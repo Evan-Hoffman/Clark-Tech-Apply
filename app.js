@@ -20,6 +20,11 @@ const publicDirectory = path.join(__dirname, './public');
 //make sure express is using public directory:
 app.use(express.static(publicDirectory));
 
+//Parse URL-encoded bodies (as sent through HTML forms)
+app.use(express.urlencoded({extended: false}));
+//Parse JSON bodies (as sent by API clients)
+app.use(express.json());
+
 app.set('view engine', 'hbs');
 
 db.connect( (error) => {
@@ -31,13 +36,9 @@ db.connect( (error) => {
     }
 })
 
-app.get("/", (req, res) => {
-    res.render("index");
-});
-
-app.get("/register", (req, res) => {
-    res.render("register");
-});
+//Define routes:
+app.use('/', require('./routes/pages'));
+app.use('/auth', require('./routes/auth'));
 
 app.listen(5000, () => {
     console.log("Server started on Port 5000");
