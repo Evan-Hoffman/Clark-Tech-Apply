@@ -47,8 +47,11 @@
                   <button type="submit" class="btn btn-primary">Register User</button>
                 </form>
 
-  </div>
-</div>
+            </div>
+        </div>
+        {{#if message}}
+        <h4 class="alert alert-danger mt-4">{{message}}}</h4>
+        {{/if}}
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
