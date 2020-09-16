@@ -14,6 +14,12 @@ exports.register = (req, res) => {
 
     const {name, email, password, passwordConfirm} = req.body;
 
+    if (name == '' || email == '' || password == '' || passwordConfirm == ''){
+        return res.render('register', {
+            message: 'You are missing one or more fields'
+        })
+    }
+
     db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results)=>{
         if (error) {
             console.log(error);
