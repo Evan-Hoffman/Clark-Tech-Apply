@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
+const path = require('path');
 
 const app = express();
 dotenv.config({path: './.env'});
@@ -13,6 +14,13 @@ const db = mysql.createConnection({
     password: process.env.DB_PWD,
     database: process.env.DATABASE
 });
+//public directory for styling:
+const publicDirectory = path.join(__dirname, './public');
+
+//make sure express is using public directory:
+app.use(express.static(publicDirectory));
+
+app.set('view engine', 'hbs');
 
 db.connect( (error) => {
     if(error){
@@ -24,8 +32,8 @@ db.connect( (error) => {
 })
 
 app.get("/", (req, res) => {
-    res.send("<hi>Home Page</h1>")
-})
+    res.render("index");
+});
 
 app.listen(5000, () => {
     console.log("Server started on Port 5000");
