@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const jtoken = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const {promisify} = require('util');
 
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -90,4 +91,33 @@ exports.register = (req, res) => {
             
         })
         });
+}
+
+exports.isLoggedIn = async (req, res, next) => {
+    //console.log(req.cookies);
+    if (req.cookies.jtoken) {
+        try {
+            //verify the token:
+            const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+            console.log(decoded);
+
+            //check if the user still exists:
+            db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
+            console.log(result);
+
+            if(!result){
+                return next();
+            }
+
+            req.user = result[0];
+            return next();
+        });
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+    }
+    else {
+        next();
+    }
 }
