@@ -12,8 +12,8 @@
         <h4>clarkTech Apply</h4>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
         </ul>
     </nav>
 
@@ -25,10 +25,9 @@
                         <img src="/images/avatar.png" class="avatar" alt="profile pic">
                     </div>
                     <div class = "card-body">
-                        <h5 class="card-title">John Doe</h5>
+                        <h5 class="card-title">{{user.name}}</h5>
                         <p class="card-text">random random random random random random random random random random random random</p>
-                        <a href="#" class="btn btn-primary">john@email.com</a>
-                        
+                        <a href="#" class="btn btn-primary">{{user.email}}</a>
                     </div>
                 </div>
         </div>
@@ -39,7 +38,7 @@
                     Profile Page
                 </div>
                 <div class = "card-body">
-                    <h5 class="card-title">Hey John, Welcome Back</h5>
+                    <h5 class="card-title">Hey {{user.name}}, Welcome Back</h5>
                     <p class="card-text">This is your profile page where you can add all the information about yourself</p>
                     <a href="#" class = "btn btn-primary"> Go Somewhere</a>
                 </div>
