@@ -30,9 +30,9 @@ router.get('/profile', authController.isLoggedIn, (req, res) => {
 });
 
 //only go to profile if logged in
-router.get('/browse', authController.isLoggedIn, authController.populateJobs, (req, res) => {
+router.get('/internships', authController.isLoggedIn, authController.populateJobs, (req, res) => {
     if(req.user) {
-        res.render('browse', {
+        res.render('internships', {
             user: req.user,
             jobs: req.internships
         });

@@ -7,16 +7,15 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/css/browse.css">
 
-    <title>Document</title>
+    <title>Internships -clarkTech Apply</title>
 </head>
 <body>
-     <script src="/js/browse.js"></script>
     <nav>
         <h4>clarkTech Apply</h4>
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/profile">Profile</a></li>
-            <li><a href="/browse">Browse</a></li>
+            <li><a href="/internships">Internships</a></li>
             <li><a href="/auth/logout">Logout</a></li>
         </ul>
     </nav>
@@ -26,9 +25,10 @@
         <div class="col-12">
             <div class="car text-center">
                 <div class="card-header">
-                    Browse Internships or Full-Time Positions
+                    Browse Internships
                 </div>
-                    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+
+<table id="internshipTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   <thead>
     <tr>
       <th class="th-sm">Company
@@ -46,21 +46,22 @@
       <td>{{jobs.0.company_name}}</td>
       <td>{{jobs.0.internship_title}}</td>
       <td>{{jobs.0.location}}</td>
-      <td>Here</td>
+      <td><a href={{jobs.0.link}} target="_blank" class="btn btn-info" role="button">Apply</a>
+      </td>
 
     </tr>
     <tr>
       <td>{{jobs.1.company_name}}</td>
       <td>{{jobs.1.internship_title}}</td>
       <td>{{jobs.1.location}}</td>
-      <td>Here</td>
+      <td><a href={{jobs.1.link}} target="_blank" class="btn btn-info" role="button">Apply</a></td>
 
     </tr>
     <tr>
       <td>{{jobs.2.company_name}}</td>
       <td>{{jobs.2.internship_title}}</td>
       <td>{{jobs.2.location}}</td>
-      <td>Here</td>
+      <td><a href={{jobs.2.link}} target="_blank" class="btn btn-info" role="button">Apply</a></td>
 
     </tr>
   </tbody>
