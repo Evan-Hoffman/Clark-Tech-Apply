@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/browse.css">
+
+    <title>Document</title>
+</head>
+<body>
+     <script src="/js/browse.js"></script>
+    <nav>
+        <h4>clarkTech Apply</h4>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/browse">Browse</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="containter mt-4">
+        
+        <div class="col-12">
+            <div class="car text-center">
+                <div class="card-header">
+                    Browse Internships or Full-Time Positions
+                </div>
+                    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm">Company
+      </th>
+      <th class="th-sm">Position
+      </th>
+      <th class="th-sm">Location
+      </th>
+      <th class="th-sm">Apply
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{jobs.0.company_name}}</td>
+      <td>{{jobs.0.internship_title}}</td>
+      <td>{{jobs.0.location}}</td>
+      <td>Here</td>
+
+    </tr>
+    <tr>
+      <td>{{jobs.1.company_name}}</td>
+      <td>{{jobs.1.internship_title}}</td>
+      <td>{{jobs.1.location}}</td>
+      <td>Here</td>
+
+    </tr>
+    <tr>
+      <td>{{jobs.2.company_name}}</td>
+      <td>{{jobs.2.internship_title}}</td>
+      <td>{{jobs.2.location}}</td>
+      <td>Here</td>
+
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Company
+      </th>
+      <th>Position
+      </th>
+      <th>Location
+      </th>
+      <th>Apply
+      </th>
+    </tr>
+  </tfoot>
+</table>
+                <div class="card-footer text-muted">
+                    Clark Tech Apply 
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    
+   
+</body>
+</html>

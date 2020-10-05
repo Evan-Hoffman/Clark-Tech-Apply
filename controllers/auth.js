@@ -122,6 +122,24 @@ exports.isLoggedIn = async (req, res, next) => {
     }
 }
 
+exports.populateJobs = async (req, res, next) => {
+    try {
+        db.query('SELECT * FROM internships', (error, result) => {
+        console.log(result);
+
+        if(!result){
+            return next();
+        }
+
+        req.internships = result;
+        return next();
+    });
+    } catch (error) {
+        console.log(error);
+        return next();
+    }
+}
+
 exports.logout = async (req, res) => {
     res.cookie('jtoken', 'logout', {
         expires: new Date(Date.now() + 2*1000),
