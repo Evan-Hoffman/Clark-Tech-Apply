@@ -2,6 +2,7 @@ const mysql = require("mysql");
 const jtoken = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const {promisify} = require('util');
+var fs = require('fs');
 
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -124,14 +125,24 @@ exports.isLoggedIn = async (req, res, next) => {
 
 exports.populateJobs = async (req, res, next) => {
     try {
-        db.query('SELECT * FROM internships', (error, result) => {
-        console.log(result);
+        db.query('SELECT * FROM internships', (error, result, fields) => {
+        //console.log(result);
 
         if(!result){
             return next();
         }
 
-        req.internships = result;
+        var string = JSON.stringify(result);
+        //console.log('>> string: ', string );
+        var json =  JSON.parse(string);
+        fs.writeFile("internships.js", string, function(err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+        console.log('>> json: ', json);
+        req.internships = json; 
         return next();
     });
     } catch (error) {

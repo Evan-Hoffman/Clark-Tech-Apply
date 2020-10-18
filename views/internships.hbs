@@ -41,30 +41,17 @@
       </th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>{{jobs.0.company_name}}</td>
-      <td>{{jobs.0.internship_title}}</td>
-      <td>{{jobs.0.location}}</td>
-      <td><a href={{jobs.0.link}} target="_blank" class="btn btn-info" role="button">Apply</a>
-      </td>
-
-    </tr>
-    <tr>
-      <td>{{jobs.1.company_name}}</td>
-      <td>{{jobs.1.internship_title}}</td>
-      <td>{{jobs.1.location}}</td>
-      <td><a href={{jobs.1.link}} target="_blank" class="btn btn-info" role="button">Apply</a></td>
-
-    </tr>
-    <tr>
-      <td>{{jobs.2.company_name}}</td>
-      <td>{{jobs.2.internship_title}}</td>
-      <td>{{jobs.2.location}}</td>
-      <td><a href={{jobs.2.link}} target="_blank" class="btn btn-info" role="button">Apply</a></td>
-
-    </tr>
+  <tbody id = "test">
+    {{#each jobs}}
+      <tr>
+        <td>{{company_name}}</td>
+        <td>{{internship_title}}</td>
+        <td>{{location}}</td>
+        <td><a href={{link}} target="_blank" class="btn btn-info" role="button">Apply</a></td>
+      </tr>
+    {{/each}}
   </tbody>
+
   <tfoot>
     <tr>
       <th>Company
@@ -84,8 +71,6 @@
             </div>
         </div>
     </div>
-        
-    
-   
+
 </body>
 </html>
