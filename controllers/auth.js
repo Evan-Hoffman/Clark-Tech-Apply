@@ -85,12 +85,22 @@ exports.register = (req, res) => {
             }
             else {
                 console.log(results);
+                //create the user their own instance of an internship apps table
+                var table_name = results.insertId + '_apps';
+                db.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY, company_name VARCHAR (250), internship_title VARCHAR (250), data_applied DATETIME, app_status VARCHAR (50))', (error, results) => {
+                    if(error){
+                        console.log(error);
+                    }
+                    else {
+                        console.log(results);
+                    }
+                })
                 return res.render('register', {
                     message: 'User Registered'
                 });
+                
             }
-            
-        })
+        });
         });
 }
 
