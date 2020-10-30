@@ -87,7 +87,7 @@ exports.register = (req, res) => {
                 console.log(results);
                 //create the user their own instance of an internship apps table
                 var table_name = results.insertId + '_apps';
-                db.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY, company_name VARCHAR (250), internship_title VARCHAR (250), data_applied DATETIME, app_status VARCHAR (50))', (error, results) => {
+                db.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY, company_name VARCHAR (250), internship_title VARCHAR (250), date_applied DATETIME, app_status VARCHAR (50))', (error, results) => {
                     if(error){
                         console.log(error);
                     }
@@ -103,6 +103,54 @@ exports.register = (req, res) => {
         });
         });
 }
+
+exports.track =  (req, res) => {
+    console.log(req.body);
+    //console.log(req.cookies.jtoken);
+
+    const jid = req.body.job_id;
+    //console.log(jid);
+    db.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
+        try {
+            console.log(result);
+
+           /* if(!result){
+                return next();
+            }
+            */
+
+            var string = JSON.stringify(result);
+            //console.log('>> string: ', string );
+            var data =  JSON.parse(string);
+            console.log('>> json: ', data); 
+        // return next();
+        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+        console.log(decoded.id);
+        console.log(data[0].company_name);
+    
+        db.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, internship_title: data[0].internship_title}, (error, results) => {
+            if(error){
+                console.log(error);
+            }
+
+            else {
+                console.log(results);
+                res.status(200).redirect("/internships");
+            }
+            });
+            
+        }
+        catch (error) {
+            console.log(error); 
+        }
+        
+        
+    });
+    
+}
+
+
+
 
 exports.isLoggedIn = async (req, res, next) => {
     //console.log(req.cookies);
@@ -145,12 +193,6 @@ exports.populateJobs = async (req, res, next) => {
         var string = JSON.stringify(result);
         //console.log('>> string: ', string );
         var json =  JSON.parse(string);
-        fs.writeFile("internships.js", string, function(err) {
-            if (err) {
-                console.log(err);
-            }
-        });
-
         console.log('>> json: ', json);
         req.internships = json; 
         return next();

@@ -39,6 +39,8 @@
       </th>
       <th class="th-sm">Apply
       </th>
+      <th class="th-sm">Track
+      </th>
     </tr>
   </thead>
   <tbody id = "test">
@@ -48,8 +50,14 @@
         <td>{{internship_title}}</td>
         <td>{{location}}</td>
         <td><a href={{link}} target="_blank" class="btn btn-info" role="button">Apply</a></td>
+        <td>  <form action="/auth/track" method="POST">
+                <button name="job_id" class="btn btn-info" value={{job_id}}>Track</button>
+              </form>
+
       </tr>
     {{/each}}
+
+   
   </tbody>
 
   <tfoot>
@@ -62,6 +70,8 @@
       </th>
       <th>Apply
       </th>
+      <th>Track
+      </th>
     </tr>
   </tfoot>
 </table>
@@ -70,7 +80,10 @@
                 </div>
             </div>
         </div>
+        
     </div>
-
+{{#if message}}
+        <h4 class="alert alert-danger mt-4">{{message}}</h4>
+        {{/if}}
 </body>
 </html>
