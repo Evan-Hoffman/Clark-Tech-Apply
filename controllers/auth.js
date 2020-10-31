@@ -109,6 +109,7 @@ exports.track =  (req, res) => {
     //console.log(req.cookies.jtoken);
 
     const jid = req.body.job_id;
+
     //console.log(jid);
     db.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
         try {
@@ -127,10 +128,29 @@ exports.track =  (req, res) => {
         const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
         console.log(decoded.id);
         console.log(data[0].company_name);
+
+    
     
         db.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, internship_title: data[0].internship_title}, (error, results) => {
             if(error){
                 console.log(error);
+                if (error.errno == 1062){
+                    /*
+                    res.render('internships', {
+                        message: 'That has already been added to MyApps',
+                        jobs: req.body.internships,
+                        user: req.body.user
+                    });
+                    */
+                    return res.status(200).redirect("/internships");
+                    //req.cookies.error = 'That has already been added to MyApps';
+                    //res.redirect('/internships');
+                    //console.log(req.cookies.error);
+                    //var to_disp = req.cookies.error;
+                    //return res.render('internships', {message: to_disp});
+                    //delete req.cookies.error; // remove from further requests
+                    //res.redirect('/internships?e=' + encodeURIComponent('That has already been added to MyApps'));
+                }
             }
 
             else {
