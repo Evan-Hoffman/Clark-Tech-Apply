@@ -87,7 +87,7 @@ exports.register = (req, res) => {
                 console.log(results);
                 //create the user their own instance of an internship apps table
                 var table_name = results.insertId + '_apps';
-                db.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY, company_name VARCHAR (250), internship_title VARCHAR (250), date_applied DATETIME, app_status VARCHAR (50))', (error, results) => {
+                db.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), date_applied DATETIME, app_status VARCHAR (50))', (error, results) => {
                     if(error){
                         console.log(error);
                     }
@@ -131,7 +131,7 @@ exports.track =  (req, res) => {
 
     
     
-        db.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, internship_title: data[0].internship_title}, (error, results) => {
+        db.query('INSERT INTO ' + decoded.id + '_apps SET ?', {company_name: data[0].company_name, internship_title: data[0].internship_title}, (error, results) => {
             if(error){
                 console.log(error);
                 if (error.errno == 1062){
@@ -201,7 +201,7 @@ exports.isLoggedIn = async (req, res, next) => {
     }
 }
 
-exports.populateJobs = async (req, res, next) => {
+exports.populateInternships = async (req, res, next) => {
     try {
         db.query('SELECT * FROM internships ORDER BY date_added', (error, result, fields) => {
         //console.log(result);
