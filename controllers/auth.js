@@ -203,17 +203,20 @@ exports.isLoggedIn = async (req, res, next) => {
 
 exports.populateJobs = async (req, res, next) => {
     try {
-        db.query('SELECT * FROM internships', (error, result, fields) => {
+        db.query('SELECT * FROM internships ORDER BY date_added', (error, result, fields) => {
         //console.log(result);
 
         if(!result){
             return next();
         }
-
         var string = JSON.stringify(result);
         //console.log('>> string: ', string );
         var json =  JSON.parse(string);
         console.log('>> json: ', json);
+        //Parse time of day:
+        for(var i = 0; i < json.length; i++) {
+            json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
+        }
         req.internships = json; 
         return next();
     });
