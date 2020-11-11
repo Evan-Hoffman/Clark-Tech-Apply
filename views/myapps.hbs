@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/browse.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    
+
+
+
+    <title>MyApps -clarkTech Apply</title>
+</head>
+<body>
+    <nav>
+        <h4>clarkTech Apply</h4>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/myapps">MyApps</a></li>
+            <li><a href="/internships">Internships</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="containter mt-4">
+        
+        <div class="col-12">
+            <div class="car text-center">
+                <div class="card-header">
+                    Tracked Applications
+                </div>
+<table id="myappstable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm">Company
+      </th>
+      <th class="th-sm">Position
+      </th>
+      <th class="th-sm">Status
+      </th>
+      <th class="th-sm">Date Applied
+      </th>
+    </tr>
+  </thead>
+  <tbody id = "test">
+    {{#each myapps}}
+      <tr>
+        <td>{{company_name}}</td>
+        <td>{{internship_title}}</td>
+        
+        <td><div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+              {{#if has_status}}
+                  {{app_status}}
+              {{else}}
+                Select Status
+              {{/if}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                 <button name="update_code" class="dropdown-item" value=1>Applied</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                 <input type="hidden" name="job_id" value={{job_id}}/>
+                 <button name="update_code" class="dropdown-item" value=2>Screener</button>
+              </form>
+                <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=3>Hackerrank</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=4>Recorded Behavioral</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=5>Phone Interview</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=6>Final/Onsite Interview</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=7>Received Offer</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=8>Accepted Offer</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=9>Declined Offer</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=10>Withdrew</button>
+              </form>
+              <form action="/auth/update" method="POST"> 
+                  <input type="hidden" name="job_id" value={{job_id}}/>
+                  <button name="update_code" class="dropdown-item" value=11>Rejected</button>
+              </form>
+            </div>
+            </div>
+        </td>
+        
+        <td>{{date_applied}}</td>
+
+      </tr>
+    {{/each}}
+
+   
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <th>Company
+      </th>
+      <th>Position
+      </th>
+      <th>Status
+      </th>
+      <th>Date Applied
+      </th>
+    </tr>
+  </tfoot>
+</table>
+                <div class="card-footer text-muted">
+                    Clark Tech Apply 
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{{#if message}}
+        <h4 class="alert alert-danger mt-4">{{message}}</h4>
+        {{/if}}
+        {{#if error}}
+        <h4 class="alert alert-danger mt-4">{{error}}</h4>
+        {{/if}}
+</body>
+</html>

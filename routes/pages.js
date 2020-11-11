@@ -29,7 +29,7 @@ router.get('/profile', authController.isLoggedIn, (req, res) => {
     }
 });
 
-//only go to profile if logged in
+//only go to Internships if logged in
 router.get('/internships', authController.isLoggedIn, authController.populateInternships, (req, res) => {
     //console.log(req.internships.length);
     if(req.user) {
@@ -37,6 +37,19 @@ router.get('/internships', authController.isLoggedIn, authController.populateInt
             user: req.user,
             jobs: req.internships
 
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
+//only go to MyApps if logged in
+router.get('/myapps', authController.isLoggedIn, authController.populateMyApps, (req, res) => {
+    if(req.user) {
+        res.render('myapps', {
+            user: req.user,
+            myapps: req.myapps
         });
     }
     else {
