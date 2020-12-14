@@ -160,8 +160,20 @@ exports.update =  async (req, res) => {
     };
     console.log(updateCodes[req.body.update_code]);
 
+    if (req.body.update_code == 1){
 
-    db.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1, date_applied = current_date() WHERE job_id = ?", [jid], (error, result) => {
+        db.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1, date_applied = current_date() WHERE job_id = ?", [jid], (error, result) => {
+                if(error){
+                    console.log(error);
+                }
+                console.log(result);
+                res.status(200).redirect("/myapps");
+
+        });
+    }
+
+    else {
+        db.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1 WHERE job_id = ?", [jid], (error, result) => {
             if(error){
                 console.log(error);
             }
@@ -169,6 +181,7 @@ exports.update =  async (req, res) => {
             res.status(200).redirect("/myapps");
 
     });
+    }
 }
 
 
