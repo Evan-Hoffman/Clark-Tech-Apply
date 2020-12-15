@@ -1,4 +1,4 @@
-nav {
+nav#a {
     background-color: #33B7FF;
     color: #fff;
     padding: 30px 60px;
@@ -20,6 +20,7 @@ nav li a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    font-size: 4;
     padding: 5px 8px;
 }
 

@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/css/browse.css">
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script> 
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap.min.js"></script> 
 
     <title>Internships -clarkTech Apply</title>
 </head>
 <body>
-    <nav>
+    <nav id="a">
         <h4>clarkTech Apply</h4>
         <ul>
-            <li><a href="/">Home</a></li>
+            <li><a id="b" href="/">Home</a></li>
             <li><a href="/profile">Profile</a></li>
             <li><a href="/myapps">MyApps</a></li>
             <li><a href="/internships">Internships</a></li>
@@ -33,6 +33,8 @@
                     Browse Internships
                 </div>
 <table id="internshipTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <thead>
     <tr>
       <th class="th-sm">Company
@@ -47,7 +49,7 @@
       </th>
     </tr>
   </thead>
-  <tbody id = "test">
+  <tbody>
     {{#each jobs}}
       <tr>
         <td>{{company_name}}</td>
@@ -78,7 +80,13 @@
       </th>
     </tr>
   </tfoot>
+  <script>
+  $(document).ready(function() {
+    $('#internshipTable').DataTable();
+} );
+</script>
 </table>
+
                 <div class="card-footer text-muted">
                     Clark Tech Apply 
                 </div>
