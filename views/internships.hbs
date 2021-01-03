@@ -57,7 +57,11 @@
         <td>{{date_added}}</td>
         <td><a href={{link}} target="_blank" class="btn btn-info" role="button">Apply</a></td>
         <td>  <form action="/auth/track" method="POST">
+              {{#if is_tracked}}
+                <button name="job_id" class="btn btn-info" disabled value={{job_id}}>+</button>
+              {{else}}
                 <button name="job_id" class="btn btn-info" value={{job_id}}>+</button>
+                {{/if}}
               </form>
 
       </tr>

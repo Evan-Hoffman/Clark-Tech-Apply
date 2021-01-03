@@ -226,10 +226,32 @@ exports.populateInternships = async (req, res, next) => {
         //console.log('>> string: ', string );
         var json =  JSON.parse(string);
         //console.log('>> json: ', json);
-        //Parse time of day:
-        for(var i = 0; i < json.length; i++) {
-            json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
-        }
+        db.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results) => {
+        
+            if(!results){
+                return next();
+            }
+            //console.log(results);
+            var string_tracked = JSON.stringify(results);
+            var json_tracked =  JSON.parse(string_tracked);
+            //console.log(json_tracked);
+            //console.log(json);
+            var ct = 0;
+            for(var i = 0; i < json.length; i++) {
+                //Parse time of day:
+                json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
+                if (ct < json_tracked.length && json[i]["job_id"] == json_tracked[ct]["job_id"]){
+                    json[i]["is_tracked"] = 1;
+                    ct++;
+                }
+                else {
+                    json[i]["is_tracked"] = 0;
+                }
+            }
+        });
+        
+        //console.log(json);
+        //console.log(req.user.id);
         req.internships = json; 
         return next();
     });
@@ -240,9 +262,8 @@ exports.populateInternships = async (req, res, next) => {
 }
 
 exports.populateMyApps = async (req, res, next) => {
-    const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
     try {
-        db.query('SELECT * FROM ' + decoded.id + '_apps ORDER BY job_id', (error, result, fields) => {
+        db.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY job_id', (error, result, fields) => {
         //console.log(result);
 
         if(!result){
