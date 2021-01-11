@@ -55,12 +55,12 @@
         <td>{{company_name}}</td>
         <td>{{internship_title}}</td>
         <td>{{date_added}}</td>
-        <td><a href={{link}} target="_blank" class="btn btn-info" role="button">Apply</a></td>
+        <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
         <td>  <form action="/auth/track" method="POST">
               {{#if is_tracked}}
                 <button name="job_id" class="btn btn-info" disabled value={{job_id}}>+</button>
               {{else}}
-                <button name="job_id" class="btn btn-info" value={{job_id}}>+</button>
+                <button name="job_id" class="btn btn-success" value={{job_id}}>+</button>
                 {{/if}}
               </form>
         </td>
