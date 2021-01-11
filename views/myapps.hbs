@@ -47,6 +47,8 @@
       </th>
       <th class="th-sm">Date Applied
       </th>
+      <th class="th-sm">Un-track
+      </th>
     </tr>
   </thead>
   <tbody id = "test">
@@ -114,6 +116,12 @@
         
         <td>{{date_applied}}</td>
 
+        <td>
+          <form action="/auth/untrack" method="POST">
+                <button name="job_id" class="btn btn-info" value={{job_id}}>-</button>
+          </form>
+        </td>
+
       </tr>
     {{/each}}
 
@@ -129,6 +137,8 @@
       <th>Status
       </th>
       <th>Date Applied
+      </th>
+      <th>Un-track
       </th>
     </tr>
   </tfoot>

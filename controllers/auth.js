@@ -137,6 +137,25 @@ exports.track =  (req, res) => {
     });
 }
 
+exports.untrack = async (req, res) => {
+    //console.log(req.body);
+    
+        const jid = req.body.job_id;
+        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+
+
+        db.query('DELETE FROM ' + decoded.id + '_apps WHERE job_id = ?', [jid], async (error, result) => {
+            if(error){
+                console.log(error);
+            }
+
+            else {
+                console.log(result);
+                res.status(200).redirect("/myapps");
+            }
+        });   
+}
+
 //Method to update app status in MyApps
 exports.update =  async (req, res) => {
     //console.log(req);

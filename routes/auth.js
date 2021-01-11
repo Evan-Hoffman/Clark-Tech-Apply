@@ -11,6 +11,8 @@ router.get('/logout', authController.logout);
 
 router.post('/track', authController.track);
 
+router.post('/untrack', authController.untrack);
+
 router.post('/update', authController.update);
 
 module.exports = router;
