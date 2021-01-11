@@ -15,4 +15,8 @@ router.post('/untrack', authController.untrack);
 
 router.post('/update', authController.update);
 
+router.post('/populateMyApps', authController.populateMyApps);
+
+router.post('/populateInternships', authController.populateInternships);
+
 module.exports = router;

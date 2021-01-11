@@ -1,5 +1,5 @@
 Technology Internship + New Grad Opportunities List And Stage Tracking Application for Clark Students
 
-Icon Credit: Dmitriy Bondarchuk, https://www.behance.net/indie4art
+by Evan Hurst Hoffman, Clark'21
 
-//test
+Icon Credit: Dmitriy Bondarchuk, https://www.behance.net/indie4art

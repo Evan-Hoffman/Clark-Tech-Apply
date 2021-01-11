@@ -11,6 +11,7 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 });
 
+//login a user
 exports.login = async (req, res) => {
     try {
         const {email, password} = req.body;
@@ -51,6 +52,7 @@ exports.login = async (req, res) => {
     }
 }
 
+//register a new user
 exports.register = (req, res) => {
     //console.log(req.body);
 
@@ -104,6 +106,7 @@ exports.register = (req, res) => {
         });
 }
 
+//allows a user to track an internship from the internships page (add it to myapps page)
 exports.track =  (req, res) => {
     console.log(req.body);
 
@@ -137,6 +140,7 @@ exports.track =  (req, res) => {
     });
 }
 
+//allows a user to untrack an app from the myapps page
 exports.untrack = async (req, res) => {
     //console.log(req.body);
     
@@ -156,7 +160,7 @@ exports.untrack = async (req, res) => {
         });   
 }
 
-//Method to update app status in MyApps
+//method to update app status in MyApps
 exports.update =  async (req, res) => {
     //console.log(req);
 
@@ -203,7 +207,7 @@ exports.update =  async (req, res) => {
     }
 }
 
-
+//function checks if you are logged in and a user, for purposes of hiding pages for users not logged in
 exports.isLoggedIn = async (req, res, next) => {
     //console.log(req.cookies);
     if (req.cookies.jtoken) {
@@ -233,6 +237,7 @@ exports.isLoggedIn = async (req, res, next) => {
     }
 }
 
+//populate the internships page from the database
 exports.populateInternships = async (req, res, next) => {
     try {
         db.query('SELECT * FROM internships ORDER BY date_added', (error, result, fields) => {
@@ -280,6 +285,7 @@ exports.populateInternships = async (req, res, next) => {
     }
 }
 
+//populates the table in the myapps page from the user's tracked apps table
 exports.populateMyApps = async (req, res, next) => {
     try {
         db.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY job_id', (error, result, fields) => {
@@ -307,6 +313,7 @@ exports.populateMyApps = async (req, res, next) => {
     }
 }
 
+//allows the user to logout
 exports.logout = async (req, res) => {
     res.cookie('jtoken', 'logout', {
         expires: new Date(Date.now() + 2*1000),
