@@ -43,5 +43,5 @@ db.connect( (error) => {
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
 
-var port_number = server.listen(process.env.PORT || 3000);
+var port_number = app.listen(process.env.PORT || 3000);
 app.listen(port_number);
