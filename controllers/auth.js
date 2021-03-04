@@ -6,7 +6,7 @@ var fs = require('fs');
 
 
 var db_config = {
-    connectionLimit : 100,
+    //connectionLimit : 100,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PWD,
@@ -267,7 +267,7 @@ exports.isLoggedIn = async (req, res, next) => {
 
 //populate the internships page from the database
 exports.populateInternships = async (req, res, next) => {
-
+if (req.user){
     try {
         pool.query('SELECT * FROM internships ORDER BY date_added', (error, result, fields) => {
         //console.log(result);
@@ -281,7 +281,7 @@ exports.populateInternships = async (req, res, next) => {
         //console.log('>> string: ', string );
         var json =  JSON.parse(string);
         //console.log('>> json: ', json);
-        pool.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results) => {
+        pool.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results, fields) => {
             //console.log("got here");
             if (error) {
                 console.log(error);
@@ -293,12 +293,12 @@ exports.populateInternships = async (req, res, next) => {
             //console.log(results);
             var string_tracked = JSON.stringify(results);
             var json_tracked =  JSON.parse(string_tracked);
-            //console.log(json_tracked);
+            console.log(json_tracked);
             //console.log(json);
            // console.log("check1");
             var ct = 0;
             for(var i = 0; i < json.length; i++) {
-                console.log("check2");
+                //console.log("check2");
 
                 //Parse time of day:
                 json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
@@ -327,7 +327,10 @@ exports.populateInternships = async (req, res, next) => {
 
     //db.end;
     //console.log("connection closed");
-
+}
+else {
+    return next();
+}
 }
 
 //populates the table in the myapps page from the user's tracked apps table
