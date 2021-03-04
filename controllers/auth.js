@@ -4,12 +4,17 @@ const bcrypt = require("bcryptjs");
 const {promisify} = require('util');
 var fs = require('fs');
 
-const db = mysql.createConnection({
+
+var db_config = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PWD,
     database: process.env.DATABASE
-});
+};
+
+//setup Database connection:
+let pool = mysql.createPool(db_config);
+
 
 //login a user
 exports.login = async (req, res) => {
@@ -22,8 +27,11 @@ exports.login = async (req, res) => {
             })
         }
 
-        db.query('SELECT * FROM users WHERE email = ?',[email], async (error, results) => {
+        pool.query('SELECT * FROM users WHERE email = ?',[email], async (error, results) => {
             //console.log(results);
+            if (error) {
+                console.log(error);
+            }
             if(!results || !(await bcrypt.compare(password, results[0].password))) {
                 res.status(401).render('login', {
                     message: 'Your email or password is incorrect'
@@ -46,10 +54,13 @@ exports.login = async (req, res) => {
                 res.status(200).redirect("/");
             }
         })
+        
 
     } catch (error) {
         console.log(error);
     }
+    //db.end;
+    console.log("connection closed");
 }
 
 //register a new user
@@ -64,7 +75,7 @@ exports.register = (req, res) => {
         })
     }
 
-    db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results)=>{
+    pool.query('SELECT email FROM users WHERE email = ?', [email], async (error, results)=>{
         if (error) {
             console.log(error);
         }
@@ -81,7 +92,7 @@ exports.register = (req, res) => {
         let hashedPassword = await bcrypt.hash(password, 8);
         console.log(hashedPassword);
         //column: value (from above):
-        db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword}, (error, results) => {
+        pool.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword}, (error, results) => {
             if(error) {
                 console.log(error);
             }
@@ -89,7 +100,7 @@ exports.register = (req, res) => {
                 //console.log(results);
                 //create the user their own instance of an internship apps table
                 var table_name = results.insertId + '_apps';
-                db.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), date_applied DATE, app_status VARCHAR (50), has_status INT)', (error, results) => {
+                pool.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), date_applied DATE, app_status VARCHAR (50), has_status INT)', (error, results) => {
                     if(error){
                         console.log(error);
                     }
@@ -104,6 +115,9 @@ exports.register = (req, res) => {
             }
         });
         });
+        //db.end;
+        //console.log("connection closed");
+
 }
 
 //allows a user to track an internship from the internships page (add it to myapps page)
@@ -112,7 +126,10 @@ exports.track =  (req, res) => {
 
     const jid = req.body.job_id;
 
-    db.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
+    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
+        if (error) {
+            console.log(error);
+        }
             console.log(result);
 
 
@@ -124,7 +141,7 @@ exports.track =  (req, res) => {
         //console.log(decoded.id);
         //console.log(data[0].company_name);
 
-        db.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, internship_title: data[0].internship_title}, (error, results) => {
+        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, internship_title: data[0].internship_title}, (error, results) => {
             if(error){
                 console.log(error);
                 if (error.errno == 1062){
@@ -138,6 +155,8 @@ exports.track =  (req, res) => {
             }
             });
     });
+    //db.end;
+    //console.log("connection closed");
 }
 
 //allows a user to untrack an app from the myapps page
@@ -148,7 +167,7 @@ exports.untrack = async (req, res) => {
         const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
 
 
-        db.query('DELETE FROM ' + decoded.id + '_apps WHERE job_id = ?', [jid], async (error, result) => {
+        pool.query('DELETE FROM ' + decoded.id + '_apps WHERE job_id = ?', [jid], async (error, result) => {
             if(error){
                 console.log(error);
             }
@@ -158,6 +177,8 @@ exports.untrack = async (req, res) => {
                 res.status(200).redirect("/myapps");
             }
         });   
+        //db.end;
+        //console.log("connection closed");
 }
 
 //method to update app status in MyApps
@@ -185,7 +206,7 @@ exports.update =  async (req, res) => {
 
     if (req.body.update_code == 1){
 
-        db.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1, date_applied = current_date() WHERE job_id = ?", [jid], (error, result) => {
+        pool.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1, date_applied = current_date() WHERE job_id = ?", [jid], (error, result) => {
                 if(error){
                     console.log(error);
                 }
@@ -196,7 +217,7 @@ exports.update =  async (req, res) => {
     }
 
     else {
-        db.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1 WHERE job_id = ?", [jid], (error, result) => {
+        pool.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1 WHERE job_id = ?", [jid], (error, result) => {
             if(error){
                 console.log(error);
             }
@@ -205,6 +226,8 @@ exports.update =  async (req, res) => {
 
     });
     }
+    //db.end;
+    //console.log("connection closed");
 }
 
 //function checks if you are logged in and a user, for purposes of hiding pages for users not logged in
@@ -217,9 +240,11 @@ exports.isLoggedIn = async (req, res, next) => {
             //console.log(decoded);
 
             //check if the user still exists:
-            db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
+            pool.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
            // console.log(result);
-
+           if (error) {
+                console.log(error);
+            }
             if(!result){
                 return next();
             }
@@ -235,14 +260,19 @@ exports.isLoggedIn = async (req, res, next) => {
     else {
         next();
     }
+   // db.end;
+    //console.log("connection closed");
 }
 
 //populate the internships page from the database
 exports.populateInternships = async (req, res, next) => {
-    try {
-        db.query('SELECT * FROM internships ORDER BY date_added', (error, result, fields) => {
-        //console.log(result);
 
+    try {
+        pool.query('SELECT * FROM internships ORDER BY date_added', (error, result, fields) => {
+        //console.log(result);
+        if (error) {
+            console.log(error);
+        }
         if(!result){
             return next();
         }
@@ -250,9 +280,13 @@ exports.populateInternships = async (req, res, next) => {
         //console.log('>> string: ', string );
         var json =  JSON.parse(string);
         //console.log('>> json: ', json);
-        db.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results) => {
-        
+        pool.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results) => {
+            console.log("got here");
+            if (error) {
+                console.log(error);
+            }
             if(!results){
+                console.log("this");
                 return next();
             }
             //console.log(results);
@@ -260,21 +294,27 @@ exports.populateInternships = async (req, res, next) => {
             var json_tracked =  JSON.parse(string_tracked);
             //console.log(json_tracked);
             //console.log(json);
+           // console.log("check1");
             var ct = 0;
             for(var i = 0; i < json.length; i++) {
+                console.log("check2");
+
                 //Parse time of day:
                 json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
                 if (ct < json_tracked.length && json[i]["job_id"] == json_tracked[ct]["job_id"]){
                     json[i]["is_tracked"] = 1;
                     ct++;
+                    console.log("edit a")
                 }
                 else {
                     json[i]["is_tracked"] = 0;
+                    console.log("edit b")
                 }
+                //console.log("check3");
+
             }
-        });
-        
-        //console.log(json);
+         });
+        console.log(json);
         //console.log(req.user.id);
         req.internships = json; 
         return next();
@@ -283,14 +323,20 @@ exports.populateInternships = async (req, res, next) => {
         console.log(error);
         return next();
     }
+
+    //db.end;
+    //console.log("connection closed");
+
 }
 
 //populates the table in the myapps page from the user's tracked apps table
 exports.populateMyApps = async (req, res, next) => {
     try {
-        db.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY job_id', (error, result, fields) => {
+        pool.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY job_id', (error, result, fields) => {
         //console.log(result);
-
+        if (error) {
+            console.log(error);
+        }
         if(!result){
             return next();
         }
@@ -311,6 +357,8 @@ exports.populateMyApps = async (req, res, next) => {
         console.log(error);
         return next();
     }
+   // db.end;
+    //console.log("connection closed");
 }
 
 //allows the user to logout
@@ -320,4 +368,6 @@ exports.logout = async (req, res) => {
         httpOnly: true
     });
     res.status(200).redirect('/');
+    //db.end;
+    //console.log("connection closed");
 }
