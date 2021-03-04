@@ -6,6 +6,7 @@ var fs = require('fs');
 
 
 var db_config = {
+    connectionLimit : 100,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PWD,
@@ -32,7 +33,7 @@ exports.login = async (req, res) => {
             if (error) {
                 console.log(error);
             }
-            if(!results || !(await bcrypt.compare(password, results[0].password))) {
+            if(results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
                 res.status(401).render('login', {
                     message: 'Your email or password is incorrect'
                 })
@@ -281,12 +282,12 @@ exports.populateInternships = async (req, res, next) => {
         var json =  JSON.parse(string);
         //console.log('>> json: ', json);
         pool.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results) => {
-            console.log("got here");
+            //console.log("got here");
             if (error) {
                 console.log(error);
             }
             if(!results){
-                console.log("this");
+                //console.log("this");
                 return next();
             }
             //console.log(results);
@@ -304,17 +305,17 @@ exports.populateInternships = async (req, res, next) => {
                 if (ct < json_tracked.length && json[i]["job_id"] == json_tracked[ct]["job_id"]){
                     json[i]["is_tracked"] = 1;
                     ct++;
-                    console.log("edit a")
+                    //console.log("edit a")
                 }
                 else {
                     json[i]["is_tracked"] = 0;
-                    console.log("edit b")
+                    //console.log("edit b")
                 }
                 //console.log("check3");
 
             }
          });
-        console.log(json);
+        //console.log(json);
         //console.log(req.user.id);
         req.internships = json; 
         return next();
