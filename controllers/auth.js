@@ -267,70 +267,76 @@ exports.isLoggedIn = async (req, res, next) => {
 
 //populate the internships page from the database
 exports.populateInternships = async (req, res, next) => {
-if (req.user){
-    try {
-        pool.query('SELECT * FROM internships ORDER BY date_added', (error, result, fields) => {
-        //console.log(result);
-        if (error) {
-            console.log(error);
-        }
-        if(!result){
-            return next();
-        }
-        var string = JSON.stringify(result);
-        //console.log('>> string: ', string );
-        var json =  JSON.parse(string);
-        //console.log('>> json: ', json);
-        pool.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results, fields) => {
-            //console.log("got here");
+    if (req.user){
+        try {
+            pool.query('SELECT * FROM internships ORDER BY date_added', async (error, result, fields) => {
+            //console.log(result);
             if (error) {
                 console.log(error);
             }
-            if(!results){
-                //console.log("this");
+            if(!result){
                 return next();
             }
-            //console.log(results);
-            var string_tracked = JSON.stringify(results);
-            var json_tracked =  JSON.parse(string_tracked);
-            console.log(json_tracked);
-            //console.log(json);
-           // console.log("check1");
-            var ct = 0;
-            for(var i = 0; i < json.length; i++) {
-                //console.log("check2");
-
-                //Parse time of day:
-                json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
-                if (ct < json_tracked.length && json[i]["job_id"] == json_tracked[ct]["job_id"]){
-                    json[i]["is_tracked"] = 1;
-                    ct++;
-                    //console.log("edit a")
-                }
-                else {
-                    json[i]["is_tracked"] = 0;
-                    //console.log("edit b")
-                }
-                //console.log("check3");
-
-            }
-         });
-        //console.log(json);
-        //console.log(req.user.id);
-        req.internships = json; 
-        return next();
-    });
-    } catch (error) {
-        console.log(error);
+            var string = JSON.stringify(result);
+            //console.log('>> string: ', string );
+            var json =  JSON.parse(string);
+            //console.log('>> json: ', json);
+            
+            populateInternshipsHelper(req, json, function() {
+                //console.log(json);
+                req.internships = json; 
+                return next();
+            });
+        });
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+    }
+    else {
         return next();
     }
+}
 
-    //db.end;
-    //console.log("connection closed");
-}
-else {
-    return next();
-}
+function populateInternshipsHelper(req, json, _callback){
+    pool.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results, fields) => {
+        //console.log("got here");
+        if (error) {
+            console.log(error);
+        }
+        if(!results){
+            //console.log("this");
+            return next();
+        }
+
+        //console.log(results);
+        var string_tracked = JSON.stringify(results);
+        var json_tracked =  JSON.parse(string_tracked);
+        //console.log(json_tracked);
+        //console.log(json);
+        //console.log("check1");
+        var ct = 0;
+        for(var i = 0; i < json.length; i++) {
+            //console.log("check2");
+            //Parse time of day:
+            json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
+            if (ct < json_tracked.length && json[i]["job_id"] == json_tracked[ct]["job_id"]){
+                json[i]["is_tracked"] = 1;
+                ct++;
+                //console.log("edit a")
+            }
+            else {
+                json[i]["is_tracked"] = 0;
+                //console.log("edit b")
+            }
+            //console.log("check3");
+            //console.log(json);
+        }
+            //console.log("check4");
+        _callback();
+            //return json;
+        });
+    
 }
 
 //populates the table in the myapps page from the user's tracked apps table
