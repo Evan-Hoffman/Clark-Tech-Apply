@@ -1,0 +1,335 @@
+[33mcommit c1cd7c88644fac8edd4312d59467942f8d2682e8[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Evan-Hoffman <44278589+Evan-Hoffman@users.noreply.github.com>
+Date:   Sun Mar 7 22:38:10 2021 -0500
+
+    Delete .env
+
+[33mcommit 12c9c5f0d4b746119c5941dd67d62ecd4538eb40[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Mar 7 22:36:24 2021 -0500
+
+    many updates from cloud-migration
+
+[33mcommit eb5394a0c671f8122da01dcb1deab1923c0ba38f[m[33m ([m[1;31mheroku/master[m[33m)[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Mar 7 21:56:25 2021 -0500
+
+    fixed internships page; dates and previously tracked, which broke during cloud migration
+
+[33mcommit 57464d41a64bdd78e3a05b59c7b8c680469fe896[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Thu Mar 4 15:09:47 2021 -0500
+
+    fixed crash on /internships when not logged in
+
+[33mcommit c89bacb288f00e4a7fcdfbd3a6f3206ed9aafef8[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Thu Mar 4 14:26:43 2021 -0500
+
+    clean up and fixed login bug from new db (when email is incorrect)
+
+[33mcommit d9386821c8f492f3854c0f693da0a0317fe7a14e[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Thu Mar 4 14:08:52 2021 -0500
+
+    corrected crashing-mysql disconnect
+
+[33mcommit ac4884cfd947f18b0c25ab52a573011ae15c4ab5[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Feb 28 19:09:55 2021 -0500
+
+    tryin something for heroku
+
+[33mcommit 56105ffd4bf7f3ba7d75c1b4a722c4428ad65d2d[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Feb 28 17:01:45 2021 -0500
+
+    cleared npm cache
+
+[33mcommit 77bf08a7d3dce144d023cc10b21b8fe4efd70b22[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Feb 28 16:49:53 2021 -0500
+
+    fixed script again
+
+[33mcommit 0e0db6b1fc0c9d1657a1717b897fc5b0b32ef9bb[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Feb 28 16:47:00 2021 -0500
+
+    fixed script
+
+[33mcommit 7426ddf205ff52bca6c9ab2ee0c3a076725e639c[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Feb 28 16:43:42 2021 -0500
+
+    removed nodemon from start script
+
+[33mcommit 8ffa7bca60fee8a46401dedd4834206cd5ec865e[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Feb 28 16:39:20 2021 -0500
+
+    removed nodemon
+
+[33mcommit ca03240a1d986ab3e8e120b646f8db8a1021d152[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sat Feb 27 17:27:44 2021 -0500
+
+    for heroku againnn
+
+[33mcommit 5b9454e5e04b313f0239d97b37b99572a140a972[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sat Feb 27 17:25:13 2021 -0500
+
+    for heroku again
+
+[33mcommit 75f3061f3bc66515d46c5dcd29a80a1c9c4a9c4e[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sat Feb 27 17:19:26 2021 -0500
+
+    heroku test
+
+[33mcommit 458d18a8adb3468d85bf653bf0bc076c92df068e[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sat Feb 27 16:22:36 2021 -0500
+
+    for heroku
+
+[33mcommit e95a0d4c0ef7c0ed283b47a0dc47319c9349cc12[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Fri Jan 15 20:52:54 2021 -0500
+
+    adding tips page
+
+[33mcommit 6b7d2d6bd409b1e96b372e3c4e59b11bafbf7cd6[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Thu Jan 14 19:13:35 2021 -0500
+
+    added footer
+
+[33mcommit 611193575d37ef32fc1f69cf03e917c63a466635[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Jan 10 21:36:28 2021 -0500
+
+    Some cleanup
+
+[33mcommit 7f38f7cf59f672de7cbb4ef95c3adc79fb661c54[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Jan 10 21:17:24 2021 -0500
+
+    Made button color clearer
+
+[33mcommit 99a9e44cf86afd1b8432bb2bd67289bd8d506a88[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Jan 10 21:12:44 2021 -0500
+
+    Added untrack functionality from myapps
+
+[33mcommit 08f13dd2bb92fd41ddd8e501209c160fff6499c8[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sat Jan 2 20:01:14 2021 -0500
+
+    ignore this
+
+[33mcommit 6db32bc0175386f3ee4defad2377d0ad83c6bbd3[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sat Jan 2 19:46:49 2021 -0500
+
+    indicate which apps are already being tracked in internships master table
+
+[33mcommit 9b0f0a9dfa261a82714280a602a408bfb8a9d7ee[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Mon Dec 14 20:18:54 2020 -0500
+
+    made internship table paginated and sortable
+
+[33mcommit 5135feb54cdb6cdc6b9bff0fa487aabff46104a9[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Mon Dec 14 17:25:50 2020 -0500
+
+    Bug addressed: now Date applied only updates when applied
+
+[33mcommit 265c5409963552978062dfbd179d40337bf17360[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Nov 11 03:32:22 2020 -0500
+
+    fixed dropdowns and introduced date systems, and added dropdown backend
+
+[33mcommit 477c09a180de01217cda9d7bf278d7d450386042[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Nov 3 18:06:05 2020 -0500
+
+    new user tracking tables are now job_ID'd  by when they were added rather than the job_id from the master list, allowing us to order by most recently added using just the Job_ID come the MYApps Page
+
+[33mcommit c580874d9667713dfd70b391bf4ebf3b25a3a948[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Nov 3 16:58:02 2020 -0500
+
+    date_added attribute added to jobs table and now sorted by that on rendering
+
+[33mcommit d99a50133245d20976c1c31994a1ecfd9b736ec8[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sat Oct 31 03:04:13 2020 -0400
+
+    doesnt crash anymore if u click track and u previously had clicked tracked
+
+[33mcommit 130a40931e8499ebd87986b59ef26a42c7ce4c2f[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Fri Oct 30 17:56:22 2020 -0400
+
+    added functionality to let you track an internship
+
+[33mcommit 0f06bbb66b6a4728fe819d5aa26ee1e996abe7e9[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Oct 28 16:52:57 2020 -0400
+
+    create new table on registeration for personal internship tracking
+
+[33mcommit 83e5bc58e8e193361703b5ab02964a132e8f17e2[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Oct 18 17:30:50 2020 -0400
+
+    removed dead file
+
+[33mcommit 032d68b780cd01be1ee746cb9000de9e964d8251[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Sun Oct 18 17:29:33 2020 -0400
+
+    populate internship table correctly
+
+[33mcommit 34041b2b92bf5c03527ada371b6cfcb341908d51[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Mon Oct 5 02:12:13 2020 -0400
+
+    added buttons to apply
+
+[33mcommit 2ffe15af62e0db5d2948dfd8e07f5b87b15b304f[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Mon Oct 5 00:57:28 2020 -0400
+
+    created page for job browsing
+
+[33mcommit 066de0600bb52db5bee7b175f20dd5da7be76f12[m[33m ([m[1;31morigin/login-feature[m[33m, [m[1;32mlogin-feature[m[33m)[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Thu Sep 17 01:35:51 2020 -0400
+
+    added logout functionality and destruction of cookie
+
+[33mcommit cec801c10eb3db420963ba65fce632d0af841cb7[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Thu Sep 17 01:27:21 2020 -0400
+
+    made nav bar pages dependable on if you are logged in or not
+
+[33mcommit 980229ac44b9cba5d400e537c982c29ea30e56cf[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Thu Sep 17 01:17:32 2020 -0400
+
+    added middleware so profile only accesible to those logged in
+
+[33mcommit b451177f39ab6c947d038396be071b356a55cca8[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Thu Sep 17 00:19:52 2020 -0400
+
+    created and styled profile page
+
+[33mcommit 186594856fbe768d48af0dac6d387cb02a560b95[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Sep 16 23:28:39 2020 -0400
+
+    built login page and cookie placing in browser
+
+[33mcommit a3d3ee6eb94e75bfdd9c2129a73cc1b546c8d9d4[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Sep 16 02:44:34 2020 -0400
+
+    made so all fields are required in register form
+
+[33mcommit a3f76845076814bcea03895458b333b399091756[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Sep 16 02:41:35 2020 -0400
+
+    connected register form to database
+
+[33mcommit 4301482c6a599d83c513c6ebd9d1d62713a7f5c2[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Sep 16 02:19:51 2020 -0400
+
+    added error catching in registration form
+
+[33mcommit 7adbfce3ee2a8437f7fbadf98b182c127c788d10[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Sep 16 02:03:30 2020 -0400
+
+    filled out register page and auths
+
+[33mcommit 51c4c546c0d53bd41edcf634e17fb0a3504d895a[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Sep 16 00:43:00 2020 -0400
+
+    added Register page
+
+[33mcommit e099b6752ee675f6164607f518429ff22245f5ae[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Wed Sep 16 00:10:24 2020 -0400
+
+    added homepage
+
+[33mcommit 96c75680eddf4c1c9cd9e2f75f0669814e5a1cd6[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 19:23:39 2020 -0400
+
+    added db info
+
+[33mcommit 6d569e4285397ac8b7ba446a1b127d2e0ef2856f[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 19:00:28 2020 -0400
+
+    import mysql
+
+[33mcommit 2877efb0550cb728fc67a0f4ad05e94cacc8fdf2[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 18:49:45 2020 -0400
+
+    setting up server
+
+[33mcommit 5fc9c819deeba9be82bee1c8ae06b053344c1add[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 18:40:30 2020 -0400
+
+    imports
+
+[33mcommit fdb190500571d5dd934752c5c5d1ed9c2b589ea9[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 18:37:56 2020 -0400
+
+    removing node modules from git 3
+
+[33mcommit acf130e9eeeaf694959927f935fd94dda2aeb387[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 18:37:04 2020 -0400
+
+    removing node modules from git 2
+
+[33mcommit 9085763396be05e3ed186c79f5c5dd13b214d0ff[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 18:35:56 2020 -0400
+
+    removing node modules from git
+
+[33mcommit 728ae66e0945aebc66d641c4b0199be90315e2cf[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 18:34:33 2020 -0400
+
+    added dependencies
+
+[33mcommit 8ba91d7fcf3bf712771ce2b75b6dc30ac83a4031[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 18:29:12 2020 -0400
+
+    Readme
+
+[33mcommit 2b1072539e2d689b3101fdbf88e66740621a6b59[m
+Author: Evan-Hoffman <evanhoffman370@gmail.com>
+Date:   Tue Sep 15 18:26:21 2020 -0400
+
+    first commit
