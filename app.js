@@ -20,14 +20,14 @@ let pool = mysql.createPool(db_config);
 //public directory for styling:
 const publicDirectory = path.join(__dirname, './public');
 
-/*
+
 app.use(function(req, res, next) {
     if ((req.get('X-Forwarded-Proto') !== 'https')) {
       res.redirect('https://' + req.get('Host') + req.url);
     } else
       next();
 });
-*/
+
 
 //make sure express is using public directory:
 app.use(express.static(publicDirectory));
