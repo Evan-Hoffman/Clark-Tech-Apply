@@ -101,7 +101,7 @@ exports.register = (req, res) => {
                 //console.log(results);
                 //create the user their own instance of an internship apps table
                 var table_name = results.insertId + '_apps';
-                pool.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), date_applied DATE, app_status VARCHAR (50), has_status INT)', (error, results) => {
+                pool.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), link VARCHAR (250), date_applied DATE, app_status VARCHAR (50), has_status INT)', (error, results) => {
                     if(error){
                         console.log(error);
                     }
@@ -142,7 +142,7 @@ exports.track =  (req, res) => {
         //console.log(decoded.id);
         //console.log(data[0].company_name);
 
-        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, internship_title: data[0].internship_title}, (error, results) => {
+        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
             if(error){
                 console.log(error);
                 if (error.errno == 1062){
@@ -280,7 +280,7 @@ exports.populateInternships = async (req, res, next) => {
             var string = JSON.stringify(result);
             //console.log('>> string: ', string );
             var json =  JSON.parse(string);
-            //console.log('>> json: ', json);
+            console.log('>> json: ', json);
             
             populateInternshipsHelper(req, json, function() {
                 //console.log(json);

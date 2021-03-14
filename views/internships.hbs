@@ -39,6 +39,10 @@
     <tr>
       <th class="th-sm">Company
       </th>
+        <th class="th-sm">Tags
+      </th>
+       <th class="th-sm">Jrs Only?
+      </th>
       <th class="th-sm">Position
       </th>
       <th class="th-sm">Date Added
@@ -53,6 +57,29 @@
     {{#each jobs}}
       <tr>
         <td>{{company_name}}</td>
+        <td>
+           {{#if dsci_tag}}
+              <span class="label label-pill label-info">DSCI</span>            
+              {{/if}}
+          {{#if swe_tag}}
+              <span class="label label-pill label-primary">SWE</span>            
+            {{/if}}
+          {{#if it_tag}}
+              <span class="label label-pill label-success">IT</span>            
+            {{/if}}
+          {{#if consulting_tag}}
+              <span class="label label-pill label-warning">TECH-CONSULTING</span>            
+          {{/if}}
+          {{#if cyber_tag}}
+              <span class="label label-pill label-danger">CYBER</span>            
+          {{/if}}
+        </td>
+        {{#if juniors_only}}
+         <td>Jrs Only</td> 
+        {{else}} 
+          <td>Any</td>
+        {{/if}}
+
         <td>{{internship_title}}</td>
         <td>{{date_added}}</td>
         <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
@@ -73,6 +100,10 @@
   <tfoot>
     <tr>
       <th>Company
+      </th>
+      <th>Tags
+      </th>
+      <th>Jrs Only?
       </th>
       <th>Position
       </th>
