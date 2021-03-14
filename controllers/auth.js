@@ -101,7 +101,7 @@ exports.register = (req, res) => {
                 //console.log(results);
                 //create the user their own instance of an internship apps table
                 var table_name = results.insertId + '_apps';
-                pool.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), link VARCHAR (250), date_applied DATE, app_status VARCHAR (50), has_status INT)', (error, results) => {
+                pool.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), link VARCHAR (250), date_applied DATE, date_tracked DATETIME DEFAULT CURRENT_TIMESTAMP, app_status VARCHAR (50), has_status INT)', (error, results) => {
                     if(error){
                         console.log(error);
                     }
@@ -342,7 +342,7 @@ function populateInternshipsHelper(req, json, _callback){
 //populates the table in the myapps page from the user's tracked apps table
 exports.populateMyApps = async (req, res, next) => {
     try {
-        pool.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY job_id', (error, result, fields) => {
+        pool.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY date_tracked DESC', (error, result, fields) => {
         //console.log(result);
         if (error) {
             console.log(error);
