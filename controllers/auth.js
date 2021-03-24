@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const jtoken = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 const {promisify} = require('util');
 var fs = require('fs');
 
@@ -12,6 +13,14 @@ var db_config = {
     password: process.env.DB_PWD,
     database: process.env.DATABASE
 };
+
+const transport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.CTA_EMAIL,
+      pass: process.env.CTA_EMAIL_PASSWORD,
+    },
+});
 
 //setup Database connection:
 let pool = mysql.createPool(db_config);
@@ -29,7 +38,7 @@ exports.login = async (req, res) => {
         }
 
         pool.query('SELECT * FROM users WHERE email = ?',[email], async (error, results) => {
-            //console.log(results);
+            console.log(results);
             if (error) {
                 console.log(error);
             }
@@ -37,6 +46,11 @@ exports.login = async (req, res) => {
                 res.status(401).render('login', {
                     message: 'Your email or password is incorrect'
                 })
+            }
+            if (results[0].active == 0) {
+                return res.status(401).render('login', {
+                  message: "Pending Account. Please Verify Your Email!"
+                });
             }
             else {
                 const id = results[0].id;
@@ -63,6 +77,20 @@ exports.login = async (req, res) => {
     //db.end;
     console.log("connection closed");
 }
+
+exports.sendConfirmationEmail = (name, email, confirmationCode) => {
+    console.log("Check");
+    transport.sendMail({
+      from: process.env.CTA_EMAIL,
+      to: email,
+      subject: "Please confirm your account",
+      html: `<h1>Email Confirmation</h1>
+          <h2>Hello ${name}</h2>
+          <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
+          <a href=https://clarktechapply.com/auth/confirm/${confirmationCode}> Click here </a>
+          </div>`,
+    }).catch(err => console.log(err));
+};
 
 //register a new user
 exports.register = (req, res) => {
@@ -91,9 +119,14 @@ exports.register = (req, res) => {
             }
 
         let hashedPassword = await bcrypt.hash(password, 8);
-        console.log(hashedPassword);
+        //console.log(hashedPassword);
         //column: value (from above):
-        pool.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword}, (error, results) => {
+        const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let token = '';
+        for (let i = 0; i < 25; i++) {
+            token += characters[Math.floor(Math.random() * characters.length )];
+        }
+        pool.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword, confirmation_code: token}, (error, results) => {
             if(error) {
                 console.log(error);
             }
@@ -109,8 +142,13 @@ exports.register = (req, res) => {
                         console.log(results);
                     }
                 })
+                exports.sendConfirmationEmail(
+                    name,
+                    email,
+                    token
+                );
                 return res.render('register', {
-                    message: 'User Registered'
+                    message: 'User Registered Succesfully! Please check your email'
                 });
                 
             }
@@ -119,6 +157,16 @@ exports.register = (req, res) => {
         //db.end;
         //console.log("connection closed");
 
+}
+
+exports.verifyUser = (req, res) => {
+    let ccode = req.params.confirmationCode;
+    pool.query('UPDATE users SET active = 1 WHERE confirmation_code = ?', [ccode], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+    });
+    return res.status(200).redirect("/login");
 }
 
 //allows a user to track an internship from the internships page (add it to myapps page)

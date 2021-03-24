@@ -19,4 +19,6 @@ router.post('/populateMyApps', authController.populateMyApps);
 
 router.post('/populateInternships', authController.populateInternships);
 
+router.get('/confirm/:confirmationCode', authController.verifyUser);
+
 module.exports = router;
