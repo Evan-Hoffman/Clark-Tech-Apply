@@ -120,7 +120,9 @@
   </tfoot>
   <script>
   $(document).ready(function() {
-    $('#internshipTable').DataTable();
+    $('#internshipTable').DataTable({
+      "order": [[4, "desc"]]
+    });
 } );
 </script>
 </table>
