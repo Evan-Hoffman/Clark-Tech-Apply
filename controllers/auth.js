@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
 
         if(!email || !password){
             return res.status(400).render('login', {
-                message: 'Please provide an email and a password'
+                message1: 'Please provide an email and a password'
             })
         }
 
@@ -44,12 +44,12 @@ exports.login = async (req, res) => {
             }
             if(results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
                 res.status(401).render('login', {
-                    message: 'Your email or password is incorrect'
+                    message1: 'Your email or password is incorrect'
                 })
             }
-            if (results[0].active == 0) {
+            else if (results[0].active == 0) {
                 return res.status(401).render('login', {
-                  message: "Pending Account. Please Verify Your Email!"
+                  message1: "Pending Account. Please Verify Your Email!"
                 });
             }
             else {
@@ -166,7 +166,10 @@ exports.verifyUser = (req, res) => {
             console.log(error);
         }
     });
-    return res.status(200).redirect("/login");
+    //return res.status(200).redirect("/login");
+    return res.render('login', {
+        message2: 'Account Verified. Please Login'
+    });
 }
 
 //allows a user to track an internship from the internships page (add it to myapps page)
@@ -328,7 +331,7 @@ exports.populateInternships = async (req, res, next) => {
             var string = JSON.stringify(result);
             //console.log('>> string: ', string );
             var json =  JSON.parse(string);
-            console.log('>> json: ', json);
+            //console.log('>> json: ', json);
             
             populateInternshipsHelper(req, json, function() {
                 //console.log(json);

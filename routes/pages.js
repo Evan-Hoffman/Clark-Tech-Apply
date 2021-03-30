@@ -44,7 +44,7 @@ router.get('/tips', authController.isLoggedIn, (req, res) => {
 router.get('/internships', authController.isLoggedIn, authController.populateInternships, (req, res) => {
     //console.log(req.internships.length);
     if(req.user) {
-        console.log(req.internships);
+        //console.log(req.internships);
         res.render('internships', {
             user: req.user,
             jobs: req.internships
