@@ -100,7 +100,7 @@ exports.register = (req, res) => {
 
     if (name == '' || email == '' || password == '' || passwordConfirm == ''){
         return res.render('register', {
-            message: 'You are missing one or more fields'
+            message1: 'You are missing one or more fields'
         })
     }
 
@@ -110,11 +110,11 @@ exports.register = (req, res) => {
         }
         if (results.length > 0){
             return res.render('register', {
-                message: 'That email is already in use'
+                message1: 'That email is already in use'
             })
         }   else if (password != passwordConfirm) {
                 return res.render('register', {
-                    message: 'Passwords do not match'
+                    message1: 'Passwords do not match'
                 });
             }
 
@@ -148,7 +148,7 @@ exports.register = (req, res) => {
                     token
                 );
                 return res.render('register', {
-                    message: 'User Registered Succesfully! Please check your email'
+                    message2: 'User Registered Succesfully! Please check your email'
                 });
                 
             }
