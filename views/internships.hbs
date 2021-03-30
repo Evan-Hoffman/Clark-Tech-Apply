@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script> 
@@ -18,7 +19,7 @@
 </head>
 <body>
     <nav id="a">
-        <h4>clarkTech Apply</h4>
+        <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
         <ul>
             <li><a id="b" href="/">Home</a></li>
             <li><a href="/tips">Tips</a></li>
@@ -60,19 +61,19 @@
         <td>{{company_name}}</td>
         <td>
            {{#if dsci_tag}}
-              <span class="label label-pill label-info">DSCI</span>            
+              <span class="badge badge-pill badge-primary">DSCI</span>            
               {{/if}}
           {{#if swe_tag}}
-              <span class="label label-pill label-primary">SWE</span>            
+              <span class="badge badge-pill badge-success">SWE</span>            
             {{/if}}
           {{#if it_tag}}
-              <span class="label label-pill label-success">IT</span>            
+              <span class="badge badge-pill badge-dark">IT</span>            
             {{/if}}
           {{#if consulting_tag}}
-              <span class="label label-pill label-warning">TECH-CONSULTING</span>            
+              <span class="badge badge-pill badge-warning">TECH-CONSULTING</span>            
           {{/if}}
           {{#if cyber_tag}}
-              <span class="label label-pill label-danger">CYBER</span>            
+              <span class="badge badge-pill badge-danger">CYBER</span>            
           {{/if}}
         </td>
         {{#if juniors_only}}
