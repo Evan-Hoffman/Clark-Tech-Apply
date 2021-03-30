@@ -166,6 +166,11 @@ exports.verifyUser = (req, res) => {
             console.log(error);
         }
     });
+    pool.query('UPDATE users SET confirmation_code = 0 WHERE confirmation_code = ?', [ccode], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+    });
     //return res.status(200).redirect("/login");
     return res.render('login', {
         message2: 'Account Verified. Please Login'
