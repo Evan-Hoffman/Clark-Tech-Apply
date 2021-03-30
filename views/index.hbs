@@ -34,7 +34,12 @@
 
             <p class="lead">Listings aggregated from LinkedIn, Glassdoor, Jumpstart, Wayup, Github, Handshake, Company Sites, and elsewhere</p>
             <hr class="my-4">
-            <a class="btn btn-primary btn-lg" href="/tips" role="button">Get Started</a>
+            {{#if user}}
+                <a class="btn btn-primary btn-lg" href="/internships" role="button">Get Started</a>
+            {{else}}
+                <a class="btn btn-primary btn-lg" href="/register" role="button">Get Started</a>
+            {{/if}}
+
           
         </div>
  
