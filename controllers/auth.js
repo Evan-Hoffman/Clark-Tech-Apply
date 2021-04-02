@@ -78,6 +78,50 @@ exports.login = async (req, res) => {
     console.log("connection closed");
 }
 
+exports.sendResetEmail = (req, res) => {
+    pool.query('SELECT * FROM users WHERE email = ?',[req.body.email], (error, results) => {
+        console.log(results);
+        if (error) {
+            console.log(error);
+        }
+        if(results.length == 0) {
+            return res.render('login', {
+                message1: 'There is no user with that email in our records'
+            });
+        }
+        else {
+            const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let token = '';
+            for (let i = 0; i < 25; i++) {
+                token += characters[Math.floor(Math.random() * characters.length )];
+            }
+            pool.query('UPDATE users SET confirmation_code = ? WHERE email = ?', [token, req.body.email], (error, results) => {
+                if(error) {
+                    console.log(error);
+                }
+            });
+            //console.log("Check");
+            transport.sendMail({
+                from: process.env.CTA_EMAIL,
+                to: req.body.email,
+                subject: "Password Reset",
+                html: `<h1>Password Reset</h1>
+                    <h2>Hello</h2>
+                    <p>To reset your ClarkTech Apply Password, please click the link below</p>
+                    <a href=https://clarktechapply.com/passwordreset/${token}> Click here </a>
+                    <p>If you did not request a password change, no action is needed from you at this time</p>
+
+                    </div>`,
+                }).catch(err => console.log(err));
+            return res.render('login', {
+                message2: 'Reset Email Sent'
+            });
+          
+        }
+        
+    });
+}
+
 exports.sendConfirmationEmail = (name, email, confirmationCode) => {
     console.log("Check");
     transport.sendMail({
@@ -176,6 +220,46 @@ exports.verifyUser = (req, res) => {
     //return res.status(200).redirect("/login");
     return res.render('login', {
         message2: 'Account Verified. Please Login'
+    });
+}
+
+exports.resetPassword = async (req, res) => {
+    let code = req.params.code;
+    if (code == 0){
+        return res.render('login', {
+            message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
+        })
+    }
+
+    if (req.body.password == '' || req.body.passwordConfirm == ''){
+        return res.render('register', {
+            message1: 'You are missing one or more fields'
+        })
+    }
+
+    if (req.body.password != req.body.passwordConfirm) {
+        return res.render('passwordreset/' + code, {
+            message1: 'Passwords do not match'
+        });
+    }
+
+    let hashedPassword = await bcrypt.hash(req.body.password, 8);
+
+    pool.query('UPDATE users SET password = ? WHERE confirmation_code = ?', [hashedPassword, code], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+
+        pool.query('UPDATE users SET confirmation_code = 0 WHERE confirmation_code = ?', [code], (error, results) => {
+            if(error) {
+                console.log(error);
+            }
+        });
+    });
+    
+    //return res.status(200).redirect("/login");
+    return res.render('login', {
+        message2: 'Password Reset, Please Login'
     });
 }
 

@@ -69,4 +69,17 @@ router.get('/myapps', authController.isLoggedIn, authController.populateMyApps, 
     }
 });
 
+router.get('/passwordreset/:confirmationCode', (req, res) => {
+    if (req.params.confirmationCode != 0){
+        res.render('passwordreset', {
+            code: req.params.confirmationCode
+        });
+    }
+    else {
+        res.render('login', {
+            message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
+        });
+    }
+});
+
 module.exports = router;
