@@ -226,19 +226,19 @@ exports.verifyUser = (req, res) => {
 exports.resetPassword = async (req, res) => {
     let code = req.params.code;
     if (code == 0){
-        return res.redirect('back', {
+        return res.render('passwordreset', {
             message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
         })
     }
 
     if (req.body.password == '' || req.body.passwordConfirm == ''){
-        return res.redirect('back', {
+        return res.render('passwordreset', {
             message1: 'You are missing one or more fields'
         })
     }
 
     if (req.body.password != req.body.passwordConfirm) {
-        return res.redirect('back', {
+        return res.render('passwordreset', {
             message1: 'Passwords do not match'
         });
     }
