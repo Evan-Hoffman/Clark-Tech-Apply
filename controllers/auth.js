@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
         }
 
         pool.query('SELECT * FROM users WHERE email = ?',[email], async (error, results) => {
-            console.log(results);
+            //console.log(results);
             if (error) {
                 console.log(error);
             }
@@ -75,12 +75,12 @@ exports.login = async (req, res) => {
         console.log(error);
     }
     //db.end;
-    console.log("connection closed");
+    //console.log("connection closed");
 }
 
 exports.sendResetEmail = (req, res) => {
     pool.query('SELECT * FROM users WHERE email = ?',[req.body.email], (error, results) => {
-        console.log(results);
+        //console.log(results);
         if (error) {
             console.log(error);
         }
@@ -123,7 +123,7 @@ exports.sendResetEmail = (req, res) => {
 }
 
 exports.sendConfirmationEmail = (name, email, confirmationCode) => {
-    console.log("Check");
+    //console.log("Check");
     transport.sendMail({
       from: process.env.CTA_EMAIL,
       to: email,
@@ -238,7 +238,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     if (req.body.password != req.body.passwordConfirm) {
-        return res.render('passwordreset/' + code, {
+        return res.redirect('passwordreset/' + code, {
             message1: 'Passwords do not match'
         });
     }
@@ -265,7 +265,7 @@ exports.resetPassword = async (req, res) => {
 
 //allows a user to track an internship from the internships page (add it to myapps page)
 exports.track =  (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
 
     const jid = req.body.job_id;
 
@@ -273,7 +273,7 @@ exports.track =  (req, res) => {
         if (error) {
             console.log(error);
         }
-            console.log(result);
+           // console.log(result);
 
 
             var string = JSON.stringify(result);
@@ -293,7 +293,7 @@ exports.track =  (req, res) => {
             }
 
             else {
-                console.log(results);
+                //console.log(results);
                 res.status(200).redirect("/internships");
             }
             });
@@ -316,7 +316,7 @@ exports.untrack = async (req, res) => {
             }
 
             else {
-                console.log(result);
+                //console.log(result);
                 res.status(200).redirect("/myapps");
             }
         });   
@@ -330,7 +330,7 @@ exports.update =  async (req, res) => {
 
     const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
     const jid = req.body.job_id;
-    console.log(jid);
+    //console.log(jid);
 
     var updateCodes = {
         1: "'Applied'",
@@ -345,7 +345,7 @@ exports.update =  async (req, res) => {
         10: "'Withdrew'",
         11:"'Rejected'"
     };
-    console.log(updateCodes[req.body.update_code]);
+    //console.log(updateCodes[req.body.update_code]);
 
     if (req.body.update_code == 1){
 
@@ -353,7 +353,7 @@ exports.update =  async (req, res) => {
                 if(error){
                     console.log(error);
                 }
-                console.log(result);
+                //console.log(result);
                 res.status(200).redirect("/myapps");
 
         });
@@ -364,7 +364,7 @@ exports.update =  async (req, res) => {
             if(error){
                 console.log(error);
             }
-            console.log(result);
+            //console.log(result);
             res.status(200).redirect("/myapps");
 
     });
