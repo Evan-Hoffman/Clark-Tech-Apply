@@ -78,6 +78,30 @@ exports.login = async (req, res) => {
     //console.log("connection closed");
 }
 
+exports.updateEmail = (req, res) => {
+
+    pool.query('UPDATE users SET email = ? WHERE email = ?', [req.body.newEmail, req.params.email], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            return res.redirect('/settings');
+        }
+    });
+}
+
+exports.updateName = (req, res) => {
+
+    pool.query('UPDATE users SET name = ? WHERE email = ?', [req.body.newName, req.params.email], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            return res.redirect('/settings');
+        }
+    });
+}
+
 exports.sendResetEmail = (req, res) => {
     pool.query('SELECT * FROM users WHERE email = ?',[req.body.email], (error, results) => {
         //console.log(results);
@@ -522,4 +546,32 @@ exports.logout = async (req, res) => {
     res.status(200).redirect('/');
     //db.end;
     //console.log("connection closed");
+}
+
+exports.deleteAccount = (req, res) => {
+    console.log(req.body.email);
+    console.log(req.params.id);
+
+    pool.query('DELETE FROM users WHERE email = ?', [req.body.email], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            pool.query('DROP TABLE ' + req.params.id + '_apps', (error, results) => {
+                if(error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+
+    res.cookie('jtoken', 'logout', {
+        expires: new Date(Date.now() + 2*1000),
+        httpOnly: true
+    });
+
+    res.status(200).redirect('/');
+
+
+  
 }

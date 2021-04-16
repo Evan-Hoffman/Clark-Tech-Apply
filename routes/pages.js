@@ -40,6 +40,17 @@ router.get('/tips', authController.isLoggedIn, (req, res) => {
     }
 });
 
+router.get('/settings', authController.isLoggedIn, (req, res) => {
+    if(req.user) {
+        res.render('settings', {
+            user: req.user
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
 //only go to Internships if logged in
 router.get('/internships', authController.isLoggedIn, authController.populateInternships, (req, res) => {
     //console.log(req.internships.length);

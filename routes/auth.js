@@ -15,6 +15,10 @@ router.post('/untrack', authController.untrack);
 
 router.post('/update', authController.update);
 
+router.post('/updateEmail/:email', authController.updateEmail);
+
+router.post('/updateName/:email', authController.updateName);
+
 router.post('/resetemail', authController.sendResetEmail);
 
 router.post('/populateMyApps', authController.populateMyApps);
@@ -24,6 +28,8 @@ router.post('/populateInternships', authController.populateInternships);
 router.get('/confirm/:confirmationCode', authController.verifyUser);
 
 router.post('/resetpassword/:code', authController.resetPassword);
+
+router.post('/deleteAccount/:id', authController.deleteAccount);
 
 
 module.exports = router;
