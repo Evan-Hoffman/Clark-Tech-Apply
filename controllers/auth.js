@@ -32,22 +32,24 @@ exports.login = async (req, res) => {
         const {email, password} = req.body;
 
         if(!email || !password){
+            console.log("Someone forgot to include their password or email at login")
             return res.status(400).render('login', {
                 message1: 'Please provide an email and a password'
             })
         }
 
         pool.query('SELECT * FROM users WHERE email = ?',[email], async (error, results) => {
-            //console.log(results);
             if (error) {
                 console.log(error);
             }
             if(results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
+                console.log("Someone's email or password is incorrect")
                 res.status(401).render('login', {
                     message1: 'Your email or password is incorrect'
                 })
             }
             else if (results[0].active == 0) {
+                console.log(email + " tried to login before confirming their account");
                 return res.status(401).render('login', {
                   message1: "Pending Account. Please Verify Your Email!"
                 });
@@ -65,7 +67,7 @@ exports.login = async (req, res) => {
                     ),
                     httpOnly: true
                 }
-                console.log(email + "has just logged in");
+                console.log(email + " has just logged in");
                 res.cookie('jtoken', token, cookieOptions);
                 res.status(200).redirect("/");
             }
@@ -75,8 +77,7 @@ exports.login = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-    //db.end;
-    //console.log("connection closed");
+
 }
 
 exports.updateEmail = (req, res) => {
@@ -107,11 +108,11 @@ exports.updateName = (req, res) => {
 
 exports.sendResetEmail = (req, res) => {
     pool.query('SELECT * FROM users WHERE email = ?',[req.body.email], (error, results) => {
-        //console.log(results);
         if (error) {
             console.log(error);
         }
         if(results.length == 0) {
+            console.log(req.body.email + " just tried to get a password email, but there email is not in our records");
             return res.render('login', {
                 message1: 'There is no user with that email in our records'
             });
@@ -127,7 +128,6 @@ exports.sendResetEmail = (req, res) => {
                     console.log(error);
                 }
             });
-            //console.log("Check");
             transport.sendMail({
                 from: process.env.CTA_EMAIL,
                 to: req.body.email,
@@ -140,6 +140,8 @@ exports.sendResetEmail = (req, res) => {
 
                     </div>`,
                 }).catch(err => console.log(err));
+            
+            console.log(req.body.email + " has just requested to reset their password");
             return res.render('login', {
                 message2: 'Reset Email Sent'
             });
@@ -161,6 +163,9 @@ exports.sendConfirmationEmail = (name, email, confirmationCode) => {
           <a href=https://clarktechapply.com/auth/confirm/${confirmationCode}> Click here </a>
           </div>`,
     }).catch(err => console.log(err));
+
+    console.log("Account confirmation email has been issued to: " + email);
+
 };
 
 //register a new user
@@ -170,6 +175,7 @@ exports.register = (req, res) => {
     const {name, email, password, passwordConfirm} = req.body;
 
     if (name == '' || email == '' || password == '' || passwordConfirm == ''){
+        console.log("Someone forgot a field when trying to register");
         return res.render('register', {
             message1: 'You are missing one or more fields'
         })
@@ -180,10 +186,12 @@ exports.register = (req, res) => {
             console.log(error);
         }
         if (results.length > 0){
+            console.log("Someone tried to register with an email already in use: " + email);
             return res.render('register', {
                 message1: 'That email is already in use'
             })
         }   else if (password != passwordConfirm) {
+                console.log("Someone's password and passwordConfirm did not match");
                 return res.render('register', {
                     message1: 'Passwords do not match'
                 });
@@ -191,7 +199,6 @@ exports.register = (req, res) => {
 
         let hashedPassword = await bcrypt.hash(password, 8);
         //console.log(hashedPassword);
-        //column: value (from above):
         const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         let token = '';
         for (let i = 0; i < 25; i++) {
@@ -202,7 +209,6 @@ exports.register = (req, res) => {
                 console.log(error);
             }
             else {
-                //console.log(results);
                 //create the user their own instance of an internship apps table
                 var table_name = results.insertId + '_apps';
                 pool.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), link VARCHAR (250), date_applied DATE, date_tracked DATETIME DEFAULT CURRENT_TIMESTAMP, app_status VARCHAR (50), has_status INT)', (error, results) => {
@@ -213,6 +219,7 @@ exports.register = (req, res) => {
                         console.log(results);
                     }
                 })
+                console.log(email + " has just registered an account (pre confirmation");
                 exports.sendConfirmationEmail(
                     name,
                     email,
@@ -225,9 +232,6 @@ exports.register = (req, res) => {
             }
         });
         });
-        //db.end;
-        //console.log("connection closed");
-
 }
 
 exports.verifyUser = (req, res) => {
@@ -243,8 +247,7 @@ exports.verifyUser = (req, res) => {
             }
         });
     });
-    
-    //return res.status(200).redirect("/login");
+    console.log("Someone just verified their account");
     return res.render('login', {
         message2: 'Account Verified. Please Login'
     });
@@ -253,18 +256,21 @@ exports.verifyUser = (req, res) => {
 exports.resetPassword = async (req, res) => {
     let code = req.params.code;
     if (code == 0){
+        console.log("Someone attempted to reset their password with a confirmation code of 0");
         return res.render('passwordreset', {
             message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
         })
     }
 
     if (req.body.password == '' || req.body.passwordConfirm == ''){
+        console.log("Someone left a field empty on password reset form");
         return res.render('passwordreset', {
             message1: 'You are missing one or more fields'
         })
     }
 
     if (req.body.password != req.body.passwordConfirm) {
+        console.log("Someone failed password match on password reset form");
         return res.render('passwordreset', {
             message1: 'Passwords do not match'
         });
@@ -284,7 +290,7 @@ exports.resetPassword = async (req, res) => {
         });
     });
     
-    //return res.status(200).redirect("/login");
+    console.log("Someone succesfully reset their password");
     return res.render('login', {
         message2: 'Password Reset, Please Login'
     });
@@ -292,24 +298,18 @@ exports.resetPassword = async (req, res) => {
 
 //allows a user to track an internship from the internships page (add it to myapps page)
 exports.track =  (req, res) => {
-    //console.log(req.body);
-
     const jid = req.body.job_id;
 
     pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
         if (error) {
             console.log(error);
         }
-           // console.log(result);
-
 
             var string = JSON.stringify(result);
-            //console.log('>> string: ', string );
             var data =  JSON.parse(string);
             //console.log('>> json: ', data); 
         const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
         //console.log(decoded.id);
-        //console.log(data[0].company_name);
 
         pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
             if(error){
@@ -320,18 +320,15 @@ exports.track =  (req, res) => {
             }
 
             else {
-                //console.log(results);
+                console.log("User: " + decoded.id + " has just tracked job# " + jid);
                 res.status(200).redirect("/internships");
             }
             });
     });
-    //db.end;
-    //console.log("connection closed");
 }
 
 //allows a user to untrack an app from the myapps page
 exports.untrack = async (req, res) => {
-    //console.log(req.body);
     
         const jid = req.body.job_id;
         const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
@@ -343,21 +340,17 @@ exports.untrack = async (req, res) => {
             }
 
             else {
-                //console.log(result);
+                console.log("User: " + decoded.id + " has just untracked job# " + jid);
                 res.status(200).redirect("/myapps");
             }
         });   
-        //db.end;
-        //console.log("connection closed");
 }
 
 //method to update app status in MyApps
 exports.update =  async (req, res) => {
-    //console.log(req);
 
     const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
     const jid = req.body.job_id;
-    //console.log(jid);
 
     var updateCodes = {
         1: "'Applied'",
@@ -372,7 +365,6 @@ exports.update =  async (req, res) => {
         10: "'Withdrew'",
         11:"'Rejected'"
     };
-    //console.log(updateCodes[req.body.update_code]);
 
     if (req.body.update_code == 1){
 
@@ -380,7 +372,7 @@ exports.update =  async (req, res) => {
                 if(error){
                     console.log(error);
                 }
-                //console.log(result);
+                console.log("User: " + decoded.id + " has just applied to job#: " + jid);
                 res.status(200).redirect("/myapps");
 
         });
@@ -391,13 +383,11 @@ exports.update =  async (req, res) => {
             if(error){
                 console.log(error);
             }
-            //console.log(result);
+            console.log("User: " + decoded.id + " has just updated their status on job#: " + jid + " to: " + updateCodes[req.body.update_code]);
             res.status(200).redirect("/myapps");
 
     });
     }
-    //db.end;
-    //console.log("connection closed");
 }
 
 //function checks if you are logged in and a user, for purposes of hiding pages for users not logged in
@@ -430,8 +420,6 @@ exports.isLoggedIn = async (req, res, next) => {
     else {
         next();
     }
-   // db.end;
-    //console.log("connection closed");
 }
 
 //populate the internships page from the database
@@ -447,7 +435,6 @@ exports.populateInternships = async (req, res, next) => {
                 return next();
             }
             var string = JSON.stringify(result);
-            //console.log('>> string: ', string );
             var json =  JSON.parse(string);
             //console.log('>> json: ', json);
             
@@ -461,6 +448,7 @@ exports.populateInternships = async (req, res, next) => {
             console.log(error);
             return next();
         }
+        console.log(req.user.email + " has just loaded up the internships page");
     }
     else {
         return next();
@@ -469,39 +457,29 @@ exports.populateInternships = async (req, res, next) => {
 
 function populateInternshipsHelper(req, json, _callback){
     pool.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results, fields) => {
-        //console.log("got here");
         if (error) {
             console.log(error);
         }
         if(!results){
-            //console.log("this");
             return next();
         }
 
-        //console.log(results);
         var string_tracked = JSON.stringify(results);
         var json_tracked =  JSON.parse(string_tracked);
-        //console.log(json_tracked);
-        //console.log(json);
-        //console.log("check1");
+
         var ct = 0;
         for(var i = 0; i < json.length; i++) {
-            //console.log("check2");
             //Parse time of day:
             json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
             if (ct < json_tracked.length && json[i]["job_id"] == json_tracked[ct]["job_id"]){
                 json[i]["is_tracked"] = 1;
                 ct++;
-                //console.log("edit a")
             }
             else {
                 json[i]["is_tracked"] = 0;
-                //console.log("edit b")
             }
-            //console.log("check3");
-            //console.log(json);
         }
-            //console.log("check4");
+            
         _callback();
             //return json;
         });
@@ -512,7 +490,6 @@ function populateInternshipsHelper(req, json, _callback){
 exports.populateMyApps = async (req, res, next) => {
     try {
         pool.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY date_tracked DESC', (error, result, fields) => {
-        //console.log(result);
         if (error) {
             console.log(error);
         }
@@ -530,14 +507,13 @@ exports.populateMyApps = async (req, res, next) => {
         }
         //console.log('>> json: ', json);
         req.myapps = json; 
+        console.log(req.user.email + " has just loaded up MyApps");
         return next();
     });
     } catch (error) {
         console.log(error);
         return next();
     }
-   // db.end;
-    //console.log("connection closed");
 }
 
 //allows the user to logout
@@ -546,9 +522,8 @@ exports.logout = async (req, res) => {
         expires: new Date(Date.now() + 2*1000),
         httpOnly: true
     });
+    console.log("Someone has just logged out");
     res.status(200).redirect('/');
-    //db.end;
-    //console.log("connection closed");
 }
 
 exports.deleteAccount = (req, res) => {
@@ -571,8 +546,7 @@ exports.deleteAccount = (req, res) => {
         httpOnly: true
     });
 
+    console.log(req.body.email + " has just deleted their account");
+
     res.status(200).redirect('/');
-
-
-  
 }
