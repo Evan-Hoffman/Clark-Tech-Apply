@@ -402,9 +402,12 @@ exports.isLoggedIn = async (req, res, next) => {
             //check if the user still exists:
             pool.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
            // console.log(result);
+           
            if (error) {
-                console.log(error);
+               
+               console.log(error);
             }
+            
             if(!result){
                 return next();
             }
@@ -413,7 +416,7 @@ exports.isLoggedIn = async (req, res, next) => {
             return next();
         });
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             return next();
         }
     }
