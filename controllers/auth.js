@@ -65,6 +65,7 @@ exports.login = async (req, res) => {
                     ),
                     httpOnly: true
                 }
+                console.log(email + "has just logged in");
                 res.cookie('jtoken', token, cookieOptions);
                 res.status(200).redirect("/");
             }
@@ -85,6 +86,7 @@ exports.updateEmail = (req, res) => {
             console.log(error);
         }
         else {
+            console.log(req.params.email + " has succesfully updated their email to " + req.body.newEmail);
             return res.redirect('/settings');
         }
     });
@@ -97,6 +99,7 @@ exports.updateName = (req, res) => {
             console.log(error);
         }
         else {
+            console.log(req.params.email + " has succesfully updated their name to " + req.body.newName);
             return res.redirect('/settings');
         }
     });
@@ -549,8 +552,6 @@ exports.logout = async (req, res) => {
 }
 
 exports.deleteAccount = (req, res) => {
-    console.log(req.body.email);
-    console.log(req.params.id);
 
     pool.query('DELETE FROM users WHERE email = ?', [req.body.email], (error, results) => {
         if(error) {
