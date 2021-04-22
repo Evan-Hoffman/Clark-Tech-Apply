@@ -15,7 +15,9 @@
     <nav id="a">
         <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
         <ul>
-           
+                {{#if user.is_privileged}}
+                    <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+                {{/if}}
                 <li><a href="/">Home</a></li>
                 <li><a href="/tips">Tips</a></li>
                 <li><a href="/myapps">MyApps</a></li>
@@ -25,7 +27,6 @@
                     <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/profile" class="dropdown-item" style="color: #000000"> Profile</a></li>
                         <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
                         <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
                     </ul>

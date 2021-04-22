@@ -14,8 +14,10 @@
     <nav id="a">
         <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
         <ul>
-            <li><a href="/">Home</a></li>
-            {{#if user}}
+                {{#if user.is_privileged}}
+                    <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+                {{/if}}
+                <li><a href="/">Home</a></li>
                 <li><a href="/tips">Tips</a></li>
                 <li><a href="/myapps">MyApps</a></li>
                 <li><a href="/internships">Internships</a></li>
@@ -24,17 +26,10 @@
                     <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/profile" class="dropdown-item" style="color: #000000"> Profile</a></li>
                         <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
                         <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
                     </ul>
                 </li>
-
-            {{else}}
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
-            {{/if}}
-           
         </ul>
     </nav>
 
@@ -47,7 +42,7 @@
                 <form action="/auth/updateEmail/{{user.email}}" method = "POST">
                   <div class="form-group">
                     <label for="email" >Email Address</label>
-                    <input type="email" class="form-control" placeholder={{user.email}} id="email" name="newEmail">
+                    <input type="email" class="form-control" placeholder={{user.email}} id="email" name="newEmail" required>
                   </div>
                   <button type="submit" class="btn btn-primary">Update Email</button>
                 </form>
@@ -61,7 +56,7 @@
                 <form action="/auth/updateName/{{user.email}}" method = "POST">
                   <div class="form-group">
                     <label for="name" >Name</label>
-                    <input type="name" class="form-control" placeholder={{user.name}} id="name" name="newName">
+                    <input type="name" class="form-control" placeholder={{user.name}} id="name" name="newName" required>
                   </div>
                   <button type="submit" class="btn btn-primary">Update Name</button>
                 </form>

@@ -93,4 +93,22 @@ router.get('/passwordreset/:confirmationCode', (req, res) => {
     }
 });
 
+//Approvals Page for Privileged Users to approve suggested internship additions
+router.get('/approvals', authController.isLoggedIn, authController.populateApprovals, (req, res) => {
+if(req.user){
+    if(req.user.is_privileged) {
+        res.render('approvals', {
+            user: req.user,
+            suggestions: req.suggestions
+        });
+    }
+    else {
+        res.redirect('/');
+    }
+}
+else {
+    res.redirect('/');
+}
+});
+
 module.exports = router;

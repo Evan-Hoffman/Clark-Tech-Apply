@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const {promisify} = require('util');
 var fs = require('fs');
+const e = require("express");
+const { waitForDebugger } = require("inspector");
 
 
 var db_config = {
@@ -81,6 +83,8 @@ exports.login = async (req, res) => {
 }
 
 exports.updateEmail = (req, res) => {
+    console.log("New Email: " + req.body.newEmail);
+    console.log("Old Email: " + req.params.email);
 
     pool.query('UPDATE users SET email = ? WHERE email = ?', [req.body.newEmail, req.params.email], (error, results) => {
         if(error) {
@@ -429,7 +433,7 @@ exports.isLoggedIn = async (req, res, next) => {
 exports.populateInternships = async (req, res, next) => {
     if (req.user){
         try {
-            pool.query('SELECT * FROM internships ORDER BY date_added', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -442,7 +446,7 @@ exports.populateInternships = async (req, res, next) => {
             //console.log('>> json: ', json);
             
             populateInternshipsHelper(req, json, function() {
-                //console.log(json);
+               // console.log(json);
                 req.internships = json; 
                 return next();
             });
@@ -459,6 +463,8 @@ exports.populateInternships = async (req, res, next) => {
 }
 
 function populateInternshipsHelper(req, json, _callback){
+    //console.log('>> json: ', json);
+
     pool.query('SELECT job_id FROM ' + req.user.id + '_apps ORDER BY job_id', (error, results, fields) => {
         if (error) {
             console.log(error);
@@ -469,19 +475,30 @@ function populateInternshipsHelper(req, json, _callback){
 
         var string_tracked = JSON.stringify(results);
         var json_tracked =  JSON.parse(string_tracked);
+        //console.log('>> json_tracked: ', json_tracked);
 
-        var ct = 0;
-        for(var i = 0; i < json.length; i++) {
-            //Parse time of day:
+        for (var i = 0; i < json.length; i++){
             json[i]["date_added"] = json[i]["date_added"].substring(0, 10);
-            if (ct < json_tracked.length && json[i]["job_id"] == json_tracked[ct]["job_id"]){
-                json[i]["is_tracked"] = 1;
-                ct++;
+        }
+
+        var jsonPtr = 0;
+        var trackedPtr = 0;
+
+        while (jsonPtr < json.length && trackedPtr < json_tracked.length){
+            if (json[jsonPtr]["job_id"] > json_tracked[trackedPtr]["job_id"]){
+                trackedPtr++;
+            }
+            else if (json[jsonPtr]["job_id"] == json_tracked[trackedPtr]["job_id"]){
+                json[jsonPtr]["is_tracked"] = 1;
+                jsonPtr++;
+                trackedPtr++;
             }
             else {
-                json[i]["is_tracked"] = 0;
+                json[jsonPtr]["is_tracked"] = 0;
+                jsonPtr++;
             }
         }
+
             
         _callback();
             //return json;
@@ -553,3 +570,185 @@ exports.deleteAccount = (req, res) => {
 
     res.status(200).redirect('/');
 }
+
+//adds a suggestion to suggestions table once user has submitted it
+exports.suggest =  (req, res) => {
+    console.log(req.body);
+
+    let {suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only} = req.body;
+
+
+    if (swe_tag.length >1){
+        swe_tag = '1';
+    }
+    if (dsci_tag.length >1){
+        dsci_tag = '1';
+    }
+    if (it_tag.length >1){
+        it_tag = '1';
+    }
+    if (consulting_tag.length >1){
+        consulting_tag = '1';
+    }
+    if (cyber_tag.length >1){
+        cyber_tag = '1';
+    }
+    if (product_tag.length >1){
+        product_tag = '1';
+    }
+    if (juniors_only.length >1){
+        juniors_only = '1';
+    }
+    
+    pool.query('INSERT INTO suggestions SET ?', {suggested_by: suggested_by, company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
+         dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
+        international_allowed: international_allowed}, (error, results) => {
+        if(error) {
+            console.log(error);
+            return;
+        }
+        else {
+            return res.redirect('/internships');
+        }
+
+    });
+}
+
+//populate the internships page from the database
+exports.populateApprovals = async (req, res, next) => {
+    if (req.user){
+        try {
+            pool.query('SELECT * FROM suggestions ORDER BY date_suggested', async (error, result, fields) => {
+            //console.log(result);
+            if (error) {
+                console.log(error);
+            }
+            if(!result){
+                return next();
+            }
+            var string = JSON.stringify(result);
+            var json =  JSON.parse(string);
+            //console.log('>> json: ', json);
+            for(var i = 0; i < json.length; i++) {
+                //Parse time of day:
+                json[i]["date_suggested"] = json[i]["date_suggested"].substring(0, 10);
+            }
+            req.suggestions = json; 
+            return next();
+           
+        });
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+        console.log(req.user.email + " has just loaded up the approvals page");
+    }
+    else {
+        return next();
+    }
+}
+
+//adds a suggestion to internships table once privileged user has approved it
+exports.approve =  (req, res) => {
+    console.log(req.body);
+
+    let {suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only} = req.body;
+    
+    //console.log(juniors_only);
+    //console.log(it_tag);
+    //console.log(swe_tag);
+
+    if (swe_tag.length >1){
+        swe_tag = '1';
+    }
+    if (dsci_tag.length >1){
+        dsci_tag = '1';
+    }
+
+    if (it_tag.length >1){
+        it_tag = '1';
+    }
+    if (consulting_tag.length >1){
+        consulting_tag = '1';
+    }
+    if (cyber_tag.length >1){
+        cyber_tag = '1';
+    }
+    if (product_tag.length >1){
+        product_tag = '1';
+    }
+    if (juniors_only.length >1){
+        juniors_only = '1';
+    }
+    
+    pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
+         dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
+        international_allowed: international_allowed }, (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            //create the user their own instance of an internship apps table
+            pool.query('SELECT karma FROM users WHERE id = ?', [suggested_by], async (error, result) => {
+                if(error) {
+                    console.log(error);
+                }
+                else if (result.length < 1){
+                    console.log('User does not exist, no Karma awarded');
+
+                    pool.query('DELETE FROM suggestions WHERE suggestion_id = ?', [suggestion_id], (error, result) => {
+                        if(error) {
+                            console.log(error);
+                        }
+                        else {
+                            console.log('An internship suggestion at ' + company_name + ' has been approved by a privileged user');
+                            return res.redirect('/approvals');
+                        }
+                    });
+                }
+                else {
+                    var newKarma = result[0].karma + 1;
+
+                    pool.query('UPDATE users SET karma = ? WHERE id = ?', [newKarma, suggested_by], (error, results) => {
+                        if(error) {
+                            console.log(error);
+                        }
+                        else {
+                            console.log(suggestion_id);
+                            pool.query('DELETE FROM suggestions WHERE suggestion_id = ?', [suggestion_id], (error, result) => {
+                                if(error) {
+                                    console.log(error);
+                                }
+                                else {
+                                    console.log('An internship suggestion at ' + company_name + ' has been approved by a privileged user');
+                                    return res.redirect('/approvals');
+                                }
+                            });
+                           
+                            
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+
+}
+
+//a rejection of a suggestion ordered by the admin
+exports.reject =  (req, res) => {
+    console.log(req.body.suggestion_id);
+
+    pool.query('DELETE FROM suggestions WHERE suggestion_id = ?', [req.body.suggestion_id], (error, result) => {
+        if(error) {
+            console.log(error);
+       }
+        else {
+            return res.redirect('/approvals');
+            }
+        });
+}
+

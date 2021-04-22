@@ -14,6 +14,9 @@
     <nav id="a">
         <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
         <ul>
+            {{#if user.is_privileged}}
+                <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+            {{/if}}
             <li><a href="/">Home</a></li>
             <li><a href="/tips">Tips</a></li>
             <li><a href="/myapps">MyApps</a></li>

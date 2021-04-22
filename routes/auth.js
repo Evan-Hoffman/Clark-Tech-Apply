@@ -31,5 +31,14 @@ router.post('/resetpassword/:code', authController.resetPassword);
 
 router.post('/deleteAccount/:id', authController.deleteAccount);
 
+router.post('/suggest', authController.suggest);
+
+router.post('/approve', authController.approve);
+
+router.post('/reject', authController.reject);
+
+
+
+
 
 module.exports = router;
