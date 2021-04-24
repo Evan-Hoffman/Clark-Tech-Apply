@@ -11,6 +11,8 @@ router.get('/logout', authController.logout);
 
 router.post('/track', authController.track);
 
+router.post('/ug_track', authController.ug_track);
+
 router.post('/untrack', authController.untrack);
 
 router.post('/update', authController.update);
@@ -24,6 +26,8 @@ router.post('/resetemail', authController.sendResetEmail);
 router.post('/populateMyApps', authController.populateMyApps);
 
 router.post('/populateInternships', authController.populateInternships);
+
+router.post('/populateUnderrepresented', authController.populateUnderrepresented);
 
 router.get('/confirm/:confirmationCode', authController.verifyUser);
 

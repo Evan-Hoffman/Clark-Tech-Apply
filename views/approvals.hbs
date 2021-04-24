@@ -29,7 +29,15 @@
             <li><a id="b" href="/">Home</a></li>
             <li><a href="/tips">Tips</a></li>
             <li><a href="/myapps">MyApps</a></li>
-            <li><a href="/internships">Internships</a></li>
+            <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      Internships
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
+                        <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
+                    </ul>
+            </li>
             <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
@@ -59,6 +67,8 @@
        <th class="th-sm">'23 Only?
       </th>
       <th class="th-sm">Int'l Students?
+      </th>
+      <th class="th-sm">UG?
       </th>
       <th class="th-sm">Position
       </th>
@@ -103,6 +113,11 @@
         {{/if}}
 
         <td>{{international_allowed}}</td>
+        {{#if is_ug}}
+         <td>Yes</td> 
+        {{else}} 
+          <td>No</td>
+        {{/if}}
         <td>{{internship_title}}</td>
         <td>{{date_suggested}}</td>
         <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Link</a></td>
@@ -209,7 +224,22 @@
                             {{/if}}
                             <label for="juniors_only">'23 Only?</label>
                           </div>
-
+                          
+                          <div class="form-check">
+                            <input type="hidden" name="is_ug" value="0">
+                            {{#if is_ug}}
+                              <input type="checkbox" checked="checked" value="1" name="is_ug" id="is_ug">
+                            {{else}}
+                              <input type="checkbox" value="1" name="is_ug" id="is_ug">
+                            {{/if}}
+                            <label for="is_ug">UG?</label>
+                          </div>
+                           
+                            <div class="form-group">
+                            <label for="eligibility">Eligibile Groups:</label>
+                            <input type="text" placeholder="null" value="" class="form-control" id="eligibility" name="eligibility">
+                          </div>
+                          </div>
                           <button type="submit" class="btn btn-primary">Approve</button>
                         </form>
 
@@ -236,6 +266,8 @@
        <th class="th-sm">'23 Only?
       </th>
       <th class="th-sm">Int'l Students?
+      </th>
+      <th class="th-sm">UG?
       </th>
       <th class="th-sm">Position
       </th>

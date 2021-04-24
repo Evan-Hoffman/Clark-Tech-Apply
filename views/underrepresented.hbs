@@ -12,12 +12,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script> 
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script> 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     
 
 
-    <title>Internships -clarkTech Apply</title>
+    <title>Tech Internships for Underrepresented Groups -clarkTech Apply</title>
 </head>
 <body>
     <nav id="a">
@@ -59,6 +59,14 @@
                   Suggest
               </a>
             <p></p>
+            <div class="car text-center">
+              <t>Many Companies have special internship programs only for students from traditionally underrepresented 
+                backgrounds, like Google STEP, Microsoft Explore, PWC Start. Of course we will only post ones here 
+                where you will work in a tech capacity --the work is the same as other internship programs, these just have 
+                more narrow application criteria so if you qualify you will be competing against a smaller field of applicants. Definitely give these a shot (as well as the ones on the General Listings page, they are not mutually-exclusive)
+                
+              </t>
+            </div>
             <div class="car text-center">
                 <div class="card-header">
                     Browse Internships
@@ -133,12 +141,12 @@
                             <label for="juniors_only">'23 Only? (will be juniors)</label>
                           </div>
 
-                          
                           <div class="form-check">
                             <label for="is_ug">Is this program specifically for an underrepresented group (Google STEP, PWC START, etc)?</label>
                             <input type="hidden" name="is_ug" value="0">
                             <input type="checkbox" value="1" name="is_ug" id="is_ug">
                           </div>
+
 
                           <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -153,13 +161,9 @@
     <tr>
       <th class="th-sm">Company
       </th>
-        <th class="th-sm">Tags
-      </th>
-       <th class="th-sm">'23 Only?
-      </th>
-      <th class="th-sm">Int'l Students?
-      </th>
       <th class="th-sm">Position
+      </th>
+      <th class="th-sm">Eligibility
       </th>
       <th class="th-sm">Date Added
       </th>
@@ -173,45 +177,18 @@
     {{#each jobs}}
       <tr>
         <td>{{company_name}}</td>
-        <td>
-           {{#if dsci_tag}}
-              <span class="badge badge-pill badge-primary">DSCI</span>            
-              {{/if}}
-          {{#if swe_tag}}
-              <span class="badge badge-pill badge-success">SWE</span>            
-            {{/if}}
-          {{#if it_tag}}
-              <span class="badge badge-pill badge-dark">IT</span>            
-            {{/if}}
-          {{#if consulting_tag}}
-              <span class="badge badge-pill badge-secondary">TECH-CONSULTING</span>            
-          {{/if}}
-          {{#if cyber_tag}}
-              <span class="badge badge-pill badge-danger">CYBER</span>            
-          {{/if}}
-          {{#if product_tag}}
-              <span class="badge badge-pill badge-warning">PM</span>            
-          {{/if}}
-        </td>
-        {{#if juniors_only}}
-         <td>'23 Only</td> 
-        {{else}} 
-          <td>Any</td>
-        {{/if}}
-
-
-        <td>{{international_allowed}}</td>
         <td>{{internship_title}}</td>
+        <td>{{eligibility}}</td>
         <td>{{date_added}}</td>
         <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
-        <td>  <form action="/auth/track" method="POST">
+        <td>  <form action="/auth/ug_track" method="POST">
               {{#if is_tracked}}
 
                 <button class="btn btn-info" disabled>+</button>
              
               {{else}}
                 <button name="job_id" class="btn btn-success" value={{job_id}}>+</button>
-                {{/if}}
+              {{/if}}
               </form>
         </td>
       </tr>
@@ -222,28 +199,24 @@
 
   <tfoot>
     <tr>
-      <th>Company
+      <th class="th-sm">Company
       </th>
-      <th>Tags
+      <th class="th-sm">Position
       </th>
-      <th>'23 Only?
+      <th class="th-sm">Eligibility
       </th>
-      <th>Int'l Students?
+      <th class="th-sm">Date Added
       </th>
-      <th>Position
+      <th class="th-sm">Apply
       </th>
-      <th>Date Added
-      </th>
-      <th>Apply
-      </th>
-      <th>Track
+      <th class="th-sm">Track
       </th>
     </tr>
   </tfoot>
   <script>
   $(document).ready(function() {
     $('#internshipTable').DataTable({
-      "order": [[5, "desc"]]
+      "order": [[4, "desc"]]
     });
 } );
 </script>

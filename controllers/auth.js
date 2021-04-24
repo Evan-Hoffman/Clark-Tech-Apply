@@ -27,6 +27,119 @@ const transport = nodemailer.createTransport({
 //setup Database connection:
 let pool = mysql.createPool(db_config);
 
+/**********************************************************Login/Logout/Registration Methods*******************************************************************/
+
+//allows the user to logout
+exports.logout = async (req, res) => {
+    res.cookie('jtoken', 'logout', {
+        expires: new Date(Date.now() + 2*1000),
+        httpOnly: true
+    });
+    console.log("Someone has just logged out");
+    res.status(200).redirect('/');
+}
+
+exports.sendConfirmationEmail = (name, email, confirmationCode) => {
+    //console.log("Check");
+    transport.sendMail({
+      from: process.env.CTA_EMAIL,
+      to: email,
+      subject: "Please confirm your account",
+      html: `<h1>Email Confirmation</h1>
+          <h2>Hello ${name}</h2>
+          <p>Thank you for registering for Clark TechApply. Please confirm your email by clicking on the following link</p>
+          <a href=https://clarktechapply.com/auth/confirm/${confirmationCode}> Click here </a>
+          </div>`,
+    }).catch(err => console.log(err));
+
+    console.log("Account confirmation email has been issued to: " + email);
+
+};
+
+//register a new user
+exports.register = (req, res) => {
+    //console.log(req.body);
+
+    const {name, email, password, passwordConfirm} = req.body;
+
+    if (name == '' || email == '' || password == '' || passwordConfirm == ''){
+        console.log("Someone forgot a field when trying to register");
+        return res.render('register', {
+            message1: 'You are missing one or more fields'
+        })
+    }
+
+    pool.query('SELECT email FROM users WHERE email = ?', [email], async (error, results)=>{
+        if (error) {
+            console.log(error);
+        }
+        if (results.length > 0){
+            console.log("Someone tried to register with an email already in use: " + email);
+            return res.render('register', {
+                message1: 'That email is already in use'
+            })
+        }   else if (password != passwordConfirm) {
+                console.log("Someone's password and passwordConfirm did not match");
+                return res.render('register', {
+                    message1: 'Passwords do not match'
+                });
+            }
+
+        let hashedPassword = await bcrypt.hash(password, 8);
+        //console.log(hashedPassword);
+        const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let token = '';
+        for (let i = 0; i < 25; i++) {
+            token += characters[Math.floor(Math.random() * characters.length )];
+        }
+        pool.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword, confirmation_code: token}, (error, results) => {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                //create the user their own instance of an internship apps table
+                var table_name = results.insertId + '_apps';
+                pool.query('CREATE TABLE ' + table_name + ' (job_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), link VARCHAR (250), date_applied DATE, date_tracked DATETIME DEFAULT CURRENT_TIMESTAMP, app_status VARCHAR (50), has_status INT)', (error, results) => {
+                    if(error){
+                        console.log(error);
+                    }
+                    else {
+                        console.log(results);
+                    }
+                })
+                console.log(email + " has just registered an account (pre confirmation");
+                exports.sendConfirmationEmail(
+                    name,
+                    email,
+                    token
+                );
+                return res.render('register', {
+                    message2: 'User Registered Succesfully! Please check your email'
+                });
+                
+            }
+        });
+        });
+}
+
+exports.verifyUser = (req, res) => {
+    let ccode = req.params.confirmationCode;
+    pool.query('UPDATE users SET active = 1 WHERE confirmation_code = ?', [ccode], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+
+        pool.query('UPDATE users SET confirmation_code = 0 WHERE confirmation_code = ?', [ccode], (error, results) => {
+            if(error) {
+                console.log(error);
+            }
+        });
+    });
+    console.log("Someone just verified their account");
+    return res.render('login', {
+        message2: 'Account Verified. Please Login'
+    });
+}
 
 //login a user
 exports.login = async (req, res) => {
@@ -81,6 +194,112 @@ exports.login = async (req, res) => {
     }
 
 }
+
+//function checks if you are logged in and a user, for purposes of hiding pages for users not logged in
+exports.isLoggedIn = async (req, res, next) => {
+    //console.log(req.cookies);
+    if (req.cookies.jtoken) {
+        try {
+            //verify the token:
+            const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+            //console.log(decoded);
+
+            //check if the user still exists:
+            pool.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
+           // console.log(result);
+           
+           if (error) {
+               
+               console.log(error);
+            }
+            
+            if(!result){
+                return next();
+            }
+
+            req.user = result[0];
+            return next();
+        });
+        } catch (error) {
+            //console.log(error);
+            return next();
+        }
+    }
+    else {
+        next();
+    }
+}
+
+/**********************************************************Account/Settings Methods*******************************************************************/
+
+exports.deleteAccount = (req, res) => {
+
+    pool.query('DELETE FROM users WHERE email = ?', [req.body.email], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            pool.query('DROP TABLE ' + req.params.id + '_apps', (error, results) => {
+                if(error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+
+    res.cookie('jtoken', 'logout', {
+        expires: new Date(Date.now() + 2*1000),
+        httpOnly: true
+    });
+
+    console.log(req.body.email + " has just deleted their account");
+
+    res.status(200).redirect('/');
+}
+
+exports.resetPassword = async (req, res) => {
+    let code = req.params.code;
+    if (code == 0){
+        console.log("Someone attempted to reset their password with a confirmation code of 0");
+        return res.render('passwordreset', {
+            message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
+        })
+    }
+
+    if (req.body.password == '' || req.body.passwordConfirm == ''){
+        console.log("Someone left a field empty on password reset form");
+        return res.render('passwordreset', {
+            message1: 'You are missing one or more fields'
+        })
+    }
+
+    if (req.body.password != req.body.passwordConfirm) {
+        console.log("Someone failed password match on password reset form");
+        return res.render('passwordreset', {
+            message1: 'Passwords do not match'
+        });
+    }
+
+    let hashedPassword = await bcrypt.hash(req.body.password, 8);
+
+    pool.query('UPDATE users SET password = ? WHERE confirmation_code = ?', [hashedPassword, code], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+
+        pool.query('UPDATE users SET confirmation_code = 0 WHERE confirmation_code = ?', [code], (error, results) => {
+            if(error) {
+                console.log(error);
+            }
+        });
+    });
+    
+    console.log("Someone succesfully reset their password");
+    return res.render('login', {
+        message2: 'Password Reset, Please Login'
+    });
+}
+
 
 exports.updateEmail = (req, res) => {
     console.log("New Email: " + req.body.newEmail);
@@ -154,286 +373,13 @@ exports.sendResetEmail = (req, res) => {
         
     });
 }
-
-exports.sendConfirmationEmail = (name, email, confirmationCode) => {
-    //console.log("Check");
-    transport.sendMail({
-      from: process.env.CTA_EMAIL,
-      to: email,
-      subject: "Please confirm your account",
-      html: `<h1>Email Confirmation</h1>
-          <h2>Hello ${name}</h2>
-          <p>Thank you for registering for Clark TechApply. Please confirm your email by clicking on the following link</p>
-          <a href=https://clarktechapply.com/auth/confirm/${confirmationCode}> Click here </a>
-          </div>`,
-    }).catch(err => console.log(err));
-
-    console.log("Account confirmation email has been issued to: " + email);
-
-};
-
-//register a new user
-exports.register = (req, res) => {
-    //console.log(req.body);
-
-    const {name, email, password, passwordConfirm} = req.body;
-
-    if (name == '' || email == '' || password == '' || passwordConfirm == ''){
-        console.log("Someone forgot a field when trying to register");
-        return res.render('register', {
-            message1: 'You are missing one or more fields'
-        })
-    }
-
-    pool.query('SELECT email FROM users WHERE email = ?', [email], async (error, results)=>{
-        if (error) {
-            console.log(error);
-        }
-        if (results.length > 0){
-            console.log("Someone tried to register with an email already in use: " + email);
-            return res.render('register', {
-                message1: 'That email is already in use'
-            })
-        }   else if (password != passwordConfirm) {
-                console.log("Someone's password and passwordConfirm did not match");
-                return res.render('register', {
-                    message1: 'Passwords do not match'
-                });
-            }
-
-        let hashedPassword = await bcrypt.hash(password, 8);
-        //console.log(hashedPassword);
-        const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        let token = '';
-        for (let i = 0; i < 25; i++) {
-            token += characters[Math.floor(Math.random() * characters.length )];
-        }
-        pool.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword, confirmation_code: token}, (error, results) => {
-            if(error) {
-                console.log(error);
-            }
-            else {
-                //create the user their own instance of an internship apps table
-                var table_name = results.insertId + '_apps';
-                pool.query('CREATE TABLE ' + table_name + ' (job_id INT PRIMARY KEY AUTO_INCREMENT, company_name VARCHAR (250), internship_title VARCHAR (250), link VARCHAR (250), date_applied DATE, date_tracked DATETIME DEFAULT CURRENT_TIMESTAMP, app_status VARCHAR (50), has_status INT)', (error, results) => {
-                    if(error){
-                        console.log(error);
-                    }
-                    else {
-                        console.log(results);
-                    }
-                })
-                console.log(email + " has just registered an account (pre confirmation");
-                exports.sendConfirmationEmail(
-                    name,
-                    email,
-                    token
-                );
-                return res.render('register', {
-                    message2: 'User Registered Succesfully! Please check your email'
-                });
-                
-            }
-        });
-        });
-}
-
-exports.verifyUser = (req, res) => {
-    let ccode = req.params.confirmationCode;
-    pool.query('UPDATE users SET active = 1 WHERE confirmation_code = ?', [ccode], (error, results) => {
-        if(error) {
-            console.log(error);
-        }
-
-        pool.query('UPDATE users SET confirmation_code = 0 WHERE confirmation_code = ?', [ccode], (error, results) => {
-            if(error) {
-                console.log(error);
-            }
-        });
-    });
-    console.log("Someone just verified their account");
-    return res.render('login', {
-        message2: 'Account Verified. Please Login'
-    });
-}
-
-exports.resetPassword = async (req, res) => {
-    let code = req.params.code;
-    if (code == 0){
-        console.log("Someone attempted to reset their password with a confirmation code of 0");
-        return res.render('passwordreset', {
-            message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
-        })
-    }
-
-    if (req.body.password == '' || req.body.passwordConfirm == ''){
-        console.log("Someone left a field empty on password reset form");
-        return res.render('passwordreset', {
-            message1: 'You are missing one or more fields'
-        })
-    }
-
-    if (req.body.password != req.body.passwordConfirm) {
-        console.log("Someone failed password match on password reset form");
-        return res.render('passwordreset', {
-            message1: 'Passwords do not match'
-        });
-    }
-
-    let hashedPassword = await bcrypt.hash(req.body.password, 8);
-
-    pool.query('UPDATE users SET password = ? WHERE confirmation_code = ?', [hashedPassword, code], (error, results) => {
-        if(error) {
-            console.log(error);
-        }
-
-        pool.query('UPDATE users SET confirmation_code = 0 WHERE confirmation_code = ?', [code], (error, results) => {
-            if(error) {
-                console.log(error);
-            }
-        });
-    });
-    
-    console.log("Someone succesfully reset their password");
-    return res.render('login', {
-        message2: 'Password Reset, Please Login'
-    });
-}
-
-//allows a user to track an internship from the internships page (add it to myapps page)
-exports.track =  (req, res) => {
-    const jid = req.body.job_id;
-
-    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-
-            var string = JSON.stringify(result);
-            var data =  JSON.parse(string);
-            //console.log('>> json: ', data); 
-        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
-        //console.log(decoded.id);
-
-        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
-            if(error){
-                console.log(error);
-                if (error.errno == 1062){
-                    return res.status(200).redirect("/internships");
-                }
-            }
-
-            else {
-                console.log("User: " + decoded.id + " has just tracked job# " + jid);
-                res.status(200).redirect("/internships");
-            }
-            });
-    });
-}
-
-//allows a user to untrack an app from the myapps page
-exports.untrack = async (req, res) => {
-    
-        const jid = req.body.job_id;
-        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
-
-
-        pool.query('DELETE FROM ' + decoded.id + '_apps WHERE job_id = ?', [jid], async (error, result) => {
-            if(error){
-                console.log(error);
-            }
-
-            else {
-                console.log("User: " + decoded.id + " has just untracked job# " + jid);
-                res.status(200).redirect("/myapps");
-            }
-        });   
-}
-
-//method to update app status in MyApps
-exports.update =  async (req, res) => {
-
-    const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
-    const jid = req.body.job_id;
-
-    var updateCodes = {
-        1: "'Applied'",
-        2: "'Screener'",
-        3: "'Hackerrank'",
-        4: "'Recorded Behavioral'",
-        5: "'Phone Interview'",
-        6: "'Final/Onsite Interview'",
-        7: "'Received Offer'",
-        8: "'Accepted Offer'",
-        9: "'Declined Offer'",
-        10: "'Withdrew'",
-        11:"'Rejected'"
-    };
-
-    if (req.body.update_code == 1){
-
-        pool.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1, date_applied = current_date() WHERE job_id = ?", [jid], (error, result) => {
-                if(error){
-                    console.log(error);
-                }
-                console.log("User: " + decoded.id + " has just applied to job#: " + jid);
-                res.status(200).redirect("/myapps");
-
-        });
-    }
-
-    else {
-        pool.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1 WHERE job_id = ?", [jid], (error, result) => {
-            if(error){
-                console.log(error);
-            }
-            console.log("User: " + decoded.id + " has just updated their status on job#: " + jid + " to: " + updateCodes[req.body.update_code]);
-            res.status(200).redirect("/myapps");
-
-    });
-    }
-}
-
-//function checks if you are logged in and a user, for purposes of hiding pages for users not logged in
-exports.isLoggedIn = async (req, res, next) => {
-    //console.log(req.cookies);
-    if (req.cookies.jtoken) {
-        try {
-            //verify the token:
-            const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
-            //console.log(decoded);
-
-            //check if the user still exists:
-            pool.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
-           // console.log(result);
-           
-           if (error) {
-               
-               console.log(error);
-            }
-            
-            if(!result){
-                return next();
-            }
-
-            req.user = result[0];
-            return next();
-        });
-        } catch (error) {
-            //console.log(error);
-            return next();
-        }
-    }
-    else {
-        next();
-    }
-}
+/**********************************************************Internship Pages Methods*******************************************************************/
 
 //populate the internships page from the database
 exports.populateInternships = async (req, res, next) => {
     if (req.user){
         try {
-            pool.query('SELECT * FROM internships ORDER BY job_id', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships WHERE is_ug = 0 ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -506,77 +452,45 @@ function populateInternshipsHelper(req, json, _callback){
     
 }
 
-//populates the table in the myapps page from the user's tracked apps table
-exports.populateMyApps = async (req, res, next) => {
-    try {
-        pool.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY date_tracked DESC', (error, result, fields) => {
-        if (error) {
+//populate the internships page from the database
+exports.populateUnderrepresented = async (req, res, next) => {
+    if (req.user){
+        try {
+            pool.query('SELECT * FROM internships WHERE is_ug = 1 ORDER BY job_id', async (error, result, fields) => {
+            //console.log(result);
+            if (error) {
+                console.log(error);
+            }
+            if(!result){
+                return next();
+            }
+            var string = JSON.stringify(result);
+            var json =  JSON.parse(string);
+            //console.log('>> json: ', json);
+            
+            populateInternshipsHelper(req, json, function() {
+                //console.log(json);
+                req.internships = json; 
+                return next();
+            });
+        });
+        } catch (error) {
             console.log(error);
-        }
-        if(!result){
             return next();
         }
-        
-        var string = JSON.stringify(result);
-        //console.log('>> string: ', string );
-        var json =  JSON.parse(string);
-        for(var i = 0; i < json.length; i++) {
-            if (json[i]["date_applied"] != null){
-                json[i]["date_applied"] = json[i]["date_applied"].substring(0, 10);
-            }
-        }
-        //console.log('>> json: ', json);
-        req.myapps = json; 
-        console.log(req.user.email + " has just loaded up MyApps");
-        return next();
-    });
-    } catch (error) {
-        console.log(error);
+        console.log(req.user.email + " has just loaded up the programs for underrepresented peoples page");
+    }
+    else {
         return next();
     }
 }
 
-//allows the user to logout
-exports.logout = async (req, res) => {
-    res.cookie('jtoken', 'logout', {
-        expires: new Date(Date.now() + 2*1000),
-        httpOnly: true
-    });
-    console.log("Someone has just logged out");
-    res.status(200).redirect('/');
-}
-
-exports.deleteAccount = (req, res) => {
-
-    pool.query('DELETE FROM users WHERE email = ?', [req.body.email], (error, results) => {
-        if(error) {
-            console.log(error);
-        }
-        else {
-            pool.query('DROP TABLE ' + req.params.id + '_apps', (error, results) => {
-                if(error) {
-                    console.log(error);
-                }
-            });
-        }
-    });
-
-    res.cookie('jtoken', 'logout', {
-        expires: new Date(Date.now() + 2*1000),
-        httpOnly: true
-    });
-
-    console.log(req.body.email + " has just deleted their account");
-
-    res.status(200).redirect('/');
-}
-
 //adds a suggestion to suggestions table once user has submitted it
 exports.suggest =  (req, res) => {
-    console.log(req.body);
+    console.log(req);
 
     let {suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only} = req.body;
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug} = req.body;
 
 
     if (swe_tag.length >1){
@@ -600,10 +514,14 @@ exports.suggest =  (req, res) => {
     if (juniors_only.length >1){
         juniors_only = '1';
     }
+
+    if (is_ug.length >1){
+        is_ug = '1';
+    }
     
     pool.query('INSERT INTO suggestions SET ?', {suggested_by: suggested_by, company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
-        international_allowed: international_allowed}, (error, results) => {
+        international_allowed: international_allowed, is_ug: is_ug}, (error, results) => {
         if(error) {
             console.log(error);
             return;
@@ -615,6 +533,165 @@ exports.suggest =  (req, res) => {
     });
 }
 
+//allows a user to track an internship from the internships page (add it to myapps page)
+exports.track =  (req, res) => {
+    const jid = req.body.job_id;
+
+    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
+        if (error) {
+            console.log(error);
+        }
+
+            var string = JSON.stringify(result);
+            var data =  JSON.parse(string);
+            //console.log('>> json: ', data); 
+        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+        //console.log(decoded.id);
+
+        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
+            if(error){
+                console.log(error);
+                if (error.errno == 1062){
+                    return res.status(200).redirect("/internships");
+                }
+            }
+
+            else {
+                console.log("User: " + decoded.id + " has just tracked job# " + jid);
+                res.status(200).redirect("/internships");
+            }
+            });
+    });
+}
+
+//allows a user to track an internship from the internships page (add it to myapps page)
+exports.ug_track =  (req, res) => {
+    const jid = req.body.job_id;
+
+    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
+        if (error) {
+            console.log(error);
+        }
+
+            var string = JSON.stringify(result);
+            var data =  JSON.parse(string);
+            //console.log('>> json: ', data); 
+        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+        //console.log(decoded.id);
+
+        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
+            if(error){
+                console.log(error);
+                if (error.errno == 1062){
+                    return res.status(200).redirect("/underrepresented");
+                }
+            }
+
+            else {
+                console.log("User: " + decoded.id + " has just tracked u-job# " + jid);
+                res.status(200).redirect("/underrepresented");
+            }
+            });
+    });
+}
+
+
+/**********************************************************MyApps Methods*******************************************************************/
+
+//allows a user to untrack an app from the myapps page
+exports.untrack = async (req, res) => {
+    const jid = req.body.job_id;
+    const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+
+
+    pool.query('DELETE FROM ' + decoded.id + '_apps WHERE job_id = ?', [jid], (error, result) => {
+        if(error){
+            console.log(error);
+        }
+
+        else {
+            console.log("User: " + decoded.id + " has just untracked job# " + jid);
+            res.status(200).redirect("/myapps");
+        }
+    });   
+}
+
+//method to update app status in MyApps
+exports.update =  async (req, res) => {
+
+const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+const jid = req.body.job_id;
+
+var updateCodes = {
+    1: "'Applied'",
+    2: "'Screener'",
+    3: "'Hackerrank'",
+    4: "'Recorded Behavioral'",
+    5: "'Phone Interview'",
+    6: "'Final/Onsite Interview'",
+    7: "'Received Offer'",
+    8: "'Accepted Offer'",
+    9: "'Declined Offer'",
+    10: "'Withdrew'",
+    11:"'Rejected'"
+};
+
+if (req.body.update_code == 1){
+
+    pool.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1, date_applied = current_date() WHERE job_id = ?", [jid], (error, result) => {
+            if(error){
+                console.log(error);
+            }
+            console.log(result);
+            console.log("User: " + decoded.id + " has just applied to job#: " + jid);
+            res.status(200).redirect("/myapps");
+
+    });
+}
+
+else {
+    pool.query("UPDATE " + decoded.id + "_apps SET app_status = " + updateCodes[req.body.update_code] + ", has_status = 1 WHERE job_id = ?", [jid], (error, result) => {
+        if(error){
+            console.log(error);
+        }
+        console.log("User: " + decoded.id + " has just updated their status on job#: " + jid + " to: " + updateCodes[req.body.update_code]);
+        res.status(200).redirect("/myapps");
+
+});
+}
+}
+
+//populates the table in the myapps page from the user's tracked apps table
+exports.populateMyApps = async (req, res, next) => {
+try {
+    pool.query('SELECT * FROM ' + req.user.id + '_apps ORDER BY date_tracked DESC', (error, result, fields) => {
+    if (error) {
+        console.log(error);
+    }
+    if(!result){
+        return next();
+    }
+    
+    var string = JSON.stringify(result);
+    //console.log('>> string: ', string );
+    var json =  JSON.parse(string);
+    for(var i = 0; i < json.length; i++) {
+        if (json[i]["date_applied"] != null){
+            json[i]["date_applied"] = json[i]["date_applied"].substring(0, 10);
+        }
+    }
+    //console.log('>> json: ', json);
+    req.myapps = json; 
+    console.log(req.user.email + " has just loaded up MyApps");
+    return next();
+});
+} catch (error) {
+    console.log(error);
+    return next();
+}
+}
+
+/**********************************************************Privileged Methods*******************************************************************/
 //populate the internships page from the database
 exports.populateApprovals = async (req, res, next) => {
     if (req.user){
@@ -654,7 +731,7 @@ exports.approve =  (req, res) => {
     console.log(req.body);
 
     let {suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only} = req.body;
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility} = req.body;
     
     //console.log(juniors_only);
     //console.log(it_tag);
@@ -682,10 +759,13 @@ exports.approve =  (req, res) => {
     if (juniors_only.length >1){
         juniors_only = '1';
     }
+    if (is_ug.length > 1){
+        is_ug = 1;
+    }
     
     pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
-        international_allowed: international_allowed }, (error, results) => {
+        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility}, (error, results) => {
         if(error) {
             console.log(error);
         }
@@ -752,3 +832,4 @@ exports.reject =  (req, res) => {
         });
 }
 
+/************************************************************************************************************************************* */

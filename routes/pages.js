@@ -67,6 +67,21 @@ router.get('/internships', authController.isLoggedIn, authController.populateInt
     }
 });
 
+//only go to Underrepresented Programs if logged in
+router.get('/underrepresented', authController.isLoggedIn, authController.populateUnderrepresented, (req, res) => {
+    //console.log(req.internships.length);
+    if(req.user) {
+        //console.log(req.internships);
+        res.render('underrepresented', {
+            user: req.user,
+            jobs: req.internships
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
 //only go to MyApps if logged in
 router.get('/myapps', authController.isLoggedIn, authController.populateMyApps, (req, res) => {
     if(req.user) {
