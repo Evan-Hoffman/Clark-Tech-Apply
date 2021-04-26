@@ -43,12 +43,18 @@ router.get('/tips', authController.isLoggedIn, (req, res) => {
 router.get('/settings', authController.isLoggedIn, (req, res) => {
     if(req.user) {
         res.render('settings', {
-            user: req.user
+            user: req.user,
+            message1: req.session.message1,
+            message2: req.session.message2
         });
     }
     else {
         res.redirect('/login');
     }
+    delete req.session.message1;
+    delete req.session.message2;
+
+
 });
 
 //only go to Internships if logged in
@@ -58,13 +64,16 @@ router.get('/internships', authController.isLoggedIn, authController.populateInt
         res.render('internships', {
             user: req.user,
             jobs: req.internships,
-            message2: req.session.message
+            message1: req.session.message1,
+            message2: req.session.message2
         });
     }
     else {
         res.redirect('/login');
     }
-    delete req.session.message;
+    delete req.session.message1;
+    delete req.session.message2;
+
 });
 
 //only go to Underrepresented Programs if logged in
@@ -74,12 +83,17 @@ router.get('/underrepresented', authController.isLoggedIn, authController.popula
         //console.log(req.internships);
         res.render('underrepresented', {
             user: req.user,
-            jobs: req.internships
+            jobs: req.internships,
+            message1: req.session.message1,
+            message2: req.session.message2
         });
     }
     else {
         res.redirect('/login');
     }
+    delete req.session.message1;
+    delete req.session.message2;
+
 });
 
 //only go to MyApps if logged in

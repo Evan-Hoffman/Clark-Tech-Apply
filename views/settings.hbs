@@ -42,6 +42,12 @@
     </nav>
 
      <div class="containter mt-4">
+                   {{#if message1}}
+          <h4 class="alert alert-danger mt-4 text-left">{{message1}}</h4>
+        {{/if}}
+        {{#if message2}}
+          <h4 class="alert alert-success mt-4 text-left">{{message2}}</h4>
+        {{/if}}
         <div class="card">
             <div class = "card-header">
                 Update my Email
@@ -131,12 +137,7 @@
                 </div>
                 
             </div>
-            {{#if message1}}
-          <h4 class="alert alert-danger mt-4">{{message1}}</h4>
-        {{/if}}
-        {{#if message2}}
-          <h4 class="alert alert-success mt-4">{{message2}}</h4>
-        {{/if}}
+
         </div>  
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

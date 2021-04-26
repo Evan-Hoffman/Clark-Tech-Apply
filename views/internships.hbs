@@ -20,6 +20,7 @@
     <title>Internships -clarkTech Apply</title>
 </head>
 <body>
+  
     <nav id="a">
         <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
         <ul>
@@ -59,11 +60,17 @@
                   Suggest
               </a>
             <p></p>
+            
             <div class="car text-center">
                 <div class="card-header">
                     Browse Internships
                 </div>
-              
+              {{#if message1}}
+          <h4 class="alert alert-danger mt-4 text-left">{{message1}}</h4>
+              {{/if}}
+          {{#if message2}}
+        <h4 class="alert alert-success mt-4 text-left">{{message2}}</h4>
+        {{/if}}
               
 
                 <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -254,12 +261,7 @@
         </div>
         
     </div>
-{{#if message1}}
-          <h4 class="alert alert-danger mt-4">{{message1}}</h4>
-        {{/if}}
-        {{#if message2}}
-          <h4 class="alert alert-success mt-4">{{message2}}</h4>
-        {{/if}}
+
 </body>
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">

@@ -313,9 +313,8 @@ exports.updateEmail = (req, res) => {
     //console.log("New Email: " + req.body.newEmail);
     //console.log("Old Email: " + req.params.email);
     if (!req.body.newEmail.includes("@clarku.edu")) {
-        return res.render('settings', {
-            message1: "Please use your Clark Email Address"
-        });
+        req.session.message1 = 'Please use your Clark Email Address';
+        return res.redirect('/settings');
     }
     pool.query('UPDATE users SET email = ? WHERE email = ?', [req.body.newEmail, req.params.email], (error, results) => {
         if(error) {
@@ -323,6 +322,7 @@ exports.updateEmail = (req, res) => {
         }
         else {
             console.log(req.params.email + " has succesfully updated their email to " + req.body.newEmail);
+            req.session.message2 = 'Email Updated';
             return res.redirect('/settings');
         }
     });
@@ -336,6 +336,7 @@ exports.updateName = (req, res) => {
         }
         else {
             console.log(req.params.email + " has succesfully updated their name to " + req.body.newName);
+            req.session.message2 = 'Name Updated';
             return res.redirect('/settings');
         }
     });
@@ -348,9 +349,8 @@ exports.sendResetEmail = (req, res) => {
         }
         if(results.length == 0) {
             console.log(req.body.email + " just tried to get a password email, but there email is not in our records");
-            return res.render('login', {
-                message1: 'There is no user with that email in our records'
-            });
+            req.session.message1 = 'There is no user with that email in our records';
+            return res.redirect('/settings');
         }
         else {
             const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -499,7 +499,6 @@ exports.populateUnderrepresented = async (req, res, next) => {
 
 //adds a suggestion to suggestions table once user has submitted it
 exports.suggest =  (req, res) => {
-    //console.log(req);
 
     let {suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
          dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug} = req.body;
@@ -540,6 +539,7 @@ exports.suggest =  (req, res) => {
         }
         else {
             console.log("User " + suggested_by + "has submitted an internship reccomendation for approval")
+            req.session.message2 = 'Suggestion Submitted for Approval. Thanks!';
             return res.redirect('/internships');
         }
 
@@ -571,7 +571,7 @@ exports.track =  (req, res) => {
 
             else {
                 console.log("User: " + decoded.id + " has just tracked job# " + jid);
-                req.session.message = 'Tracked';
+                req.session.message2 = 'Listing Tracked & Added to MyApps';
                 res.status(200).redirect("/internships");
             }
             });
@@ -603,6 +603,7 @@ exports.ug_track =  (req, res) => {
 
             else {
                 console.log("User: " + decoded.id + " has just tracked u-job# " + jid);
+                req.session.message2 = 'Listing Tracked & Added to MyApps';
                 res.status(200).redirect("/underrepresented");
             }
             });
