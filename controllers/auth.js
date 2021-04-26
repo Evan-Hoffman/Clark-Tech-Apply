@@ -69,6 +69,13 @@ exports.register = (req, res) => {
         })
     }
 
+    if (!email.includes("@clarku.edu")){
+        console.log("Someone tried to sign up with a non-clark email");
+        return res.render('register', {
+            message1: 'Please signup with your Clark Email Address'
+        })
+    }
+
     pool.query('SELECT email FROM users WHERE email = ?', [email], async (error, results)=>{
         if (error) {
             console.log(error);
@@ -104,7 +111,7 @@ exports.register = (req, res) => {
                         console.log(error);
                     }
                     else {
-                        console.log(results);
+                        //console.log(results);
                     }
                 })
                 console.log(email + " has just registered an account (pre confirmation");
@@ -487,7 +494,7 @@ exports.populateUnderrepresented = async (req, res, next) => {
 
 //adds a suggestion to suggestions table once user has submitted it
 exports.suggest =  (req, res) => {
-    console.log(req);
+    //console.log(req);
 
     let {suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
          dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug} = req.body;
@@ -527,6 +534,7 @@ exports.suggest =  (req, res) => {
             return;
         }
         else {
+            console.log("User " + suggested_by + "has submitted an internship reccomendation for approval")
             return res.redirect('/internships');
         }
 
@@ -642,7 +650,7 @@ if (req.body.update_code == 1){
             if(error){
                 console.log(error);
             }
-            console.log(result);
+            //console.log(result);
             console.log("User: " + decoded.id + " has just applied to job#: " + jid);
             res.status(200).redirect("/myapps");
 
@@ -728,7 +736,7 @@ exports.populateApprovals = async (req, res, next) => {
 
 //adds a suggestion to internships table once privileged user has approved it
 exports.approve =  (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
 
     let {suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
          dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility} = req.body;
@@ -796,7 +804,7 @@ exports.approve =  (req, res) => {
                             console.log(error);
                         }
                         else {
-                            console.log(suggestion_id);
+                            //console.log(suggestion_id);
                             pool.query('DELETE FROM suggestions WHERE suggestion_id = ?', [suggestion_id], (error, result) => {
                                 if(error) {
                                     console.log(error);
@@ -820,13 +828,14 @@ exports.approve =  (req, res) => {
 
 //a rejection of a suggestion ordered by the admin
 exports.reject =  (req, res) => {
-    console.log(req.body.suggestion_id);
+    //console.log(req.body.suggestion_id);
 
     pool.query('DELETE FROM suggestions WHERE suggestion_id = ?', [req.body.suggestion_id], (error, result) => {
         if(error) {
             console.log(error);
        }
         else {
+            console.log("A Privileged User has rejected an internship addition request ")
             return res.redirect('/approvals');
             }
         });
