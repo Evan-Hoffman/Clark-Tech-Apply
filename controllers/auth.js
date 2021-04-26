@@ -35,6 +35,7 @@ exports.logout = async (req, res) => {
         expires: new Date(Date.now() + 2*1000),
         httpOnly: true
     });
+    req.session = null;
     console.log("Someone has just logged out");
     res.status(200).redirect('/');
 }

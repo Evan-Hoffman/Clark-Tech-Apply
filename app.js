@@ -43,7 +43,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.COOKIE_SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
 }))

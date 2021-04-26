@@ -64,8 +64,7 @@ router.get('/internships', authController.isLoggedIn, authController.populateInt
     else {
         res.redirect('/login');
     }
-    //delete req.session.message;
-
+    delete req.session.message;
 });
 
 //only go to Underrepresented Programs if logged in
