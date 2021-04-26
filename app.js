@@ -3,6 +3,7 @@ const mysql = require("mysql");
 const dotenv = require("dotenv");
 const path = require('path');
 const cookieParser = require('cookie-parser');
+var session = require('express-session')
 
 const app = express();
 dotenv.config({path: './.env'});
@@ -40,6 +41,12 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 //initialize cookie parser to set up cookies in browser
 app.use(cookieParser());
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+}))
 
 app.set('view engine', 'hbs');
 

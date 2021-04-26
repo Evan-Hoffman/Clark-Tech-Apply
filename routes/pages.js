@@ -55,16 +55,17 @@ router.get('/settings', authController.isLoggedIn, (req, res) => {
 router.get('/internships', authController.isLoggedIn, authController.populateInternships, (req, res) => {
     //console.log(req.internships.length);
     if(req.user) {
-        //console.log(req.internships);
         res.render('internships', {
             user: req.user,
-            jobs: req.internships
-
+            jobs: req.internships,
+            message2: req.session.message
         });
     }
     else {
         res.redirect('/login');
     }
+    //delete req.session.message;
+
 });
 
 //only go to Underrepresented Programs if logged in

@@ -309,9 +309,13 @@ exports.resetPassword = async (req, res) => {
 
 
 exports.updateEmail = (req, res) => {
-    console.log("New Email: " + req.body.newEmail);
-    console.log("Old Email: " + req.params.email);
-
+    //console.log("New Email: " + req.body.newEmail);
+    //console.log("Old Email: " + req.params.email);
+    if (!req.body.newEmail.includes("@clarku.edu")) {
+        return res.render('settings', {
+            message1: "Please use your Clark Email Address"
+        });
+    }
     pool.query('UPDATE users SET email = ? WHERE email = ?', [req.body.newEmail, req.params.email], (error, results) => {
         if(error) {
             console.log(error);
@@ -566,6 +570,7 @@ exports.track =  (req, res) => {
 
             else {
                 console.log("User: " + decoded.id + " has just tracked job# " + jid);
+                req.session.message = 'Tracked';
                 res.status(200).redirect("/internships");
             }
             });
