@@ -777,6 +777,9 @@ exports.approve =  (req, res) => {
     if (is_ug.length > 1){
         is_ug = 1;
     }
+    if (eligibility == ''){
+        eligibility = null;
+    }
     
     pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
