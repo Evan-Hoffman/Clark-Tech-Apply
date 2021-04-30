@@ -112,7 +112,9 @@ router.get('/myapps', authController.isLoggedIn, authController.populateMyApps, 
 router.get('/passwordreset/:confirmationCode', (req, res) => {
     if (req.params.confirmationCode != 0){
         res.render('passwordreset', {
-            code: req.params.confirmationCode
+            code: req.params.confirmationCode,
+            message1: req.session.message1,
+            message2: req.session.message2
         });
     }
     else {
@@ -120,6 +122,8 @@ router.get('/passwordreset/:confirmationCode', (req, res) => {
             message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
         });
     }
+    delete req.session.message1;
+    delete req.session.message2;
 });
 
 //Approvals Page for Privileged Users to approve suggested internship additions

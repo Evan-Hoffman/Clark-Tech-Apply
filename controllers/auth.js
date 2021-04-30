@@ -276,16 +276,14 @@ exports.resetPassword = async (req, res) => {
 
     if (req.body.password == '' || req.body.passwordConfirm == ''){
         console.log("Someone left a field empty on password reset form");
-        return res.render('passwordreset', {
-            message1: 'You are missing one or more fields'
-        })
+        req.session.message1 = 'You are missing one or more fields';
+        return res.redirect('/passwordreset');
     }
 
     if (req.body.password != req.body.passwordConfirm) {
         console.log("Someone failed password match on password reset form");
-        return res.render('passwordreset', {
-            message1: 'Passwords do not match'
-        });
+        req.session.message1 = 'Your password do not match';
+        return res.redirect('/passwordreset');
     }
 
     let hashedPassword = await bcrypt.hash(req.body.password, 8);
