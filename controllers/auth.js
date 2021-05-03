@@ -496,11 +496,10 @@ exports.populateUnderrepresented = async (req, res, next) => {
 }
 
 //adds a suggestion to suggestions table once user has submitted it
-exports.suggest =  (req, res) => {
-
+exports.suggest =  (req, res) => {    
     let {suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
          dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug} = req.body;
-
+    
 
     if (swe_tag.length >1){
         swe_tag = '1';
@@ -523,7 +522,6 @@ exports.suggest =  (req, res) => {
     if (juniors_only.length >1){
         juniors_only = '1';
     }
-
     if (is_ug.length >1){
         is_ug = '1';
     }
@@ -542,6 +540,71 @@ exports.suggest =  (req, res) => {
         }
 
     });
+}
+
+//adds a correction suggestion to edit_suggestions table once user has submitted it
+exports.suggestCorrection =  (req, res) => {
+
+    let {job_id, international_allowed, juniors_only, link, is_closed, international_allowed_new, juniors_only_new, comments} = req.body;
+    let suggested_by = req.user.id;
+
+    if (is_closed.length >1){
+        is_closed = '1';
+    }
+    else {
+        is_closed = null;
+    }
+
+    if (international_allowed_new == ''){
+        international_allowed_new = null;
+    }
+
+    if (juniors_only_new.length >1){
+        juniors_only_new = '1';
+    }
+    else {
+        juniors_only_new = null;
+    }
+    
+    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id, international_allowed: international_allowed, international_allowed_new: international_allowed_new, 
+        juniors_only: juniors_only, juniors_only_new: juniors_only_new, link: link, is_closed: is_closed, comments: comments, suggested_by: suggested_by}, (error, results) => {
+        if(error) {
+            console.log(error);
+            return;
+        }
+        else {
+            console.log("User " + suggested_by + "has submitted a correction for approval")
+            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
+            return res.redirect('/internships');
+        }
+    }); 
+}
+
+//adds a correction suggestion to edit_suggestions table once user has submitted it from UG
+exports.suggestCorrectionUG =  (req, res) => {
+
+    let {job_id, link, is_closed} = req.body;
+    let suggested_by = req.user.id;
+
+    if (is_closed.length >1){
+        is_closed = '1';
+    }
+    else {
+        is_closed = null;
+    }
+    
+    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id,
+        link: link, is_closed: is_closed, suggested_by: suggested_by}, (error, results) => {
+        if(error) {
+            console.log(error);
+            return;
+        }
+        else {
+            console.log("User " + suggested_by + "has submitted a correction for approval")
+            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
+            return res.redirect('/underrepresented');
+        }
+    }); 
 }
 
 //allows a user to track an internship from the internships page (add it to myapps page)
@@ -725,8 +788,24 @@ exports.populateApprovals = async (req, res, next) => {
                 json[i]["date_suggested"] = json[i]["date_suggested"].substring(0, 10);
             }
             req.suggestions = json; 
-            return next();
-           
+            pool.query('SELECT * FROM edit_suggestions ORDER BY date_suggested', async (error, results, fields) => {
+                if (error) {
+                    console.log(error);
+                }
+                if(!results){
+                    return next();
+                }
+                var string2 = JSON.stringify(results);
+                var json2 =  JSON.parse(string2);
+                //console.log('>> json: ', json);
+                for(var i = 0; i < json2.length; i++) {
+                    //Parse time of day:
+                    json2[i]["date_suggested"] = json2[i]["date_suggested"].substring(0, 10);
+                }
+                req.edits = json2; 
+            
+                return next();
+            });
         });
         } catch (error) {
             console.log(error);
@@ -844,6 +923,21 @@ exports.reject =  (req, res) => {
        }
         else {
             console.log("A Privileged User has rejected an internship addition request ")
+            return res.redirect('/approvals');
+            }
+        });
+}
+
+//a dismissal of an edit suggestion ordered by the admin
+exports.dismissEdit =  (req, res) => {
+    //console.log(req.body.suggestion_id);
+
+    pool.query('DELETE FROM edit_suggestions WHERE identifier = ?', [req.body.identifier], (error, result) => {
+        if(error) {
+            console.log(error);
+       }
+        else {
+            console.log("A Privileged User has dismissed an edit suggestion")
             return res.redirect('/approvals');
             }
         });

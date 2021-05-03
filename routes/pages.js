@@ -63,6 +63,7 @@ router.get('/internships', authController.isLoggedIn, authController.populateInt
     if(req.user) {
         res.render('internships', {
             user: req.user,
+            id: req.user.id,
             jobs: req.internships,
             message1: req.session.message1,
             message2: req.session.message2
@@ -132,7 +133,8 @@ if(req.user){
     if(req.user.is_privileged) {
         res.render('approvals', {
             user: req.user,
-            suggestions: req.suggestions
+            suggestions: req.suggestions,
+            edits: req.edits
         });
     }
     else {

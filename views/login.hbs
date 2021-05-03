@@ -1,96 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="/style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <title>Login -clarkTech Apply</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <title>Login -clarkTech Apply</title>
 </head>
+
 <body>
-    <nav id="a">
-        <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
+  <nav id="a">
+    <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
 
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-        </ul>
-    </nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/login">Login</a></li>
+      <li><a href="/register">Register</a></li>
+    </ul>
+  </nav>
 
-    <div class="containter mt-4">
-        <div class="card">
-            <div class = "card-header">
-                Login Form
-            </div>
-            <div class="card-body">
-                <form action="/auth/login" method = "POST">
+  <div class="containter mt-4">
+    <div class="card">
+      <div class="card-header">
+        Login Form
+      </div>
+      <div class="card-body">
+        <form action="/auth/login" method="POST">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <h1></h1>
+        <a type="button" data-toggle="modal" data-target="#resetModal">
+          Forgot your password?
+        </a>
+
+        <div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Please Input Your Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="/auth/resetemail" method="POST">
                   <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" class="form-control" id="email" name="email">
                   </div>
-
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                  </div>
-                   
-                  <button type="submit" class="btn btn-primary">Login</button>
+                  <button type="submit" class="btn btn-primary">Reset</button>
                 </form>
-                <h1></h1>
-                <a type="button" data-toggle="modal" data-target="#resetModal">
-                  Forgot your password?
-                </a>
 
-                <div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Please Input Your Email</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                         <form action="/auth/resetemail" method = "POST">
-                          <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" class="form-control" id="email" name="email">
-                          </div>
-                          <button type="submit" class="btn btn-primary">Reset</button>
-                          </form>
+              </div>
 
-                      </div>
-                     
-                    </div>
-                  </div>
-                </div>
             </div>
+          </div>
         </div>
-        {{#if message1}}
-          <h4 class="alert alert-danger mt-4">{{message1}}</h4>
-        {{/if}}
-        {{#if message2}}
-          <h4 class="alert alert-success mt-4">{{message2}}</h4>
-        {{/if}}
+      </div>
     </div>
+    {{#if message1}}
+    <h4 class="alert alert-danger mt-4">{{message1}}</h4>
+    {{/if}}
+    {{#if message2}}
+    <h4 class="alert alert-success mt-4">{{message2}}</h4>
+    {{/if}}
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
 </body>
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
     <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
-    <p>
-        <a href= "https://www.linkedin.com/in/evan-hoffman/" target="_blank">
-        <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px"  class="img-thumbnail">
-                <a href= "https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role = "button">Code</a>
+      <p>
+        <a href="https://www.linkedin.com/in/evan-hoffman/" target="_blank">
+          <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px" class="img-thumbnail">
+          <a href="https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role="button">Code</a>
 
-        </p>
-        <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
+      </p>
+      <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
     </a>
   </div>
 </footer>
+
 </html>

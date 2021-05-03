@@ -1,318 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script> 
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
-    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script> 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
 
-    <title>Approvals -clarkTech Apply</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+
+
+  <title>Approvals -clarkTech Apply</title>
 </head>
+
 <body>
-    <nav id="a">
-        <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
-        <ul>
-            {{#if user.is_privileged}}
-                <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
-            {{/if}}
-            <li><a id="b" href="/">Home</a></li>
-            <li><a href="/tips">Tips</a></li>
-            <li><a href="/myapps">MyApps</a></li>
-            <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      Internships
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-                        <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
-                    </ul>
-            </li>
-            <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
-                        <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
-                    </ul>
-            </li>
+  <nav id="a">
+    <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
+    <ul>
+      {{#if user.is_privileged}}
+      <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+      {{/if}}
+      <li><a id="b" href="/">Home</a></li>
+      <li><a href="/tips">Tips</a></li>
+      <li><a href="/myapps">MyApps</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Internships
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
+          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
+          </li>
         </ul>
-    </nav>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
+          <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 
-    <div class="containter mt-4">
-        
-        <div class="col-12">
-            <div class="car text-center">
-                <div class="card-header">
-                    Browse Suggestions
-                </div>
-<table id="suggestionsTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Company
-      </th>
-        <th class="th-sm">Tags
-      </th>
-       <th class="th-sm">'23 Only?
-      </th>
-      <th class="th-sm">Int'l Students?
-      </th>
-      <th class="th-sm">UG?
-      </th>
-      <th class="th-sm">Position
-      </th>
-      <th class="th-sm">Date Suggested
-      </th>
-      <th class="th-sm">URL
-      </th>
-      <th class="th-sm">Suggestor
-      </th>
-      <th class="th-sm">Approve/Reject
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each suggestions}}
-      <tr>
-        <td>{{company_name}}</td>
-        <td>
-           {{#if dsci_tag}}
-              <span class="badge badge-pill badge-primary">DSCI</span>            
-              {{/if}}
-          {{#if swe_tag}}
-              <span class="badge badge-pill badge-success">SWE</span>            
-            {{/if}}
-          {{#if it_tag}}
-              <span class="badge badge-pill badge-dark">IT</span>            
-            {{/if}}
-          {{#if consulting_tag}}
-              <span class="badge badge-pill badge-secondary">TECH-CONSULTING</span>            
-          {{/if}}
-          {{#if cyber_tag}}
-              <span class="badge badge-pill badge-danger">CYBER</span>            
-          {{/if}}
-          {{#if product_tag}}
-              <span class="badge badge-pill badge-warning">PM</span>            
-          {{/if}}
-        </td>
-        {{#if juniors_only}}
-         <td>'23 Only</td> 
-        {{else}} 
-          <td>Any</td>
-        {{/if}}
+  <div class="containter mt-4">
 
-        <td>{{international_allowed}}</td>
-        {{#if is_ug}}
-         <td>Yes</td> 
-        {{else}} 
-          <td>No</td>
-        {{/if}}
-        <td>{{internship_title}}</td>
-        <td>{{date_suggested}}</td>
-        <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Link</a></td>
-        <td>{{suggested_by}}</td>
-        <td>                
-              <a type="button" data-toggle="modal" class="btn btn-success" data-target="#approveModal + {{suggestion_id}}">
-                  +
-              </a>
+    <div class="col-12">
 
-                <div class="modal fade" id="approveModal + {{suggestion_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Make any Edits</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                         <form action="/auth/approve" method = "POST">
-                         <div class="form-group">
-                            <input type="hidden" value={{suggestion_id}} class="form-control" id="suggestion_id" name="suggestion_id">
-                        </div>
-                         <div class="form-group">
-                            <input type="hidden" value={{suggested_by}} class="form-control" id="suggested_by" name="suggested_by">
-                        </div>
-                          <div class="form-group">
-                            <label for="company_name">Company</label>
-                            <input type="text" placeholder="Company Name" value={{company_name}} class="form-control" id="company_name" name="company_name">
-                          </div>
-                          <div class="form-group">
-                            <label for="internship_title">Internship Title</label>
-                            <input type="text" placeholder="Internship Title" value={{internship_title}} class="form-control" id="internship_title" name="internship_title">
-                          </div>
-                          <div class="form-group">
-                            <label for="link">URL</label>
-                            <input type="text" placeholder="link" value={{link}} class="form-control" id="link" name="link">
-                          </div>
-                            <div class="form-group">
-                            <label for="international_allowed">Int'l Students?</label>
-                            <input type="text" placeholder="Int'l Students?" value={{international_allowed}} class="form-control" id="international_allowed" name="international_allowed">
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="swe_tag" value="0">
-                            {{#if swe_tag}}
-                              <input type="checkbox" checked="checked" value="1" name="swe_tag" id="swe_tag">
-                            {{else}}
-                              <input type="checkbox" value="1" name="swe_tag" id="swe_tag">
-                            {{/if}}
-                            <label for="swe_tag">SWE Tag</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="dsci_tag" value="0">
-                            {{#if dsci_tag}}
-                              <input type="checkbox" checked="checked" value="1" name="dsci_tag" id="dsci_tag">
-                            {{else}}
-                              <input type="checkbox" value="1" name="dsci_tag" id="dsci_tag">
-                            {{/if}}
-                            <label for="dsci_tag">DSCI Tag</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="it_tag" value="0">
-                            {{#if it_tag}}
-                              <input type="checkbox" checked="checked" value="1" name="it_tag" id="it_tag">
-                            {{else}}
-                              <input type="checkbox" value="1" name="it_tag" id="it_tag">
-                            {{/if}}
-                            <label for="it_tag">IT Tag</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="consulting_tag" value="0">
-                            {{#if consulting_tag}}
-                              <input type="checkbox" checked="checked" value="1" name="consulting_tag" id="consulting_tag">
-                            {{else}}
-                              <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
-                            {{/if}}
-                            <label for="consulting_tag">Consulting Tag</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="cyber_tag" value="0">
-                            {{#if cyber_tag}}
-                              <input type="checkbox" checked="checked" value="1" name="cyber_tag" id="cyber_tag">
-                            {{else}}
-                              <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
-                            {{/if}}
-                            <label for="cyber_tag">Cyber Tag</label>
-                          </div>
-                           <div class="form-check form-check-inline">
-                            <input type="hidden" name="product_tag" value="0">
-                            {{#if product_tag}}
-                              <input type="checkbox" checked="checked" value="1" name="product_tag" id="product_tag">
-                            {{else}}
-                              <input type="checkbox" value="1" name="product_tag" id="product_tag">
-                            {{/if}}
-                            <label for="product_tag">Product Tag</label>
-                          </div>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class='nav-link active' id="internshipSuggestions-tab" data-bs-toggle='tab'
+            data-bs-target="#internshipSuggestions" role="tab" aria-selected="true" type="button"
+            aria-controls="internshipSuggestions" href='#internshipSuggestions'>Internships</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class='nav-link' data-bs-toggle='tab' id="edits-tab" role="tab" data-bs-target="#edits"
+            aria-controls="edits" type="button" href='#edits'>Edits</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="internshipSuggestions" aria-selected="false" role="tabpanel"
+          aria-labelledby="internshipSuggestions-tab">
+          <div class="car text-center">
+            <div class="card-header">
+              Browse Suggestions
+            </div>
+            <table id="suggestionsTable" class="table table-striped table-bordered table-sm" cellspacing="0"
+              width="100%">
+              <thead>
+                <tr>
+                  <th class="th-sm">Company
+                  </th>
+                  <th class="th-sm">Tags
+                  </th>
+                  <th class="th-sm">'23 Only?
+                  </th>
+                  <th class="th-sm">Int'l Students?
+                  </th>
+                  <th class="th-sm">UG?
+                  </th>
+                  <th class="th-sm">Position
+                  </th>
+                  <th class="th-sm">Date Suggested
+                  </th>
+                  <th class="th-sm">URL
+                  </th>
+                  <th class="th-sm">Suggestor
+                  </th>
+                  <th class="th-sm">Approve/Reject
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each suggestions}}
+                <tr>
+                  <td>{{company_name}}</td>
+                  <td>
+                    {{#if dsci_tag}}
+                    <span class="badge badge-pill badge-primary">DSCI</span>
+                    {{/if}}
+                    {{#if swe_tag}}
+                    <span class="badge badge-pill badge-success">SWE</span>
+                    {{/if}}
+                    {{#if it_tag}}
+                    <span class="badge badge-pill badge-dark">IT</span>
+                    {{/if}}
+                    {{#if consulting_tag}}
+                    <span class="badge badge-pill badge-secondary">TECH-CONSULTING</span>
+                    {{/if}}
+                    {{#if cyber_tag}}
+                    <span class="badge badge-pill badge-danger">CYBER</span>
+                    {{/if}}
+                    {{#if product_tag}}
+                    <span class="badge badge-pill badge-warning">PM</span>
+                    {{/if}}
+                  </td>
+                  {{#if juniors_only}}
+                  <td>'23 Only</td>
+                  {{else}}
+                  <td>Any</td>
+                  {{/if}}
 
-                           <div class="form-check">
-                            <input type="hidden" name="juniors_only" value="0">
-                            {{#if juniors_only}}
-                              <input type="checkbox" checked="checked" value="1" name="juniors_only" id="juniors_only">
-                            {{else}}
-                              <input type="checkbox" value="1" name="juniors_only" id="juniors_only">
-                            {{/if}}
-                            <label for="juniors_only">'23 Only?</label>
+                  <td>{{international_allowed}}</td>
+                  {{#if is_ug}}
+                  <td>Yes</td>
+                  {{else}}
+                  <td>No</td>
+                  {{/if}}
+                  <td>{{internship_title}}</td>
+                  <td>{{date_suggested}}</td>
+                  <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Link</a></td>
+                  <td>{{suggested_by}}</td>
+                  <td>
+                    <a type="button" data-toggle="modal" class="btn btn-success"
+                      data-target="#approveModal + {{suggestion_id}}">
+                      +
+                    </a>
+                    <div class="modal fade" id="approveModal + {{suggestion_id}}" tabindex="-1" role="dialog"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Make any Edits</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
                           </div>
-                          
-                          <div class="form-check">
-                            <input type="hidden" name="is_ug" value="0">
-                            {{#if is_ug}}
-                              <input type="checkbox" checked="checked" value="1" name="is_ug" id="is_ug">
-                            {{else}}
-                              <input type="checkbox" value="1" name="is_ug" id="is_ug">
-                            {{/if}}
-                            <label for="is_ug">UG?</label>
-                          </div>
-                           
-                            <div class="form-group">
-                            <label for="eligibility">Eligibile Groups:</label>
-                            <input type="text" value="" class="form-control" id="eligibility" name="eligibility">
-                          </div>
+                          <div class="modal-body">
+                            <form action="/auth/approve" method="POST">
+                              <div class="form-group">
+                                <input type="hidden" value={{suggestion_id}} class="form-control" id="suggestion_id"
+                                  name="suggestion_id">
+                              </div>
+                              <div class="form-group">
+                                <input type="hidden" value={{suggested_by}} class="form-control" id="suggested_by"
+                                  name="suggested_by">
+                              </div>
+                              <div class="form-group">
+                                <label for="company_name">Company</label>
+                                <input type="text" placeholder="Company Name" value={{company_name}}
+                                  class="form-control" id="company_name" name="company_name">
+                              </div>
+                              <div class="form-group">
+                                <label for="internship_title">Internship Title</label>
+                                <input type="text" placeholder="Internship Title" value={{internship_title}}
+                                  class="form-control" id="internship_title" name="internship_title">
+                              </div>
+                              <div class="form-group">
+                                <label for="link">URL</label>
+                                <input type="text" placeholder="link" value={{link}} class="form-control" id="link"
+                                  name="link">
+                              </div>
+                              <div class="form-group">
+                                <label for="international_allowed">Int'l Students?</label>
+                                <input type="text" placeholder="Int'l Students?" value={{international_allowed}}
+                                  class="form-control" id="international_allowed" name="international_allowed">
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="swe_tag" value="0">
+                                {{#if swe_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="swe_tag" id="swe_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="swe_tag" id="swe_tag">
+                                {{/if}}
+                                <label for="swe_tag">SWE Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="dsci_tag" value="0">
+                                {{#if dsci_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="dsci_tag" id="dsci_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="dsci_tag" id="dsci_tag">
+                                {{/if}}
+                                <label for="dsci_tag">DSCI Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="it_tag" value="0">
+                                {{#if it_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="it_tag" id="it_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="it_tag" id="it_tag">
+                                {{/if}}
+                                <label for="it_tag">IT Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="consulting_tag" value="0">
+                                {{#if consulting_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="consulting_tag"
+                                  id="consulting_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
+                                {{/if}}
+                                <label for="consulting_tag">Consulting Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="cyber_tag" value="0">
+                                {{#if cyber_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="cyber_tag" id="cyber_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
+                                {{/if}}
+                                <label for="cyber_tag">Cyber Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="product_tag" value="0">
+                                {{#if product_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="product_tag" id="product_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="product_tag" id="product_tag">
+                                {{/if}}
+                                <label for="product_tag">Product Tag</label>
+                              </div>
+
+                              <div class="form-check">
+                                <input type="hidden" name="juniors_only" value="0">
+                                {{#if juniors_only}}
+                                <input type="checkbox" checked="checked" value="1" name="juniors_only"
+                                  id="juniors_only">
+                                {{else}}
+                                <input type="checkbox" value="1" name="juniors_only" id="juniors_only">
+                                {{/if}}
+                                <label for="juniors_only">'23 Only?</label>
+                              </div>
+
+                              <div class="form-check">
+                                <input type="hidden" name="is_ug" value="0">
+                                {{#if is_ug}}
+                                <input type="checkbox" checked="checked" value="1" name="is_ug" id="is_ug">
+                                {{else}}
+                                <input type="checkbox" value="1" name="is_ug" id="is_ug">
+                                {{/if}}
+                                <label for="is_ug">UG?</label>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="eligibility">Eligibile Groups:</label>
+                                <input type="text" value="" class="form-control" id="eligibility" name="eligibility">
+                              </div>
                           </div>
                           <button type="submit" class="btn btn-primary">Approve</button>
-                        </form>
+                          </form>
+
+                        </div>
 
                       </div>
-                     
                     </div>
-                  </div>
-                </div>
-              
-              <form action="/auth/reject" method = "POST">
-                  <button type="submit" name="suggestion_id" value={{suggestion_id}} class="btn btn-danger">-</button>
-              </form>
-        </td>
-      </tr>
-    {{/each}}
-  </tbody>
+          </div>
 
-  <tfoot>
-    <tr>
-      <th class="th-sm">Company
-      </th>
-        <th class="th-sm">Tags
-      </th>
-       <th class="th-sm">'23 Only?
-      </th>
-      <th class="th-sm">Int'l Students?
-      </th>
-      <th class="th-sm">UG?
-      </th>
-      <th class="th-sm">Position
-      </th>
-      <th class="th-sm">Date Suggested
-      </th>
-      <th class="th-sm">URL
-      </th>
-      <th class="th-sm">Suggestor
-      </th>
-      <th class="th-sm">Approve/Reject
-      </th>
-    </tr>
-  </tfoot>
-  <script>
-  $(document).ready(function() {
-    $('#suggestionsTable').DataTable({
-      "order": [[5, "desc"]]
-    });
-} );
-</script>
-</table>
+          <form action="/auth/reject" method="POST">
+            <button type="submit" name="suggestion_id" value={{suggestion_id}} class="btn btn-danger">-</button>
+          </form>
+          </td>
+          </tr>
+          {{/each}}
+          </tbody>
 
-               
-            </div>
+          <tfoot>
+            <tr>
+              <th class="th-sm">Company
+              </th>
+              <th class="th-sm">Tags
+              </th>
+              <th class="th-sm">'23 Only?
+              </th>
+              <th class="th-sm">Int'l Students?
+              </th>
+              <th class="th-sm">UG?
+              </th>
+              <th class="th-sm">Position
+              </th>
+              <th class="th-sm">Date Suggested
+              </th>
+              <th class="th-sm">URL
+              </th>
+              <th class="th-sm">Suggestor
+              </th>
+              <th class="th-sm">Approve/Reject
+              </th>
+            </tr>
+          </tfoot>
+          <script>
+            $(document).ready(function () {
+              $('#suggestionsTable').DataTable({
+                "order": [[6, "desc"]]
+              });
+            });
+          </script>
+
+          </table>
         </div>
-        
+
+      </div>
+
+
+
+      <div class="tab-pane fade" id="edits" role="tabpanel">
+        <div class="car text-center">
+          <div class="card-header">
+            Browse Edit Suggestions
+          </div>
+          <table id="editsTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th class="th-sm">Job ID
+                </th>
+                <th class="th-sm">(Old) Int'l Students?
+                </th>
+                <th class="th-sm">(New) Int'l Students?
+                </th>
+                <th class="th-sm">(Old) '23 Only?
+                </th>
+                <th class="th-sm">(New) '23 Only?
+                </th>
+                <th class="th-sm">Link
+                </th>
+                <th class="th-sm">Closed?
+                </th>
+                <th class="th-sm">Comments
+                </th>
+                <th class="th-sm">Suggestor
+                </th>
+                <th class="th-sm">Date Suggested
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each edits}}
+              <tr>
+                <td>{{job_id}}</td>
+                <td>{{international_allowed}}</td>
+                <td>{{international_allowed_new}}</td>
+                <td>{{juniors_only}}</td>
+                <td>{{juniors_only_new}}</td>
+                <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Link</a></td>
+                <td>{{is_closed}}</td>
+                <td>{{comments}}</td>
+                <td>{{suggested_by}}</td>
+                <td>{{date_suggested}}</td>
+
+                <td>
+                  <form action="/auth/dismissEdit" method="POST">
+                    <button type="submit" name="identifier" value={{identifier}} class="btn btn-danger">-</button>
+                  </form>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <th class="th-sm">Job ID
+                </th>
+                <th class="th-sm">(Old) Int'l Students?
+                </th>
+                <th class="th-sm">(New) Int'l Students?
+                </th>
+                <th class="th-sm">(Old) '23 Only?
+                </th>
+                <th class="th-sm">(New) '23 Only?
+                </th>
+                <th class="th-sm">Link
+                </th>
+                <th class="th-sm">Closed?
+                </th>
+                <th class="th-sm">Comments
+                </th>
+                <th class="th-sm">Suggestor
+                </th>
+                <th class="th-sm">Date Suggested
+                </th>
+              </tr>
+            </tfoot>
+            <script>
+              $(document).ready(function () {
+                $('#editsTable').DataTable({
+                  "order": [[9, "desc"]]
+                });
+              });
+            </script>
+
+          </table>
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+
     </div>
-{{#if message1}}
-          <h4 class="alert alert-danger mt-4">{{message1}}</h4>
-        {{/if}}
-        {{#if message2}}
-          <h4 class="alert alert-success mt-4">{{message2}}</h4>
-        {{/if}}
+
+  </div>
+  {{#if message1}}
+  <h4 class="alert alert-danger mt-4">{{message1}}</h4>
+  {{/if}}
+  {{#if message2}}
+  <h4 class="alert alert-success mt-4">{{message2}}</h4>
+  {{/if}}
+
 </body>
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
     <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
-    <p>
-        <a href= "https://www.linkedin.com/in/evan-hoffman/" target="_blank">
-        <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px"  class="img-thumbnail">
-                <a href= "https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role = "button">Code</a>
+      <p>
+        <a href="https://www.linkedin.com/in/evan-hoffman/" target="_blank">
+          <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px" class="img-thumbnail">
+          <a href="https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role="button">Code</a>
 
-        </p>
-        <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
+      </p>
+      <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
     </a>
   </div>
 </footer>
+
 </html>

@@ -1,250 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script> 
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
-    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script> 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-    
 
 
-    <title>Tech Internships for Underrepresented Groups -clarkTech Apply</title>
+
+  <title>Tech Internships for Underrepresented Groups -clarkTech Apply</title>
 </head>
+
 <body>
-    <nav id="a">
-        <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
-        <ul>
-            {{#if user.is_privileged}}
-                <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
-            {{/if}}
-            <li><a id="b" href="/">Home</a></li>
-            <li><a href="/tips">Tips</a></li>
-            <li><a href="/myapps">MyApps</a></li>
-            <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      Internships
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-                        <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
-                    </ul>
-            </li>
-            <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
-                        <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
-                    </ul>
-            </li>
+  <nav id="a">
+    <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
+    <ul>
+      {{#if user.is_privileged}}
+      <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+      {{/if}}
+      <li><a id="b" href="/">Home</a></li>
+      <li><a href="/tips">Tips</a></li>
+      <li><a href="/myapps">MyApps</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Internships
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
+          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
+          </li>
         </ul>
-    </nav>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
+          <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 
-    <div class="containter mt-4">
-        
-        <div class="col-12">
-          <div class="car text-center" >
-            <div class="p-3 mb-2 bg-success text-white">Summer 2022 Season LIVE: Early (~2-5 New Listings/Week)</div>
-            <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#suggestModal">
-                  Suggest
-              </a>
-            <p></p>
-            <div class="car text-center">
-              <t>Many Companies have special internship programs only for students from traditionally underrepresented 
-                backgrounds, like Google STEP, Microsoft Explore, PWC Start. Of course we will only post ones here 
-                where you will work in a tech capacity --the work is the same as other internship programs, these just have 
-                more narrow application criteria so if you qualify you will be competing against a smaller field of applicants. Definitely give these a shot (as well as the ones on the General Listings page, they are not mutually-exclusive)
-                
-              </t>
-            </div>
-            <div class="car text-center">
-                <div class="card-header">
-                    Browse Internships
+  <div class="containter mt-4">
+
+    <div class="col-12">
+      <div class="car text-center">
+        <div class="p-3 mb-2 bg-success text-white">Summer 2022 Season LIVE: Early (~2-5 New Listings/Week)</div>
+        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#suggestModal">
+          Suggest
+        </a>
+        <p></p>
+        <div class="car text-center">
+          <t>Many Companies have special internship programs only for students from traditionally underrepresented
+            backgrounds, like Google STEP, Microsoft Explore, PWC Start. Of course we will only post ones here
+            where you will work in a tech capacity --the work is the same as other internship programs, these just have
+            more narrow application criteria so if you qualify you will be competing against a smaller field of
+            applicants. Definitely give these a shot (as well as the ones on the General Listings page, they are not
+            mutually-exclusive)
+
+          </t>
+        </div>
+        <div class="car text-center">
+          <div class="card-header">
+            Browse Internships
+          </div>
+          {{#if message1}}
+          <h4 class="alert alert-danger mt-4 text-left">{{message1}}</h4>
+          {{/if}}
+          {{#if message2}}
+          <h4 class="alert alert-success mt-4 text-left">{{message2}}</h4>
+          {{/if}}
+
+
+          <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Contribute an internship we may have missed!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-              
-              
+                <div class="modal-body">
+                  <form action="/auth/suggest" method="POST">
+                    <div class="form-group">
+                      <input type="hidden" value={{user.id}} class="form-control" id="suggested_by" name="suggested_by">
+                    </div>
+                    <div class="form-group">
+                      <label for="company_name">Company*</label>
+                      <input type="text" placeholder="Company Name" value="" class="form-control" id="company_name"
+                        name="company_name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="internship_title">Internship Title*</label>
+                      <input type="text" placeholder="Internship Title" value="" class="form-control"
+                        id="internship_title" name="internship_title" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="link">Link*</label>
+                      <input type="text" placeholder="URL" value="" class="form-control" id="link" name="link" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="international_allowed">Do they Sponser International Students?</label>
+                      <input type="text" placeholder="Yes/No/tbd" value="" class="form-control"
+                        id="international_allowed" name="international_allowed">
+                    </div>
+                    <label>Tags:</label>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="swe_tag" value="0">
+                      <input type="checkbox" value="1" name="swe_tag" id="swe_tag">
+                      <label for="swe_tag">SWE</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="dsci_tag" value="0">
+                      <input type="checkbox" value="1" name="dsci_tag" id="dsci_tag">
+                      <label for="dsci_tag">DSCI</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="it_tag" value="0">
+                      <input type="checkbox" value="1" name="it_tag" id="it_tag">
+                      <label for="it_tag">IT</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="consulting_tag" value="0">
+                      <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
+                      <label for="consulting_tag">Consulting</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="cyber_tag" value="0">
+                      <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
+                      <label for="cyber_tag">Cyber</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="product_tag" value="0">
+                      <input type="checkbox" value="1" name="product_tag" id="product_tag">
+                      <label for="product_tag">Product</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="hidden" name="juniors_only" value="0">
+                      <input type="checkbox" value="1" name="juniors_only" id="juniors_only">
+                      <label for="juniors_only">'23 Only? (will be juniors)</label>
+                    </div>
 
-                <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Contribute an internship we may have missed!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                         <form action="/auth/suggest" method = "POST">
-                         <div class="form-group">
-                            <input type="hidden" value={{user.id}} class="form-control" id="suggested_by" name="suggested_by">
+                    <div class="form-check">
+                      <label for="is_ug">Is this program specifically for an underrepresented group (Google STEP, PWC
+                        START, etc)?</label>
+                      <input type="hidden" name="is_ug" value="0">
+                      <input type="checkbox" value="1" name="is_ug" id="is_ug">
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <table id="internshipTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th class="th-sm">Company
+                </th>
+                <th class="th-sm">Position
+                </th>
+                <th class="th-sm">Eligibility
+                </th>
+                <th class="th-sm">Date Added
+                </th>
+                <th class="th-sm">Apply
+                </th>
+                <th class="th-sm">Track
+                </th>
+                <th style="width: 5%">Flag Errors</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {{#each jobs}}
+              <tr>
+                <td>{{company_name}}</td>
+                <td>{{internship_title}}</td>
+                <td>{{eligibility}}</td>
+                <td>{{date_added}}</td>
+                <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
+                <td>
+                  <form action="/auth/ug_track" method="POST">
+                    {{#if is_tracked}}
+
+                    <button class="btn btn-info" disabled>+</button>
+
+                    {{else}}
+                    <button name="job_id" class="btn btn-success" value={{job_id}}>+</button>
+                    {{/if}}
+                  </form>
+                </td>
+                <td>
+                  <img src="/images/whiteflagicon.png" type="button" data-toggle="modal"
+                    data-target="#flagModal + {{job_id}}" style="width: 25px; height: 25px">
+
+                  <div class="modal fade" id="flagModal + {{job_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Only Check/Fill the Relevent Field</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
                         </div>
-                          <div class="form-group">
-                            <label for="company_name">Company*</label>
-                            <input type="text" placeholder="Company Name" value = "" class="form-control" id="company_name" name="company_name" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="internship_title">Internship Title*</label>
-                            <input type="text" placeholder="Internship Title" value="" class="form-control" id="internship_title" name="internship_title" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="link">Link*</label>
-                            <input type="text" placeholder="URL" value="" class="form-control" id="link" name="link" required>
-                          </div>
+                        <div class="modal-body">
+                          <form action="/auth/suggestCorrectionUG" method="POST">
+
                             <div class="form-group">
-                            <label for="international_allowed">Do they Sponser International Students?</label>
-                            <input type="text" placeholder="Yes/No/tbd" value="" class="form-control" id="international_allowed" name="international_allowed">
-                          </div>
-                          <label>Tags:</label>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="swe_tag" value="0">
-                            <input type="checkbox" value="1" name="swe_tag" id="swe_tag">
-                            <label for="swe_tag">SWE</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="dsci_tag" value="0">
-                            <input type="checkbox" value="1" name="dsci_tag" id="dsci_tag">
-                            <label for="dsci_tag">DSCI</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="it_tag" value="0">
-                            <input type="checkbox" value="1" name="it_tag" id="it_tag">
-                            <label for="it_tag">IT</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="consulting_tag" value="0">
-                            <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
-                            <label for="consulting_tag">Consulting</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="cyber_tag" value="0">
-                            <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
-                            <label for="cyber_tag">Cyber</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="hidden" name="product_tag" value="0">
-                            <input type="checkbox" value="1" name="product_tag" id="product_tag">
-                            <label for="product_tag">Product</label>
-                          </div>
-                          <div class="form-check">
-                            <input type="hidden" name="juniors_only" value="0">
-                            <input type="checkbox" value="1" name="juniors_only" id="juniors_only">
-                            <label for="juniors_only">'23 Only? (will be juniors)</label>
-                          </div>
+                              <input type="hidden" value={{job_id}} class="form-control" id="job_id" name="job_id">
+                              <input type="hidden" value={{link}} class="form-control" id="link" name="link">
+                            </div>
+                            <t>------------------------------------------------------------------------</t>
+                            <div class="form-check">
+                              <input type="hidden" name="is_closed" value="0">
+                              <input type="checkbox" value="1" name="is_closed" id="is_closed">
+                              <label for="is_closed">Is the Link Down or Application Closed?</label>
+                            </div>
+                            <t>------------------------------------------------------------------------</t>
 
-                          <div class="form-check">
-                            <label for="is_ug">Is this program specifically for an underrepresented group (Google STEP, PWC START, etc)?</label>
-                            <input type="hidden" name="is_ug" value="0">
-                            <input type="checkbox" value="1" name="is_ug" id="is_ug">
-                          </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
 
-
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                        </div>
 
                       </div>
-                     
                     </div>
                   </div>
-                </div>
-<table id="internshipTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Company
-      </th>
-      <th class="th-sm">Position
-      </th>
-      <th class="th-sm">Eligibility
-      </th>
-      <th class="th-sm">Date Added
-      </th>
-      <th class="th-sm">Apply
-      </th>
-      <th class="th-sm">Track
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each jobs}}
-      <tr>
-        <td>{{company_name}}</td>
-        <td>{{internship_title}}</td>
-        <td>{{eligibility}}</td>
-        <td>{{date_added}}</td>
-        <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
-        <td>  <form action="/auth/ug_track" method="POST">
-              {{#if is_tracked}}
+                </td>
+              </tr>
+              {{/each}}
 
-                <button class="btn btn-info" disabled>+</button>
-             
-              {{else}}
-                <button name="job_id" class="btn btn-success" value={{job_id}}>+</button>
-              {{/if}}
-              </form>
-        </td>
-      </tr>
-    {{/each}}
 
-   
-  </tbody>
+            </tbody>
 
-  <tfoot>
-    <tr>
-      <th class="th-sm">Company
-      </th>
-      <th class="th-sm">Position
-      </th>
-      <th class="th-sm">Eligibility
-      </th>
-      <th class="th-sm">Date Added
-      </th>
-      <th class="th-sm">Apply
-      </th>
-      <th class="th-sm">Track
-      </th>
-    </tr>
-  </tfoot>
-  <script>
-  $(document).ready(function() {
-    $('#internshipTable').DataTable({
-      "order": [[4, "desc"]]
-    });
-} );
-</script>
-</table>
+            <tfoot>
+              <tr>
+                <th class="th-sm">Company
+                </th>
+                <th class="th-sm">Position
+                </th>
+                <th class="th-sm">Eligibility
+                </th>
+                <th class="th-sm">Date Added
+                </th>
+                <th class="th-sm">Apply
+                </th>
+                <th class="th-sm">Track
+                </th>
+                <th style="width: 5%">Flag Errors</th>
 
-               
-            </div>
+              </tr>
+            </tfoot>
+            <script>
+              $(document).ready(function () {
+                $('#internshipTable').DataTable({
+                  "order": [[4, "desc"]]
+                });
+              });
+            </script>
+          </table>
+
+
         </div>
-        
+      </div>
+
     </div>
-{{#if message1}}
-          <h4 class="alert alert-danger mt-4">{{message1}}</h4>
-        {{/if}}
-        {{#if message2}}
-          <h4 class="alert alert-success mt-4">{{message2}}</h4>
-        {{/if}}
+
 </body>
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
     <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
-    <p>
-        <a href= "https://www.linkedin.com/in/evan-hoffman/" target="_blank">
-        <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px"  class="img-thumbnail">
-                <a href= "https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role = "button">Code</a>
+      <p>
+        <a href="https://www.linkedin.com/in/evan-hoffman/" target="_blank">
+          <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px" class="img-thumbnail">
+          <a href="https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role="button">Code</a>
 
-        </p>
-        <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
+      </p>
+      <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
     </a>
   </div>
 </footer>
+
 </html>

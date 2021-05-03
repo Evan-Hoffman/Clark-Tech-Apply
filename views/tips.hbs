@@ -1,173 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <title>Tips -clarkTech Apply</title>
 </head>
+
 <body>
     <nav id="a">
         <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
         <ul>
-                {{#if user.is_privileged}}
-                    <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
-                {{/if}}
-                <li><a href="/">Home</a></li>
-                <li><a href="/tips">Tips</a></li>
-                <li><a href="/myapps">MyApps</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      Internships
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-                        <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
-                        <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
-                    </ul>
-                </li>
+            {{#if user.is_privileged}}
+            <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+            {{/if}}
+            <li><a href="/">Home</a></li>
+            <li><a href="/tips">Tips</a></li>
+            <li><a href="/myapps">MyApps</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Internships
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
+                    <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented
+                            Groups</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="/images/profileIconb.png" style="width: 25px; height: 25px"
+                        class="profile-image img-circle">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
+                    <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
-    
+
     <div class="row">
-    
+
         <div class="col col-md-12">
             <div class="car text-center">
-                
-                <div class = "card-body">
-                    <a href="https://docs.google.com/document/d/1IzU6PZQAaZGKBDJ4wEeSK4TDVkG6R7J_l09G5Ywbszw/edit?fbclid=IwAR13EP4OelaHJOlX1wI1-eYz3uFMijFunVYlIBck7SEwOcdzgEerLOu-jP8" target="_blank" class="btn btn-primary">FULL Guide Here</a>
+
+                <div class="card-body">
+                    <a href="https://docs.google.com/document/d/1IzU6PZQAaZGKBDJ4wEeSK4TDVkG6R7J_l09G5Ywbszw/edit?fbclid=IwAR13EP4OelaHJOlX1wI1-eYz3uFMijFunVYlIBck7SEwOcdzgEerLOu-jP8"
+                        target="_blank" class="btn btn-primary">FULL Guide Here</a>
                     <h3 class="card-title">Before You Start Applying</h3>
                     <small>These tasks will take some time, but the value is immeasurable</small>
-                   
-            <div class="card border-primary">
-            <div class="card-header"  style="background-color: #33B7FF;">
-                Preparing a Tech Resume
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Recruiters will look at a Resume for an average of 6 seconds before deciding whether to move you to a first interview or not*. So it's gotta be good</p>
-                    <a href="https://zoom.us/rec/share/-_14FbT_7TJIRKvC50z7Xb4RH6mmT6a8gHIXrqEEyk-tBSQT7ghUd8bRW_z1u-L6" target="_blank" class="btn btn-primary">Tech Recruiters on Resume Do's and Don'ts</a>
-                    <p class = "card-text"> <small>Passcode: 6w$Y7wgA</small> </p>
-                    <h4 class="card-title"> Sample Resumes:</h5>
-                    <div class="parent-container d-flex">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="title">Early-College</h5>
-                                <a href="https://drive.google.com/file/d/1Skdy5w65L6ax4Bknfjh5WyN1stLb2DwM/view?usp=sharing" target="_blank" class="btn btn-primary">Preview</a>
-                                <a href="\docs\Early Resume Sample.docx"  target="_blank" class="btn btn-primary">Download as Doc and edit</a>
+
+                    <div class="card border-primary">
+                        <div class="card-header" style="background-color: #33B7FF;">
+                            Preparing a Tech Resume
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Recruiters will look at a Resume for an average of 6 seconds before
+                                deciding whether to move you to a first interview or not*. So it's gotta be good</p>
+                            <a href="https://zoom.us/rec/share/-_14FbT_7TJIRKvC50z7Xb4RH6mmT6a8gHIXrqEEyk-tBSQT7ghUd8bRW_z1u-L6"
+                                target="_blank" class="btn btn-primary">Tech Recruiters on Resume Do's and Don'ts</a>
+                            <p class="card-text"> <small>Passcode: 6w$Y7wgA</small> </p>
+                            <h4 class="card-title"> Sample Resumes:</h5>
+                                <div class="parent-container d-flex">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="title">Early-College</h5>
+                                                <a href="https://drive.google.com/file/d/1Skdy5w65L6ax4Bknfjh5WyN1stLb2DwM/view?usp=sharing"
+                                                    target="_blank" class="btn btn-primary">Preview</a>
+                                                <a href="\docs\Early Resume Sample.docx" target="_blank"
+                                                    class="btn btn-primary">Download as Doc and edit</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="title">More Experience</h5>
+                                                <a href="https://drive.google.com/file/d/1HvWnCS97b0hQDpHoOQIlyFAuzmOwKOYx/view?usp=sharing"
+                                                    target="_blank" class="btn btn-primary">Preview</a>
+                                                <a href="\docs\MoreExperienceTemplate.docx" target="_blank"
+                                                    class="btn btn-primary">Download as Doc and edit</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <p class="card-text">*that's right, and tech recruiters strongly discourage cover
+                                    letters as well (they won't read them). Google gets 2M applications per year, so its
+                                    kind of understandable. More stuff like this in that video ^</p>
+
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" style="background-color: #33B7FF;">
+                                Build Your LinkedIn
                             </div>
+                            <div class="card-body">
+                                <p class="card-text">It should effectively be your Resume + anything else you didn't fit
+                                    on it</p>
+                                <p class="card-text">Connect with classmates, <a
+                                        href="https://www.linkedin.com/in/evan-hoffman" target="_blank">myself</a>,
+                                    other clark CS students, etc</p>
+                                <p class="card-text">Your LinkedIn can come in handy if you wish to reach out to
+                                    recruiters (see left-hand panel for tips!)</p>
+                            </div>
+
+                            <div class="card-header" style="background-color: #33B7FF;">
+                                WHILE you Apply, Prepare!
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">During your search process, the two most common interviews you will
+                                    face are Coding (Technical) Interviews and Behavioral Interviews</p>
+                                <h4 class="card-title">Coding Interviews</h4>
+
+                                <p class="card-text">Preparing for Coding Interviews is as simple as daily practice.
+                                    Coding interviews will consist of questions where you are asked to write a program
+                                    that will do what the instructions say to do. You can ususually pick the language of
+                                    your choice, but as the material never exceeds the level of your Data Structures
+                                    (CSCI 121) or Algorithms Course (CSCI 160), you probably will be most comfortable
+                                    using the language you used in those courses (Java, Python, etc)</p>
+                                <p class="card-text"><a href="https://www.leetcode.com" target="_blank">Leetcode</a> is
+                                    a website with thousands of practice coding interview problems</p>
+                                <p class="card-text">Rather than attempting to solve every problem on Leetcode though, I
+                                    would follow some sort of study order, <a
+                                        href="https://yangshun.github.io/tech-interview-handbook/algorithms/algorithms-introduction/"
+                                        target="_blank">like this</a>, which links to Leetcode problems but in a
+                                    well-defined progression of problem topics (Arrays, Lists, etc) </p>
+
+                                <h4 class="card-title">Behavioral Interviews</h4>
+                                <p class="card-text">These are questions like, "Tell me about a time when you had a
+                                    problem with a team member", etc. Check out <a
+                                        href="https://www.themuse.com/advice/30-behavioral-interview-questions-you-should-be-ready-to-answer"
+                                        target="_blank">this question list</a> and utilize the <a
+                                        href="https://www.themuse.com/advice/star-interview-method" target="_blank">STAR
+                                        behavioral interview method</a> to answer them</p>
+                                <h4 class="card-title">**Never go into any interview (even pre-recorded interviews, like
+                                    HireVues, without researching the company and why you want to work there/how you
+                                    measure up to the job description (really study that thing, Google what you don't
+                                    know)**</h4>
+
+                            </div>
+
+
                         </div>
                     </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="title">More Experience</h5>
-                                <a href="https://drive.google.com/file/d/1HvWnCS97b0hQDpHoOQIlyFAuzmOwKOYx/view?usp=sharing" target="_blank" class="btn btn-primary">Preview</a>
-                                <a href="\docs\MoreExperienceTemplate.docx"  target="_blank" class="btn btn-primary">Download as Doc and edit</a>
+                    <div class="col col-md-12">
+                        <div class="car text-center">
+
+                            <div class="card-body">
+                                <h3 class="card-title">Additional Tips</h3>
+                                <div class="card border-primary">
+                                    <div class="card-header" style="background-color: #33B7FF;">
+                                        Increasing Your Chances: A Numbers Game
+
+                                    </div>
+                                    <small>Somewhere between quality and quantity</small>
+
+                                    <div class="card-body">
+
+                                        <p class="card-text">From experience and working with Clark CS students to find
+                                            summer internships, the students who get internships
+                                            average at least 75 applications (often >100) per recruiting season.
+                                        </p>
+                                        <p class="card-text">However, expect next steps from only 10-20% of the places
+                                            you apply to.
+                                        </p>
+                                        <p>
+                                            <img src="/images/rejections.png" style="width: 400px; height: 600px"
+                                                class="img">
+                                        </p>
+                                        </p>
+                                        <p class="card-text">Now, there are ways to improve your odds. If you really
+                                            really care about a certain company, reach out to one of their recruiters on
+                                            LinkedIn, find a Clark alum there to network with, or tailor your resume to
+                                            that specific application.
+                                        </p>
+                                        </p>
+                                        <p class="card-text"> But often people who go that route neglect applying to
+                                            most opportunties, and this is a grave mistake. When you see a new
+                                            opportunity on here, apply to it ASAP while the applicant pool is small.
+                                            After all, a referall may get you to the start of the interview process.
+                                            Odds are, so will 10 cold applications.
+                                        </p>
+                                    </div>
+
+                                </div>
                             </div>
+
                         </div>
                     </div>
-                    
-                    </div>
-                    <p class="card-text">*that's right, and tech recruiters strongly discourage cover letters as well (they won't read them). Google gets 2M applications per year, so its kind of understandable. More stuff like this in that video ^</p>
-
-                    </div>
-
-                              <div class="card">
-            <div class="card-header"  style="background-color: #33B7FF;">
-                Build Your LinkedIn
-            </div>
-                <div class="card-body">
-                    <p class="card-text">It should effectively be your Resume + anything else you didn't fit on it</p>
-                    <p class = "card-text">Connect with classmates, <a href="https://www.linkedin.com/in/evan-hoffman" target="_blank">myself</a>, other clark CS students, etc</p>
-                    <p class="card-text">Your LinkedIn can come in handy if you wish to reach out to recruiters (see left-hand panel for tips!)</p>
-                    </div>
-                  
-                   <div class="card-header"  style="background-color: #33B7FF;">
-                WHILE you Apply, Prepare!
-            </div>
-            <div class="card-body">
-                    <p class="card-text">During your search process, the two most common interviews you will face are Coding (Technical) Interviews and Behavioral Interviews</p>
-                    <h4 class="card-title">Coding Interviews</h4>
-
-                    <p class = "card-text">Preparing for Coding Interviews is as simple as daily practice. Coding interviews will consist of questions where you are asked to write a program that will do what the instructions say to do. You can ususually pick the language of your choice, but as the material never exceeds the level of your Data Structures (CSCI 121) or Algorithms Course (CSCI 160), you probably will be most comfortable using the language you used in those courses (Java, Python, etc)</p>
-                    <p class="card-text"><a href="https://www.leetcode.com" target="_blank">Leetcode</a> is a website with thousands of practice coding interview problems</p> 
-                    <p class="card-text">Rather than attempting to solve every problem on Leetcode though, I would follow some sort of study order, <a href="https://yangshun.github.io/tech-interview-handbook/algorithms/algorithms-introduction/" target="_blank">like this</a>, which links to Leetcode problems but in a well-defined progression of problem topics (Arrays, Lists, etc) </p> 
-
-                    <h4 class="card-title">Behavioral Interviews</h4>
-                    <p class = "card-text">These are questions like, "Tell me about a time when you had a problem with a team member", etc. Check out <a href="https://www.themuse.com/advice/30-behavioral-interview-questions-you-should-be-ready-to-answer" target="_blank">this question list</a> and utilize the <a href="https://www.themuse.com/advice/star-interview-method" target="_blank">STAR behavioral interview method</a>  to answer them</p>
-                    <h4 class="card-title">**Never go into any interview (even pre-recorded interviews, like HireVues, without researching the company and why you want to work there/how you measure up to the job description (really study that thing, Google what you don't know)**</h4>
-
-            </div>
-                
-
-        </div>
-    </div>
-        <div class="col col-md-12">
-            <div class="car text-center">
-                
-                <div class = "card-body">
-                    <h3 class="card-title">Additional Tips</h3>
-            <div class="card border-primary">
-            <div class="card-header"  style="background-color: #33B7FF;">
-                Increasing Your Chances: A Numbers Game
-                
                 </div>
-                                    <small>Somewhere between quality and quantity</small>                   
-
-                <div class="card-body">
-                    
-                    <p class="card-text">From experience and working with Clark CS students to find summer internships, the students who get internships
-                        average at least 75 applications (often >100) per recruiting season.
-                    </p>
-                     <p class="card-text">However, expect next steps from only 10-20% of the places you apply to. 
-                    </p>
-                    <p>
-                        <img src="/images/rejections.png" style="width: 400px; height: 600px"  class="img">
-                    </p>
-                     </p>
-                     <p class="card-text">Now, there are ways to improve your odds. If you really really care about a certain company, reach out to one of their recruiters on LinkedIn, find a Clark alum there to network with, or tailor your resume to that specific application.  
-                    </p>
-                    </p>
-                     <p class="card-text"> But often people who go that route neglect applying to most opportunties, and this is a grave mistake. When you see a new opportunity on here, apply to it ASAP while the applicant pool is small. After all, a referall may get you to the start of the interview process. Odds are, so will 10 cold applications.  
-                    </p>
-                </div>
-               
             </div>
-        </div>
-    
-    </div>
-        </div>
-</div>
-</div>
-  
+
 </body>
 
 <footer class="bg-light text-center text-lg-start">
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-    
-    <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
-        <p>
-            <a href= "https://www.linkedin.com/in/evan-hoffman/" target="_blank">
-            <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px"  class="img-thumbnail">
-                    <a href= "https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role = "button">Code</a>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
 
-        </p>
-        <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
-    </a>
-  </div>
+        <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
+            <p>
+                <a href="https://www.linkedin.com/in/evan-hoffman/" target="_blank">
+                    <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px" class="img-thumbnail">
+                    <a href="https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role="button">Code</a>
+
+            </p>
+            <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
+        </a>
+    </div>
 </footer>
+
 </html>

@@ -1,191 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="/style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
 
-    
 
 
 
-    <title>MyApps -clarkTech Apply</title>
+
+  <title>MyApps -clarkTech Apply</title>
 </head>
+
 <body>
-    <nav id="a">
-        <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
-        <ul>
-            {{#if user.is_privileged}}
-                <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
-            {{/if}}
-            <li><a href="/">Home</a></li>
-            <li><a href="/tips">Tips</a></li>
-            <li><a href="/myapps">MyApps</a></li>
-            <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      Internships
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-                        <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
-                    </ul>
-            </li>
-            <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
-                        <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
-                    </ul>
-            </li>
+  <nav id="a">
+    <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
+    <ul>
+      {{#if user.is_privileged}}
+      <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+      {{/if}}
+      <li><a href="/">Home</a></li>
+      <li><a href="/tips">Tips</a></li>
+      <li><a href="/myapps">MyApps</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Internships
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
+          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
+          </li>
         </ul>
-    </nav>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
+          <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 
-    <div class="containter mt-4">
-        
-        <div class="col-12">
-            <div class="car text-center">
-                <div class="card-header">
-                    Tracked Applications
-                </div>
-<table id="myappstable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Company
-      </th>
-      <th class="th-sm">Position
-      </th>
-      <th class="th-sm">Status
-      </th>
-      <th class="th-sm">Date Applied
-      </th>
-      <th class="th-sm">Un-track
-      </th>
-    </tr>
-  </thead>
-  <tbody id = "test">
-    {{#each myapps}}
-      <tr>
-        <td>{{company_name}}</td>
-        <td><a href= {{link}} target="_blank">{{internship_title}}</a></td>
+  <div class="containter mt-4">
 
-        <td><div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-              {{#if has_status}}
-                  {{app_status}}
-              {{else}}
-                Select Status
-              {{/if}}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                 <button name="update_code" class="dropdown-item" value=1>Applied</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                 <input type="hidden" name="job_id" value={{job_id}}/>
-                 <button name="update_code" class="dropdown-item" value=2>Screener</button>
-              </form>
-                <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=3>Hackerrank</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=4>Recorded Behavioral</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=5>Phone Interview</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=6>Final/Onsite Interview</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=7>Received Offer</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=8>Accepted Offer</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=9>Declined Offer</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=10>Withdrew</button>
-              </form>
-              <form action="/auth/update" method="POST"> 
-                  <input type="hidden" name="job_id" value={{job_id}}/>
-                  <button name="update_code" class="dropdown-item" value=11>Rejected</button>
-              </form>
-            </div>
-            </div>
-        </td>
-        
-        <td>{{date_applied}}</td>
-
-        <td>
-          <form action="/auth/untrack" method="POST">
-                <button name="job_id" class="btn btn-danger" value={{job_id}}>-</button>
-          </form>
-        </td>
-
-      </tr>
-    {{/each}}
-
-   
-  </tbody>
-
-  <tfoot>
-    <tr>
-      <th>Company
-      </th>
-      <th>Position
-      </th>
-      <th>Status
-      </th>
-      <th>Date Applied
-      </th>
-      <th>Un-track
-      </th>
-    </tr>
-  </tfoot>
-</table>
-                <div class="card-footer text-muted">
-                    Clark Tech Apply 
-                </div>
-            </div>
+    <div class="col-12">
+      <div class="car text-center">
+        <div class="card-header">
+          Tracked Applications
         </div>
-        
+        <table id="myappstable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th class="th-sm">Company
+              </th>
+              <th class="th-sm">Position
+              </th>
+              <th class="th-sm">Status
+              </th>
+              <th class="th-sm">Date Applied
+              </th>
+              <th class="th-sm">Un-track
+              </th>
+            </tr>
+          </thead>
+          <tbody id="test">
+            {{#each myapps}}
+            <tr>
+              <td>{{company_name}}</td>
+              <td><a href={{link}} target="_blank">{{internship_title}}</a></td>
+
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown">
+                    {{#if has_status}}
+                    {{app_status}}
+                    {{else}}
+                    Select Status
+                    {{/if}}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=1>Applied</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=2>Screener</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=3>Hackerrank</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=4>Recorded Behavioral</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=5>Phone Interview</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=6>Final/Onsite Interview</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=7>Received Offer</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=8>Accepted Offer</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=9>Declined Offer</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=10>Withdrew</button>
+                    </form>
+                    <form action="/auth/update" method="POST">
+                      <input type="hidden" name="job_id" value={{job_id}} />
+                      <button name="update_code" class="dropdown-item" value=11>Rejected</button>
+                    </form>
+                  </div>
+                </div>
+              </td>
+
+              <td>{{date_applied}}</td>
+
+              <td>
+                <form action="/auth/untrack" method="POST">
+                  <button name="job_id" class="btn btn-danger" value={{job_id}}>-</button>
+                </form>
+              </td>
+
+            </tr>
+            {{/each}}
+
+
+          </tbody>
+
+          <tfoot>
+            <tr>
+              <th>Company
+              </th>
+              <th>Position
+              </th>
+              <th>Status
+              </th>
+              <th>Date Applied
+              </th>
+              <th>Un-track
+              </th>
+            </tr>
+          </tfoot>
+        </table>
+        <div class="card-footer text-muted">
+          Clark Tech Apply
+        </div>
+      </div>
     </div>
-{{#if message}}
-        <h4 class="alert alert-danger mt-4">{{message}}</h4>
-        {{/if}}
-        {{#if error}}
-        <h4 class="alert alert-danger mt-4">{{error}}</h4>
-        {{/if}}
+
+  </div>
+  {{#if message}}
+  <h4 class="alert alert-danger mt-4">{{message}}</h4>
+  {{/if}}
+  {{#if error}}
+  <h4 class="alert alert-danger mt-4">{{error}}</h4>
+  {{/if}}
 </body>
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
     <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
-    <p>
-        <a href= "https://www.linkedin.com/in/evan-hoffman/" target="_blank">
-        <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px"  class="img-thumbnail">
-                <a href= "https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role = "button">Code</a>
+      <p>
+        <a href="https://www.linkedin.com/in/evan-hoffman/" target="_blank">
+          <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px" class="img-thumbnail">
+          <a href="https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role="button">Code</a>
 
-        </p>
-        <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
+      </p>
+      <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
     </a>
   </div>
 </footer>
+
 </html>

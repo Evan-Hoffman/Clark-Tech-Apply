@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <title>Profile -clarkTech Apply</title>
 </head>
+
 <body>
     <nav id="a">
         <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
         <ul>
             {{#if user.is_privileged}}
-                <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+            <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
             {{/if}}
             <li><a href="/">Home</a></li>
             <li><a href="/tips">Tips</a></li>
             <li><a href="/myapps">MyApps</a></li>
             <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      Internships
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-                        <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
-                    </ul>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Internships
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
+                    <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented
+                            Groups</a></li>
+                </ul>
             </li>
             <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/profile" class="dropdown-item" style="color: #000000"> Profile</a></li>
-                        <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
-                        <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
-                    </ul>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="/images/profileIconb.png" style="width: 25px; height: 25px"
+                        class="profile-image img-circle">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/profile" class="dropdown-item" style="color: #000000"> Profile</a></li>
+                    <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
+                    <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
+                </ul>
             </li>
         </ul>
     </nav>
@@ -49,45 +60,50 @@
                     <div class="avatar-ctn">
                         <img src="/images/avatar.png" class="avatar" alt="profile pic">
                     </div>
-                    <div class = "card-body">
+                    <div class="card-body">
                         <h5 class="card-title">{{user.name}}</h5>
-                        <p class="card-text">random random random random random random random random random random random random</p>
+                        <p class="card-text">random random random random random random random random random random
+                            random random</p>
                         <a href="#" class="btn btn-primary">{{user.email}}</a>
                     </div>
                 </div>
-        </div>
-        
-        <div class="col-8">
-            <div class="car text-center">
-                <div class="card-header">
-                    Profile Page
-                </div>
-                <div class = "card-body">
-                    <h5 class="card-title">Hey {{user.name}}, Welcome Back</h5>
-                    <p class="card-text">This is your profile page where you can add all the information about yourself</p>
-                    <a href="#" class = "btn btn-primary"> Go Somewhere</a>
-                </div>
-                <div class="card-footer text-muted">
-                    Clark Tech Apply 
+            </div>
+
+            <div class="col-8">
+                <div class="car text-center">
+                    <div class="card-header">
+                        Profile Page
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Hey {{user.name}}, Welcome Back</h5>
+                        <p class="card-text">This is your profile page where you can add all the information about
+                            yourself</p>
+                        <a href="#" class="btn btn-primary"> Go Somewhere</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Clark Tech Apply
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
-        
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 </body>
 <footer class="bg-light text-center text-lg-start">
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-    <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
-    <p>
-        <a href= "https://www.linkedin.com/in/evan-hoffman/" target="_blank">
-        <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px"  class="img-thumbnail">
-                <a href= "https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role = "button">Code</a>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
+            <p>
+                <a href="https://www.linkedin.com/in/evan-hoffman/" target="_blank">
+                    <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px" class="img-thumbnail">
+                    <a href="https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role="button">Code</a>
 
-        </p>
-        <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
-    </a>
-  </div>
+            </p>
+            <a class="text-dark">For Support, contact clarktechapply@gmail.com</a>
+        </a>
+    </div>
 </footer>
+
 </html>

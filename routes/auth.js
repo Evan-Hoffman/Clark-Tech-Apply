@@ -37,12 +37,14 @@ router.post('/deleteAccount/:id', authController.deleteAccount);
 
 router.post('/suggest', authController.suggest);
 
+router.post('/suggestCorrection', authController.isLoggedIn, authController.suggestCorrection);
+
+router.post('/suggestCorrectionUG', authController.isLoggedIn, authController.suggestCorrectionUG);
+
 router.post('/approve', authController.approve);
 
 router.post('/reject', authController.reject);
 
-
-
-
+router.post('/dismissEdit', authController.dismissEdit);
 
 module.exports = router;
