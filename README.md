@@ -1,4 +1,4 @@
-##[clarkTech Apply](https://clarktechapply.com/)
+## [clarkTech Apply](https://clarktechapply.com/)
 
 Technology Internship List And Stage Tracking Application for Clark University Students
     -Tracking Listings for Software Engineering, Data Science, Cybersecurity, Product, IT Analyst, and Tech-Consulting Summer Internships
@@ -11,7 +11,7 @@ Hosted on Heroku Cloud, DB hosted with ClearDB
 
 For Support, feedback, or comments, email clarktechapply@gmail.com
 
-##Credits:
+## Credits:
 
 Advisor: Prof. Kenneth Basye
 
