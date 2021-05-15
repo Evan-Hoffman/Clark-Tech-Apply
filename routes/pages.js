@@ -97,6 +97,25 @@ router.get('/underrepresented', authController.isLoggedIn, authController.popula
 
 });
 
+//only go to Exploratory Programs if logged in
+router.get('/exploratory', authController.isLoggedIn, authController.populateExploratory, (req, res) => {
+    //console.log(req.internships.length);
+    if(req.user) {
+        //console.log(req.internships);
+        res.render('exploratory', {
+            user: req.user,
+            jobs: req.programs,
+            message1: req.session.message1,
+            message2: req.session.message2
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
 //only go to MyApps if logged in
 router.get('/myapps', authController.isLoggedIn, authController.populateMyApps, (req, res) => {
     if(req.user) {

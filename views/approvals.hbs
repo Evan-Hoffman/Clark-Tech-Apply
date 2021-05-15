@@ -97,6 +97,8 @@
                   </th>
                   <th class="th-sm">UG?
                   </th>
+                  <th class="th-sm">EP?
+                  </th>
                   <th class="th-sm">Position
                   </th>
                   <th class="th-sm">Date Suggested
@@ -141,6 +143,11 @@
 
                   <td>{{international_allowed}}</td>
                   {{#if is_ug}}
+                  <td>Yes</td>
+                  {{else}}
+                  <td>No</td>
+                  {{/if}}
+                  {{#if is_ep}}
                   <td>Yes</td>
                   {{else}}
                   <td>No</td>
@@ -271,6 +278,16 @@
                                 <label for="is_ug">UG?</label>
                               </div>
 
+                              <div class="form-check">
+                                <input type="hidden" name="is_ep" value="0">
+                                {{#if is_ep}}
+                                <input type="checkbox" checked="checked" value="1" name="is_ep" id="is_ep">
+                                {{else}}
+                                <input type="checkbox" value="1" name="is_ep" id="is_ep">
+                                {{/if}}
+                                <label for="is_ep">EP?</label>
+                              </div>
+
                               <div class="form-group">
                                 <label for="eligibility">Eligibile Groups:</label>
                                 <input type="text" value="" class="form-control" id="eligibility" name="eligibility">
@@ -305,6 +322,8 @@
               </th>
               <th class="th-sm">UG?
               </th>
+              <th class="th-sm">EP?
+                  </th>
               <th class="th-sm">Position
               </th>
               <th class="th-sm">Date Suggested

@@ -13,6 +13,8 @@ router.post('/track', authController.track);
 
 router.post('/ug_track', authController.ug_track);
 
+router.post('/ep_track', authController.ep_track);
+
 router.post('/untrack', authController.untrack);
 
 router.post('/update', authController.update);
@@ -28,6 +30,8 @@ router.post('/populateMyApps', authController.populateMyApps);
 router.post('/populateInternships', authController.populateInternships);
 
 router.post('/populateUnderrepresented', authController.populateUnderrepresented);
+
+router.post('/populateExploratory', authController.populateExploratory);
 
 router.get('/confirm/:confirmationCode', authController.verifyUser);
 
