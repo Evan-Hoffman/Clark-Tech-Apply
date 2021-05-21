@@ -19,6 +19,8 @@ router.post('/untrack', authController.untrack);
 
 router.post('/update', authController.update);
 
+router.post('/toggleEmailNotifications/:email', authController.toggleEmailNotifications);
+
 router.post('/updateEmail/:email', authController.updateEmail);
 
 router.post('/updateName/:email', authController.updateName);

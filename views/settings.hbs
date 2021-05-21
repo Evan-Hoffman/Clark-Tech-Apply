@@ -37,7 +37,7 @@
           <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
           <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
           </li>
-                    <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a>
+          <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a>
 
         </ul>
       </li>
@@ -122,6 +122,27 @@
       </div>
     </div>
   </div>
+
+  <div class="card-header">
+    Notification Preferences
+  </div>
+  <div class="card-body">
+    <form action="/auth/toggleEmailNotifications/{{user.email}}" method="POST">
+      <div class="form-check">
+        <input type="hidden" name="email_consent" value="0">
+        {{#if user.email_consent}}
+
+        <input type="checkbox" value="1" name="email_consent" id="email_consent" checked>
+        {{else}}
+        <input type="checkbox" value="1" name="email_consent" id="email_consent">
+        {{/if}}
+
+        <label for="email_consent">Receive Occasional Emails with Advice and Platform Updates?</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Update Notification Preferences</button>
+    </form>
+  </div>
+
   <div class="card-header">
     Delete my Account
   </div>

@@ -326,6 +326,26 @@ exports.updateEmail = (req, res) => {
     });
 }
 
+exports.toggleEmailNotifications = (req, res) => {
+    console.log(req.body);
+    let email_consent = req.body.email_consent;
+    if (email_consent.length >1){
+        email_consent = '1';
+    }
+
+    
+    pool.query('UPDATE users SET email_consent = ? WHERE email = ?', [email_consent, req.params.email], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            console.log(req.params.email + " has updated their notification preferences ");
+            req.session.message2 = 'Preferences Updated';
+            return res.redirect('/settings');
+        }
+    });
+}
+
 exports.updateName = (req, res) => {
 
     pool.query('UPDATE users SET name = ? WHERE email = ?', [req.body.newName, req.params.email], (error, results) => {
