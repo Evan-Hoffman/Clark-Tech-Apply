@@ -270,7 +270,7 @@ exports.resetPassword = async (req, res) => {
     if (code == 0){
         console.log("Someone attempted to reset their password with a confirmation code of 0");
         return res.render('passwordreset', {
-            message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
+            message1: 'Error with resetting password, please contact clarktechapply@yahoo.com'
         })
     }
 

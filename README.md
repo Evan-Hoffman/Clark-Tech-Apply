@@ -9,7 +9,7 @@ Live @ [https://clarktechapply.com/](https://clarktechapply.com/)
 
 Hosted on Heroku Cloud, DB hosted with ClearDB
 
-For Support, feedback, or comments, email clarktechapply@gmail.com
+For Support, feedback, or comments, email clarktechapply@yahoo.com
 
 ## Credits:
 

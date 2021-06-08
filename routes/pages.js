@@ -139,7 +139,7 @@ router.get('/passwordreset/:confirmationCode', (req, res) => {
     }
     else {
         res.render('login', {
-            message1: 'Error with resetting password, please contact clarktechapply@gmail.com'
+            message1: 'Error with resetting password, please contact clarktechapply@yahoo.com'
         });
     }
     delete req.session.message1;
