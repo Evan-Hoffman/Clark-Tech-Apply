@@ -16,6 +16,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+
+
+
   <title>clarkTech Apply</title>
 </head>
 
@@ -88,6 +91,39 @@
       </form>
     </div>
   </div>
+
+  <div class="card-header">
+    Update my Year/Role
+  </div>
+  <div class="card-body">
+
+
+
+    <form action="/auth/updateYear/{{user.email}}" method="POST">
+      <div class="form-group">
+        <label for="grad_year">Grad Year/Faculty/Staff</label>
+        <select class="form-control" id="grad_year" name="grad_year" required>
+          {{#if user.grad_year}}
+          <option value={{user.grad_year}}>{{user.grad_year}}</option>
+          {{else}}
+          <option value=0000>Faculty/Staff</option>
+          {{/if}}
+          <option value=0000>Faculty/Staff</option>
+          <option value=2021>Winter 2020/Summer 2021</option>
+          <option value=2022>Winter 2021/Summer 2022</option>
+          <option value=2023>Winter 2022/Summer 2023</option>
+          <option value=2024>Winter 2023/Summer 2024</option>
+          <option value=2025>Winter 2024/Summer 2025</option>
+          <option value=2026>Winter 2025/Summer 2026</option>
+          <option value=2027>Winter 2026/Summer 2027</option>
+          <option value=2028>Winter 2027/Summer 2028</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Update Year/Role</button>
+    </form>
+  </div>
+  </div>
+
   <div class="card-header">
     Change my Password
   </div>
@@ -180,6 +216,8 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
+
+
 </body>
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">

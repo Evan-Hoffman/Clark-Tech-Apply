@@ -59,9 +59,15 @@ exports.sendConfirmationEmail = (name, email, confirmationCode) => {
 
 //register a new user
 exports.register = (req, res) => {
+    
     //console.log(req.body);
 
-    const {name, email, password, passwordConfirm} = req.body;
+    let {name, grad_year, email, password, passwordConfirm} = req.body;
+
+    //console.log(grad_year);
+
+    //console.log(name);
+
 
     if (name == '' || email == '' || password == '' || passwordConfirm == ''){
         console.log("Someone forgot a field when trying to register");
@@ -75,6 +81,10 @@ exports.register = (req, res) => {
         return res.render('register', {
             message1: 'Please signup with your Clark Email Address'
         })
+    }
+    
+    if (grad_year == '0000'){
+        grad_year = null;
     }
 
     pool.query('SELECT email FROM users WHERE email = ?', [email], async (error, results)=>{
@@ -100,7 +110,7 @@ exports.register = (req, res) => {
         for (let i = 0; i < 25; i++) {
             token += characters[Math.floor(Math.random() * characters.length )];
         }
-        pool.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword, confirmation_code: token}, (error, results) => {
+        pool.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword, confirmation_code: token, grad_year: grad_year}, (error, results) => {
             if(error) {
                 console.log(error);
             }
@@ -128,6 +138,7 @@ exports.register = (req, res) => {
             }
         });
         });
+        
 }
 
 exports.verifyUser = (req, res) => {
@@ -355,6 +366,25 @@ exports.updateName = (req, res) => {
         else {
             console.log(req.params.email + " has succesfully updated their name to " + req.body.newName);
             req.session.message2 = 'Name Updated';
+            return res.redirect('/settings');
+        }
+    });
+}
+
+exports.updateYear = (req, res) => {
+    let grad_year = req.body.grad_year;
+
+    if (grad_year == '0000'){
+        grad_year = null;
+    }
+
+    pool.query('UPDATE users SET grad_year = ? WHERE email = ?', [grad_year, req.params.email], (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            console.log(req.params.email + " has succesfully updated their grad year to " + grad_year);
+            req.session.message2 = 'Grad Year Updated';
             return res.redirect('/settings');
         }
     });

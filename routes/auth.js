@@ -25,6 +25,8 @@ router.post('/updateEmail/:email', authController.updateEmail);
 
 router.post('/updateName/:email', authController.updateName);
 
+router.post('/updateYear/:email', authController.updateYear);
+
 router.post('/resetemail', authController.sendResetEmail);
 
 router.post('/populateMyApps', authController.populateMyApps);
