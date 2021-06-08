@@ -17,7 +17,7 @@ var db_config = {
 };
 
 const transport = nodemailer.createTransport({
-    service: "Gmail",
+    service: "Yahoo",
     auth: {
       user: process.env.CTA_EMAIL,
       pass: process.env.CTA_EMAIL_PASSWORD,
