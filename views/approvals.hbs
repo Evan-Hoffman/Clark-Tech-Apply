@@ -39,13 +39,15 @@
       <li><a id="b" href="/">Home</a></li>
       <li><a href="/tips">Tips</a></li>
       <li><a href="/myapps">MyApps</a></li>
+      <li><a href="/fulltime">Fulltime</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Internships
         </a>
         <ul class="dropdown-menu">
           <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
+          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
+          </li>
           <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a>
           </li>
         </ul>
@@ -88,6 +90,8 @@
               width="100%">
               <thead>
                 <tr>
+                  <th class="th-sm">Type
+                  </th>
                   <th class="th-sm">Company
                   </th>
                   <th class="th-sm">Tags
@@ -98,15 +102,11 @@
                   </th>
                   <th class="th-sm">UG?
                   </th>
-                  <th class="th-sm">EP?
-                  </th>
                   <th class="th-sm">Position
                   </th>
                   <th class="th-sm">Date Suggested
                   </th>
                   <th class="th-sm">URL
-                  </th>
-                  <th class="th-sm">Suggestor
                   </th>
                   <th class="th-sm">Approve/Reject
                   </th>
@@ -115,6 +115,17 @@
               <tbody>
                 {{#each suggestions}}
                 <tr>
+                  <td>
+                    {{#if is_ep}}
+                    EP
+                    {{else}}
+                    {{#if is_ft}}
+                    FT
+                    {{else}}
+                    I
+                    {{/if}}
+                    {{/if}}
+                  </td>
                   <td>{{company_name}}</td>
                   <td>
                     {{#if dsci_tag}}
@@ -136,10 +147,14 @@
                     <span class="badge badge-pill badge-warning">PM</span>
                     {{/if}}
                   </td>
+                  {{#if is_ft}}
+                  <td>N/A</td>
+                  {{else}}
                   {{#if juniors_only}}
                   <td>'23 Only</td>
                   {{else}}
                   <td>Any</td>
+                  {{/if}}
                   {{/if}}
 
                   <td>{{international_allowed}}</td>
@@ -148,15 +163,9 @@
                   {{else}}
                   <td>No</td>
                   {{/if}}
-                  {{#if is_ep}}
-                  <td>Yes</td>
-                  {{else}}
-                  <td>No</td>
-                  {{/if}}
                   <td>{{internship_title}}</td>
                   <td>{{date_suggested}}</td>
                   <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Link</a></td>
-                  <td>{{suggested_by}}</td>
                   <td>
                     <a type="button" data-toggle="modal" class="btn btn-success"
                       data-target="#approveModal + {{suggestion_id}}">
@@ -182,15 +191,37 @@
                                 <input type="hidden" value={{suggested_by}} class="form-control" id="suggested_by"
                                   name="suggested_by">
                               </div>
+                              <t>Role Type*</t>
+                              <p></p>
+                              <div class="form-check form-check-inline" id="typeSelect">
+                                <input class="form-check-input" type="radio" name="role_type" id="internshipBox"
+                                  value=1 checked>
+                                <label class="form-check-label" for="internshipBox">
+                                  Internship
+                                </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2 {{#if is_ft}} checked {{/if}}>
+                                <label class="form-check-label" for="fulltimeBox">
+                                  Fulltime
+                                </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role_type" id="epBox" value=3 {{#if is_ep}} checked {{/if}}>
+                                <label class="form-check-label" for="epBox">
+                                  Exploratory Program/Summit
+                                </label>
+                              </div>
+                              <p></p>
                               <div class="form-group">
                                 <label for="company_name">Company</label>
                                 <input type="text" placeholder="Company Name" value={{company_name}}
-                                  class="form-control" id="company_name" name="company_name">
+                                  class="form-control" id="company_name" name="company_name" required>
                               </div>
                               <div class="form-group">
-                                <label for="internship_title">Internship Title</label>
-                                <input type="text" placeholder="Internship Title" value={{internship_title}}
-                                  class="form-control" id="internship_title" name="internship_title">
+                                <label for="internship_title">Title</label>
+                                <input type="text" placeholder="Title" value={{internship_title}} class="form-control"
+                                  id="internship_title" name="internship_title" required>
                               </div>
                               <div class="form-group">
                                 <label for="link">URL</label>
@@ -200,7 +231,7 @@
                               <div class="form-group">
                                 <label for="international_allowed">Int'l Students?</label>
                                 <input type="text" placeholder="Int'l Students?" value={{international_allowed}}
-                                  class="form-control" id="international_allowed" name="international_allowed">
+                                  class="form-control" id="international_allowed" name="international_allowed" required>
                               </div>
                               <div class="form-check form-check-inline">
                                 <input type="hidden" name="swe_tag" value="0">
@@ -279,16 +310,6 @@
                                 <label for="is_ug">UG?</label>
                               </div>
 
-                              <div class="form-check">
-                                <input type="hidden" name="is_ep" value="0">
-                                {{#if is_ep}}
-                                <input type="checkbox" checked="checked" value="1" name="is_ep" id="is_ep">
-                                {{else}}
-                                <input type="checkbox" value="1" name="is_ep" id="is_ep">
-                                {{/if}}
-                                <label for="is_ep">EP?</label>
-                              </div>
-
                               <div class="form-group">
                                 <label for="eligibility">Eligibile Groups:</label>
                                 <input type="text" value="" class="form-control" id="eligibility" name="eligibility">
@@ -313,6 +334,8 @@
 
           <tfoot>
             <tr>
+              <th class="th-sm">Type
+              </th>
               <th class="th-sm">Company
               </th>
               <th class="th-sm">Tags
@@ -323,15 +346,11 @@
               </th>
               <th class="th-sm">UG?
               </th>
-              <th class="th-sm">EP?
-                  </th>
               <th class="th-sm">Position
               </th>
               <th class="th-sm">Date Suggested
               </th>
               <th class="th-sm">URL
-              </th>
-              <th class="th-sm">Suggestor
               </th>
               <th class="th-sm">Approve/Reject
               </th>

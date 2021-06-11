@@ -22,11 +22,11 @@
 
 
 
-
-  <title>Tech Internships for Underrepresented Groups -clarkTech Apply</title>
+  <title>Fulltime Jobs -clarkTech Apply</title>
 </head>
 
 <body>
+
   <nav id="a">
     <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
     <ul>
@@ -43,10 +43,10 @@
         </a>
         <ul class="dropdown-menu">
           <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
+          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
+          <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a>
+
           </li>
-                    <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a>
-</li>
         </ul>
       </li>
       <li class="dropdown">
@@ -66,31 +66,23 @@
     <div class="col-12">
       <div class="car text-center">
         <div class="p-3 mb-2 bg-success text-white">Summer 2022 Season LIVE: Early (~2-5 New Listings/Week)</div>
-        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#suggestModal">
+  <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#suggestModal">
           Suggest
         </a>
         <p></p>
-        <div class="car text-center">
-          <t>Many Companies have special internship programs only for students from traditionally underrepresented
-            backgrounds, like Google STEP, Microsoft Explore, PWC Start. Of course we will only post ones here
-            where you will work in a tech capacity --the work is the same as other internship programs, these just have
-            more narrow application criteria so if you qualify you will be competing against a smaller field of
-            applicants. Definitely give these a shot (as well as the ones on the General Listings page, they are not
-            mutually-exclusive)
 
-          </t>
-        </div>
         <div class="car text-center">
           <div class="card-header">
-            Browse Internships
+            Browse New-Grad Positions
           </div>
+          <p class="text-left">*IT tag refers to Cloud, Networks, System Architecture, etc. Not Tech Support/ITS </p>      
+
           {{#if message1}}
           <h4 class="alert alert-danger mt-4 text-left">{{message1}}</h4>
           {{/if}}
           {{#if message2}}
           <h4 class="alert alert-success mt-4 text-left">{{message2}}</h4>
           {{/if}}
-
 
           <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -107,7 +99,8 @@
                     <t>Role Type*</t>
                     <div class="form-group">
                       <input type="hidden" value={{user.id}} class="form-control" id="suggested_by" name="suggested_by">
-                      <input type="hidden" value=2 class="form-control" id="origin" name="origin">
+                      <input type="hidden" value=4 class="form-control" id="origin" name="origin">
+
                     </div>
                     <div class="form-check form-check-inline" id="typeSelect">
                       <input class="form-check-input" type="radio" name="role_type" id="internshipBox" value=1 required>
@@ -206,9 +199,11 @@
               <tr>
                 <th class="th-sm">Company
                 </th>
-                <th class="th-sm">Position
+                <th class="th-sm">Tags
                 </th>
-                <th class="th-sm">Eligibility
+                <th class="th-sm">Int'l Students?
+                </th>
+                <th class="th-sm">Position
                 </th>
                 <th class="th-sm">Date Added
                 </th>
@@ -224,12 +219,32 @@
               {{#each jobs}}
               <tr>
                 <td>{{company_name}}</td>
+                <td>
+                  {{#if dsci_tag}}
+                  <span class="badge badge-pill badge-primary">DSCI</span>
+                  {{/if}}
+                  {{#if swe_tag}}
+                  <span class="badge badge-pill badge-success">SWE</span>
+                  {{/if}}
+                  {{#if it_tag}}
+                  <span class="badge badge-pill badge-dark">IT</span>
+                  {{/if}}
+                  {{#if consulting_tag}}
+                  <span class="badge badge-pill badge-secondary">TECH-CONSULTING</span>
+                  {{/if}}
+                  {{#if cyber_tag}}
+                  <span class="badge badge-pill badge-danger">CYBER</span>
+                  {{/if}}
+                  {{#if product_tag}}
+                  <span class="badge badge-pill badge-warning">PM</span>
+                  {{/if}}
+                </td>
+                <td>{{international_allowed}}</td>
                 <td>{{internship_title}}</td>
-                <td>{{eligibility}}</td>
                 <td>{{date_added}}</td>
                 <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
                 <td>
-                  <form action="/auth/ug_track" method="POST">
+                  <form action="/auth/ft_track" method="POST">
                     {{#if is_tracked}}
 
                     <button class="btn btn-info" disabled>+</button>
@@ -253,19 +268,37 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form action="/auth/suggestCorrectionUG" method="POST">
+                          <form action="/auth/suggestCorrectionFT" method="POST">
 
                             <div class="form-group">
                               <input type="hidden" value={{job_id}} class="form-control" id="job_id" name="job_id">
+                              <input type="hidden" value={{international_allowed}} class="form-control"
+                                id="international_allowed" name="international_allowed">
                               <input type="hidden" value={{link}} class="form-control" id="link" name="link">
                             </div>
                             <t>------------------------------------------------------------------------</t>
+
                             <div class="form-check">
                               <input type="hidden" name="is_closed" value="0">
                               <input type="checkbox" value="1" name="is_closed" id="is_closed">
                               <label for="is_closed">Is the Link Down or Application Closed?</label>
+
                             </div>
                             <t>------------------------------------------------------------------------</t>
+                            <div class="form-group">
+                              <label for="company_name">Can International Students Apply?</label>
+                              <input type="text" placeholder="Yes/No/tbd" value="" class="form-control"
+                                id="international_allowed_new" name="international_allowed_new">
+                            </div>
+
+                            <t>------------------------------------------------------------------------</t>
+                            <p> </p>
+                            <div class="form-group">
+                              <label for="comments">How Did you Find Out?*</label>
+                              <input type="text"
+                                placeholder="If you are just marking the link as broken/closed, type anything" value=""
+                                class="form-control" id="comments" name="comments" required>
+                            </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                           </form>
@@ -284,17 +317,19 @@
 
             <tfoot>
               <tr>
-                <th class="th-sm">Company
+                <th>Company
                 </th>
-                <th class="th-sm">Position
+                <th>Tags
                 </th>
-                <th class="th-sm">Eligibility
+                <th>Int'l Students?
                 </th>
-                <th class="th-sm">Date Added
+                <th>Position
                 </th>
-                <th class="th-sm">Apply
+                <th>Date Added
                 </th>
-                <th class="th-sm">Track
+                <th>Apply
+                </th>
+                <th>Track
                 </th>
                 <th style="width: 5%">Flag Errors</th>
 
@@ -303,12 +338,11 @@
             <script>
               $(document).ready(function () {
                 $('#internshipTable').DataTable({
-                  "order": [[3, "desc"]]
+                  "order": [[4, "desc"]]
                 });
               });
             </script>
           </table>
-
 
         </div>
       </div>

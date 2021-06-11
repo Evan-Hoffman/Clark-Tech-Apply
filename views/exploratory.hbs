@@ -36,6 +36,7 @@
       <li><a id="b" href="/">Home</a></li>
       <li><a href="/tips">Tips</a></li>
       <li><a href="/myapps">MyApps</a></li>
+      <li><a href="/fulltime">Fulltime</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Internships
@@ -104,29 +105,50 @@
           {{/if}}
 
 
-          <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Contribute an internship we may have missed!</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Contribute a listing we may have missed!</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
                   <form action="/auth/suggest" method="POST">
+                    <t>Role Type*</t>
                     <div class="form-group">
                       <input type="hidden" value={{user.id}} class="form-control" id="suggested_by" name="suggested_by">
+                      <input type="hidden" value=3 class="form-control" id="origin" name="origin">
                     </div>
+                    <div class="form-check form-check-inline" id="typeSelect">
+                      <input class="form-check-input" type="radio" name="role_type" id="internshipBox" value=1 required>
+                      <label class="form-check-label" for="internshipBox">
+                        Internship
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2 required>
+                      <label class="form-check-label" for="fulltimeBox">
+                        Fulltime
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="role_type" id="epBox" value=3 required>
+                      <label class="form-check-label" for="epBox">
+                        Exploratory Program/Summit
+                      </label>
+                    </div>
+                     <p></p>
                     <div class="form-group">
                       <label for="company_name">Company*</label>
                       <input type="text" placeholder="Company Name" value="" class="form-control" id="company_name"
                         name="company_name" required>
                     </div>
                     <div class="form-group">
-                      <label for="internship_title">Internship Title*</label>
-                      <input type="text" placeholder="Internship Title" value="" class="form-control"
+                      <label for="internship_title">Position Title*</label>
+                      <input type="text" placeholder="Position Title" value="" class="form-control"
                         id="internship_title" name="internship_title" required>
                     </div>
                     <div class="form-group">
@@ -175,19 +197,13 @@
                       <label for="juniors_only">'23 Only? (will be juniors)</label>
                     </div>
 
+
                     <div class="form-check">
                       <label for="is_ug">Is this program specifically for an underrepresented group (Google STEP, PWC
                         START, etc)?</label>
                       <input type="hidden" name="is_ug" value="0">
                       <input type="checkbox" value="1" name="is_ug" id="is_ug">
                     </div>
-
-                    <div class="form-check">
-                      <label for="is_ep">Is this an exploratory program/summit?</label>
-                      <input type="hidden" name="is_ep" value="0">
-                      <input type="checkbox" value="1" name="is_ep" id="is_ep">
-                    </div>
-
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
@@ -197,6 +213,7 @@
               </div>
             </div>
           </div>
+
           <table id="internshipTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <thead>
               <tr>
@@ -252,7 +269,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form action="/auth/suggestCorrectionUG" method="POST">
+                          <form action="/auth/suggestCorrectionEP" method="POST">
 
                             <div class="form-group">
                               <input type="hidden" value={{job_id}} class="form-control" id="job_id" name="job_id">

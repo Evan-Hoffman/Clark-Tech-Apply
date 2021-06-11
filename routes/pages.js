@@ -57,6 +57,24 @@ router.get('/settings', authController.isLoggedIn, (req, res) => {
 
 });
 
+//only go to Fulltime listings if logged in
+router.get('/fulltime', authController.isLoggedIn, authController.populateFulltime, (req, res) => {
+    if(req.user) {
+        res.render('fulltime', {
+            user: req.user,
+            id: req.user.id,
+            jobs: req.jobs,
+            message1: req.session.message1,
+            message2: req.session.message2
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
 //only go to Internships if logged in
 router.get('/internships', authController.isLoggedIn, authController.populateInternships, (req, res) => {
     //console.log(req.internships.length);

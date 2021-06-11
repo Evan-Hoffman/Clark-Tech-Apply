@@ -436,10 +436,43 @@ exports.sendResetEmail = (req, res) => {
 /**********************************************************Internship Pages Methods*******************************************************************/
 
 //populate the internships page from the database
+exports.populateFulltime = async (req, res, next) => {
+    if (req.user){
+        try {
+            pool.query('SELECT * FROM internships WHERE is_ft = 1 ORDER BY job_id', async (error, result, fields) => {
+            //console.log(result);
+            if (error) {
+                console.log(error);
+            }
+            if(!result){
+                return next();
+            }
+            var string = JSON.stringify(result);
+            var json =  JSON.parse(string);
+            //console.log('>> json: ', json);
+            
+            populateInternshipsHelper(req, json, function() {
+               // console.log(json);
+                req.jobs = json; 
+                return next();
+            });
+        });
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+        console.log(req.user.email + " has just loaded up the Fulltime page");
+    }
+    else {
+        return next();
+    }
+}
+
+//populate the internships page from the database
 exports.populateInternships = async (req, res, next) => {
     if (req.user){
         try {
-            pool.query('SELECT * FROM internships WHERE is_ug = 0 AND is_ep = 0 ORDER BY job_id', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships WHERE is_ug = 0 AND is_ep = 0 AND is_ft = 0 ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -580,9 +613,20 @@ exports.populateExploratory = async (req, res, next) => {
 
 //adds a suggestion to suggestions table once user has submitted it
 exports.suggest =  (req, res) => {    
-    let {suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, is_ep} = req.body;
+    console.log(req.body);
     
+    let {suggested_by, origin, role_type, company_name, internship_title, link, international_allowed, swe_tag,
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug} = req.body;
+    
+    let is_ep = 0;
+    let is_ft = 0;
+
+    if (role_type == 2) {
+        is_ft = 1;
+    }
+    else if (role_type == 3){
+        is_ep = 1;
+    }
 
     if (swe_tag.length >1){
         swe_tag = '1';
@@ -608,13 +652,10 @@ exports.suggest =  (req, res) => {
     if (is_ug.length >1){
         is_ug = '1';
     }
-    if (is_ep.length >1){
-        is_ep = '1';
-    }
     
     pool.query('INSERT INTO suggestions SET ?', {suggested_by: suggested_by, company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
-        international_allowed: international_allowed, is_ug: is_ug, is_ep: is_ep}, (error, results) => {
+        international_allowed: international_allowed, is_ug: is_ug, is_ep: is_ep, is_ft: is_ft}, (error, results) => {
         if(error) {
             console.log(error);
             return;
@@ -622,7 +663,18 @@ exports.suggest =  (req, res) => {
         else {
             console.log("User " + suggested_by + "has submitted an internship reccomendation for approval")
             req.session.message2 = 'Suggestion Submitted for Approval. Thanks!';
-            return res.redirect('/internships');
+            if (origin == 1){
+                return res.redirect('/internships');
+            }
+            if (origin == 2){
+                return res.redirect('/underrepresented');
+            }
+            if (origin == 3){
+                return res.redirect('/exploratory');
+            }
+            if (origin == 4){
+                return res.redirect('/fulltime');
+            }
         }
 
     });
@@ -666,6 +718,37 @@ exports.suggestCorrection =  (req, res) => {
     }); 
 }
 
+//adds a correction suggestion to edit_suggestions table once user has submitted it
+exports.suggestCorrectionFT =  (req, res) => {
+
+    let {job_id, international_allowed, link, is_closed, international_allowed_new, comments} = req.body;
+    let suggested_by = req.user.id;
+
+    if (is_closed.length >1){
+        is_closed = '1';
+    }
+    else {
+        is_closed = null;
+    }
+
+    if (international_allowed_new == ''){
+        international_allowed_new = null;
+    }
+    
+    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id, international_allowed: international_allowed, international_allowed_new: international_allowed_new, 
+        link: link, is_closed: is_closed, comments: comments, suggested_by: suggested_by}, (error, results) => {
+        if(error) {
+            console.log(error);
+            return;
+        }
+        else {
+            console.log("User " + suggested_by + "has submitted a correction for approval")
+            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
+            return res.redirect('/fulltime');
+        }
+    }); 
+}
+
 //adds a correction suggestion to edit_suggestions table once user has submitted it from UG
 exports.suggestCorrectionUG =  (req, res) => {
 
@@ -689,6 +772,33 @@ exports.suggestCorrectionUG =  (req, res) => {
             console.log("User " + suggested_by + "has submitted a correction for approval")
             req.session.message2 = 'Correction Submitted for Approval. Thanks!';
             return res.redirect('/underrepresented');
+        }
+    }); 
+}
+
+//adds a correction suggestion to edit_suggestions table once user has submitted it from UG
+exports.suggestCorrectionEP =  (req, res) => {
+
+    let {job_id, link, is_closed} = req.body;
+    let suggested_by = req.user.id;
+
+    if (is_closed.length >1){
+        is_closed = '1';
+    }
+    else {
+        is_closed = null;
+    }
+    
+    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id,
+        link: link, is_closed: is_closed, suggested_by: suggested_by}, (error, results) => {
+        if(error) {
+            console.log(error);
+            return;
+        }
+        else {
+            console.log("User " + suggested_by + "has submitted a correction for approval")
+            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
+            return res.redirect('/exploratory');
         }
     }); 
 }
@@ -724,6 +834,40 @@ exports.track =  (req, res) => {
             });
     });
 }
+
+//allows a user to track an internship from the internships page (add it to myapps page)
+exports.ft_track =  (req, res) => {
+    const jid = req.body.job_id;
+
+    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
+        if (error) {
+            console.log(error);
+        }
+
+            var string = JSON.stringify(result);
+            var data =  JSON.parse(string);
+            //console.log('>> json: ', data); 
+        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+        //console.log(decoded.id);
+
+        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
+            if(error){
+                console.log(error);
+                if (error.errno == 1062){
+                    return res.status(200).redirect("/fulltime");
+                }
+            }
+
+            else {
+                console.log("User: " + decoded.id + " has just tracked job# " + jid);
+                req.session.message2 = 'Listing Tracked & Added to MyApps';
+                res.status(200).redirect("/fulltime");
+            }
+            });
+    });
+}
+
+
 
 //allows a user to track an internship from the underrepresented groups internships page (add it to myapps page)
 exports.ug_track =  (req, res) => {
@@ -939,12 +1083,18 @@ exports.populateApprovals = async (req, res, next) => {
 exports.approve =  (req, res) => {
     //console.log(req.body);
 
-    let {suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, is_ep, eligibility} = req.body;
+    let {role_type, suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility} = req.body;
     
-    //console.log(juniors_only);
-    //console.log(it_tag);
-    //console.log(swe_tag);
+         let is_ep = 0;
+         let is_ft = 0;
+     
+         if (role_type == 2) {
+             is_ft = 1;
+         }
+         else if (role_type == 3){
+             is_ep = 1;
+         }
 
     if (swe_tag.length >1){
         swe_tag = '1';
@@ -971,16 +1121,13 @@ exports.approve =  (req, res) => {
     if (is_ug.length > 1){
         is_ug = 1;
     }
-    if (is_ep.length > 1){
-        is_ep = 1;
-    }
     if (eligibility == ''){
         eligibility = null;
     }
     
     pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
-        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep}, (error, results) => {
+        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft}, (error, results) => {
         if(error) {
             console.log(error);
         }
