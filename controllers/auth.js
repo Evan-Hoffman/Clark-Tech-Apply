@@ -338,7 +338,7 @@ exports.updateEmail = (req, res) => {
 }
 
 exports.toggleEmailNotifications = (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     let email_consent = req.body.email_consent;
     if (email_consent.length >1){
         email_consent = '1';
@@ -613,7 +613,7 @@ exports.populateExploratory = async (req, res, next) => {
 
 //adds a suggestion to suggestions table once user has submitted it
 exports.suggest =  (req, res) => {    
-    console.log(req.body);
+    //console.log(req.body);
     
     let {suggested_by, origin, role_type, company_name, internship_title, link, international_allowed, swe_tag,
          dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug} = req.body;
@@ -1084,7 +1084,7 @@ exports.approve =  (req, res) => {
     //console.log(req.body);
 
     let {role_type, suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility} = req.body;
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, dates} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
@@ -1124,10 +1124,14 @@ exports.approve =  (req, res) => {
     if (eligibility == ''){
         eligibility = null;
     }
+    if (dates == ''){
+        dates = null;
+    }
+
     
     pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
-        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft}, (error, results) => {
+        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: dates}, (error, results) => {
         if(error) {
             console.log(error);
         }

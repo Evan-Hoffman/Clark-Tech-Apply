@@ -75,7 +75,6 @@
           <div class="card-header">
             Browse New-Grad Positions
           </div>
-          <p class="text-left">*IT tag refers to Cloud, Networks, System Architecture, etc. Not Tech Support/ITS </p>      
 
           {{#if message1}}
           <h4 class="alert alert-danger mt-4 text-left">{{message1}}</h4>
@@ -154,7 +153,7 @@
                     <div class="form-check form-check-inline">
                       <input type="hidden" name="it_tag" value="0">
                       <input type="checkbox" value="1" name="it_tag" id="it_tag">
-                      <label for="it_tag">IT</label>
+                      <label for="it_tag">DevOps</label>
                     </div>
                     <div class="form-check form-check-inline">
                       <input type="hidden" name="consulting_tag" value="0">
@@ -227,7 +226,7 @@
                   <span class="badge badge-pill badge-success">SWE</span>
                   {{/if}}
                   {{#if it_tag}}
-                  <span class="badge badge-pill badge-dark">IT</span>
+                  <span class="badge badge-pill badge-dark">DevOps</span>
                   {{/if}}
                   {{#if consulting_tag}}
                   <span class="badge badge-pill badge-secondary">TECH-CONSULTING</span>
