@@ -57,6 +57,10 @@ router.post('/suggestCorrectionUG', authController.isLoggedIn, authController.su
 
 router.post('/approve', authController.approve);
 
+router.post('/edit', authController.edit);
+
+router.post('/deleteListing', authController.deleteListing);
+
 router.post('/reject', authController.reject);
 
 router.post('/dismissEdit', authController.dismissEdit);

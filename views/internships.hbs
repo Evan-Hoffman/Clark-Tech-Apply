@@ -32,6 +32,19 @@
     <ul>
       {{#if user.is_privileged}}
       <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #817a38">
+          Edits
+        </a>
+        <ul class="dropdown-menu" >
+          <li><a href="/fedits" class="dropdown-item" style="color: #000000">Fulltime</a></li>
+          <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
+          <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a>
+          <li><a href="/epedits" class="dropdown-item" style="color: #000000">Exploratory</a>
+          </li>
+        </ul>
+      </li>
+
       {{/if}}
       <li><a id="b" href="/">Home</a></li>
       <li><a href="/tips">Tips</a></li>
@@ -65,7 +78,7 @@
 
     <div class="col-12">
       <div class="car text-center">
-        <div class="p-3 mb-2 bg-success text-white">Summer 2022 Season LIVE: Early (~2-5 New Listings/Week)</div>
+        <div class="p-3 mb-2 bg-success text-white">Summer 2022 Season LIVE: Early (~5-10 New Listings/Week)</div>
   <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#suggestModal">
           Suggest
         </a>

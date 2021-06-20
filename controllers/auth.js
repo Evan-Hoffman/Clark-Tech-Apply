@@ -1199,6 +1199,104 @@ exports.reject =  (req, res) => {
         });
 }
 
+//allows privileged users to directly edit internship listings w/o direct DB access
+exports.edit =  (req, res) => {
+    console.log(req.body);
+
+    let {role_type, job_id, origin, company_name, internship_title, link, international_allowed, swe_tag,
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, event_dates} = req.body;
+    
+         let is_ep = 0;
+         let is_ft = 0;
+     
+         if (role_type == 2) {
+             is_ft = 1;
+         }
+         else if (role_type == 3){
+             is_ep = 1;
+         }
+
+    if (swe_tag.length >1){
+        swe_tag = '1';
+    }
+    if (dsci_tag.length >1){
+        dsci_tag = '1';
+    }
+
+    if (it_tag.length >1){
+        it_tag = '1';
+    }
+    if (consulting_tag.length >1){
+        consulting_tag = '1';
+    }
+    if (cyber_tag.length >1){
+        cyber_tag = '1';
+    }
+    if (product_tag.length >1){
+        product_tag = '1';
+    }
+    if (juniors_only.length >1){
+        juniors_only = '1';
+    }
+    if (is_ug.length > 1){
+        is_ug = 1;
+    }
+    if (eligibility == ''){
+        eligibility = null;
+    }
+    if (event_dates == ''){
+        event_dates = null;
+    }
+
+    
+    pool.query('UPDATE internships SET ? WHERE job_id = ' + job_id, {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
+         dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
+        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: event_dates}, (error, results) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            console.log("A priviledged user has updated info for listing #" + job_id);
+            if (origin == 1) {
+                return res.redirect('/iedits');
+            }
+            else if (origin == 2){
+                return res.redirect('/ugedits');
+            }
+            else if (origin == 3){
+                return res.redirect('/epedits')
+            }
+            else if (origin == 4){
+                return res.redirect('/fedits')
+            }
+        }
+    });
+}
+
+//a priviliged user may remove a listing from the internship table, client-side
+exports.deleteListing =  (req, res) => {
+    pool.query('DELETE FROM internships WHERE job_id = ?', [req.body.job_id], (error, result) => {
+        if(error) {
+            console.log(error);
+       }
+        else {
+            console.log("A Privileged User has deleted a listing at: " + req.body.company_name + " titled: " + req.body.internship_title);
+            if (req.body.origin == 1) {
+                return res.redirect('/iedits');
+            }
+            else if (req.body.origin == 2){
+                return res.redirect('/ugedits');
+            }
+            else if (req.body.origin == 3){
+                return res.redirect('/epedits')
+            }
+            else if (req.body.origin == 4){
+                return res.redirect('/fedits')
+            }     
+        }       
+    });
+}
+
 //a dismissal of an edit suggestion ordered by the admin
 exports.dismissEdit =  (req, res) => {
     //console.log(req.body.suggestion_id);

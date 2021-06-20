@@ -35,6 +35,18 @@
     <ul>
       {{#if user.is_privileged}}
       <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #817a38">
+          Edits
+        </a>
+        <ul class="dropdown-menu" >
+          <li><a href="/fedits" class="dropdown-item" style="color: #000000">Fulltime</a></li>
+          <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
+          <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a>
+          <li><a href="/epedits" class="dropdown-item" style="color: #000000">Exploratory</a>
+          </li>
+        </ul>
+      </li>
       {{/if}}
       <li><a id="b" href="/">Home</a></li>
       <li><a href="/tips">Tips</a></li>
@@ -76,7 +88,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <a class='nav-link' data-bs-toggle='tab' id="edits-tab" role="tab" data-bs-target="#edits"
-            aria-controls="edits" type="button" href='#edits'>Edits</a>
+            aria-controls="edits" type="button" href='#edits'>Suggested Edits</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
@@ -215,12 +227,12 @@
                               <p></p>
                               <div class="form-group">
                                 <label for="company_name">Company</label>
-                                <input type="text" placeholder="Company Name" value={{company_name}}
+                                <input type="text" placeholder="Company Name" value="{{company_name}}"
                                   class="form-control" id="company_name" name="company_name" required>
                               </div>
                               <div class="form-group">
                                 <label for="internship_title">Title</label>
-                                <input type="text" placeholder="Title" value={{internship_title}} class="form-control"
+                                <input type="text" placeholder="Title" value="{{internship_title}}" class="form-control"
                                   id="internship_title" name="internship_title" required>
                               </div>
                               <div class="form-group">
@@ -258,7 +270,7 @@
                                 {{else}}
                                 <input type="checkbox" value="1" name="it_tag" id="it_tag">
                                 {{/if}}
-                                <label for="it_tag">IT Tag</label>
+                                <label for="it_tag">DevOps Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
                                 <input type="hidden" name="consulting_tag" value="0">

@@ -183,4 +183,96 @@ else {
 }
 });
 
+//only go to Edits if logged in & privileged
+router.get('/iedits', authController.isLoggedIn, authController.populateInternships, (req, res) => {
+
+    if(req.user) {
+        if(req.user.is_privileged) {
+            res.render('iedits', {
+                user: req.user,
+                jobs: req.internships,
+                message1: req.session.message1,
+                message2: req.session.message2
+            });
+        }
+        else {
+            res.redirect('/');
+        }
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
+//only go to Edits if logged in & privileged
+router.get('/fedits', authController.isLoggedIn, authController.populateFulltime, (req, res) => {
+
+    if(req.user) {
+        if(req.user.is_privileged) {
+            res.render('fedits', {
+                user: req.user,
+                jobs: req.jobs,
+                message1: req.session.message1,
+                message2: req.session.message2
+            });
+        }
+        else {
+            res.redirect('/');
+        }
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
+//only go to Edits if logged in & privileged
+router.get('/ugedits', authController.isLoggedIn, authController.populateUnderrepresented, (req, res) => {
+
+    if(req.user) {
+        if(req.user.is_privileged) {
+            res.render('ugedits', {
+                user: req.user,
+                jobs: req.internships,
+                message1: req.session.message1,
+                message2: req.session.message2
+            });
+        }
+        else {
+            res.redirect('/');
+        }
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
+//only go to Edits if logged in & privileged
+router.get('/epedits', authController.isLoggedIn, authController.populateExploratory, (req, res) => {
+
+    if(req.user) {
+        if(req.user.is_privileged) {
+            res.render('epedits', {
+                user: req.user,
+                jobs: req.programs,
+                message1: req.session.message1,
+                message2: req.session.message2
+            });
+        }
+        else {
+            res.redirect('/');
+        }
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
 module.exports = router;
