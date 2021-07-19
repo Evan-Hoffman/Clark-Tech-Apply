@@ -34,6 +34,7 @@ router.get('/tips', authController.isLoggedIn, (req, res) => {
         res.render('tips', {
             user: req.user
         });
+        console.log(req.user.email + " has just loaded up the Tips page");
     }
     else {
         res.redirect('/login');
@@ -113,6 +114,25 @@ router.get('/underrepresented', authController.isLoggedIn, authController.popula
     delete req.session.message1;
     delete req.session.message2;
 
+});
+
+//only go to Sophomore Programs if logged in
+router.get('/underclassmenonly', authController.isLoggedIn, authController.populateUnderclassmen, (req, res) => {
+    //console.log(req.internships.length);
+    if(req.user) {
+        //console.log(req.internships);
+        res.render('underclassmenonly', {
+            user: req.user,
+            jobs: req.internships,
+            message1: req.session.message1,
+            message2: req.session.message2
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
 });
 
 //only go to Exploratory Programs if logged in
@@ -251,6 +271,30 @@ router.get('/ugedits', authController.isLoggedIn, authController.populateUnderre
     delete req.session.message1;
     delete req.session.message2;
 });
+
+//only go to Edits if logged in & privileged
+router.get('/ucedits', authController.isLoggedIn, authController.populateUnderclassmen, (req, res) => {
+
+    if(req.user) {
+        if(req.user.is_privileged) {
+            res.render('ucedits', {
+                user: req.user,
+                jobs: req.internships,
+                message1: req.session.message1,
+                message2: req.session.message2
+            });
+        }
+        else {
+            res.redirect('/');
+        }
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
 
 //only go to Edits if logged in & privileged
 router.get('/epedits', authController.isLoggedIn, authController.populateExploratory, (req, res) => {

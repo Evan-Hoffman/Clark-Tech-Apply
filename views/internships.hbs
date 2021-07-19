@@ -39,9 +39,9 @@
         <ul class="dropdown-menu" >
           <li><a href="/fedits" class="dropdown-item" style="color: #000000">Fulltime</a></li>
           <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
-          <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a>
-          <li><a href="/epedits" class="dropdown-item" style="color: #000000">Exploratory</a>
-          </li>
+          <li><a href="/ucedits" class="dropdown-item" style="color: #000000">Underclassmen</a></li>
+          <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a></li>
+          <li><a href="/epedits" class="dropdown-item" style="color: #000000">Exploratory</a></li>
         </ul>
       </li>
 
@@ -56,6 +56,7 @@
         </a>
         <ul class="dropdown-menu">
           <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
+          <li><a href="/underclassmenonly" class="dropdown-item" style="color: #000000">For 1st and 2nd Years Only</a></li>
           <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
           <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a>
 
@@ -190,12 +191,16 @@
                       <label for="juniors_only">'23 Only? (will be juniors)</label>
                     </div>
 
-
                     <div class="form-check">
-                      <label for="is_ug">Is this program specifically for an underrepresented group (Google STEP, PWC
-                        START, etc)?</label>
                       <input type="hidden" name="is_ug" value="0">
                       <input type="checkbox" value="1" name="is_ug" id="is_ug">
+                      <label for="is_ug">Program for Underrepresented Groups?</label>
+                    </div>
+
+                    <div class="form-check">
+                      <input type="hidden" name="is_uc" value="0">
+                      <input type="checkbox" value="1" name="is_uc" id="is_uc">
+                      <label for="is_uc">1st Year/Sophomore-Only Program?</label>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

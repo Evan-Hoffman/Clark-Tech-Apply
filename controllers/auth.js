@@ -472,7 +472,7 @@ exports.populateFulltime = async (req, res, next) => {
 exports.populateInternships = async (req, res, next) => {
     if (req.user){
         try {
-            pool.query('SELECT * FROM internships WHERE is_ug = 0 AND is_ep = 0 AND is_ft = 0 ORDER BY job_id', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships WHERE is_ug = 0 AND is_ep = 0 AND is_ft = 0 AND is_uc = 0 ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -545,7 +545,7 @@ function populateInternshipsHelper(req, json, _callback){
     
 }
 
-//populate the internships page from the database
+//populate the underrepresented groups page from the database
 exports.populateUnderrepresented = async (req, res, next) => {
     if (req.user){
         try {
@@ -572,6 +572,39 @@ exports.populateUnderrepresented = async (req, res, next) => {
             return next();
         }
         console.log(req.user.email + " has just loaded up the programs for underrepresented peoples page");
+    }
+    else {
+        return next();
+    }
+}
+
+//populate the underclassmen page from the database
+exports.populateUnderclassmen = async (req, res, next) => {
+    if (req.user){
+        try {
+            pool.query('SELECT * FROM internships WHERE is_uc = 1 ORDER BY job_id', async (error, result, fields) => {
+            //console.log(result);
+            if (error) {
+                console.log(error);
+            }
+            if(!result){
+                return next();
+            }
+            var string = JSON.stringify(result);
+            var json =  JSON.parse(string);
+            //console.log('>> json: ', json);
+            
+            populateInternshipsHelper(req, json, function() {
+                //console.log(json);
+                req.internships = json; 
+                return next();
+            });
+        });
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+        console.log(req.user.email + " has just loaded up the programs for underclassmen page");
     }
     else {
         return next();
@@ -616,7 +649,7 @@ exports.suggest =  (req, res) => {
     //console.log(req.body);
     
     let {suggested_by, origin, role_type, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug} = req.body;
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, is_uc} = req.body;
     
     let is_ep = 0;
     let is_ft = 0;
@@ -652,10 +685,14 @@ exports.suggest =  (req, res) => {
     if (is_ug.length >1){
         is_ug = '1';
     }
-    
+    if (is_uc.length >1){
+        is_uc = '1';
+    }
+
+
     pool.query('INSERT INTO suggestions SET ?', {suggested_by: suggested_by, company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
-        international_allowed: international_allowed, is_ug: is_ug, is_ep: is_ep, is_ft: is_ft}, (error, results) => {
+        international_allowed: international_allowed, is_ug: is_ug, is_ep: is_ep, is_ft: is_ft, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
             return;
@@ -674,6 +711,9 @@ exports.suggest =  (req, res) => {
             }
             if (origin == 4){
                 return res.redirect('/fulltime');
+            }
+            if (origin == 5){
+                return res.redirect('/underclassmenonly');
             }
         }
 
@@ -772,6 +812,33 @@ exports.suggestCorrectionUG =  (req, res) => {
             console.log("User " + suggested_by + "has submitted a correction for approval")
             req.session.message2 = 'Correction Submitted for Approval. Thanks!';
             return res.redirect('/underrepresented');
+        }
+    }); 
+}
+
+//adds a correction suggestion to edit_suggestions table once user has submitted it from UC
+exports.suggestCorrectionUC =  (req, res) => {
+
+    let {job_id, link, is_closed} = req.body;
+    let suggested_by = req.user.id;
+
+    if (is_closed.length >1){
+        is_closed = '1';
+    }
+    else {
+        is_closed = null;
+    }
+    
+    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id,
+        link: link, is_closed: is_closed, suggested_by: suggested_by}, (error, results) => {
+        if(error) {
+            console.log(error);
+            return;
+        }
+        else {
+            console.log("User " + suggested_by + "has submitted a correction for approval")
+            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
+            return res.redirect('/underclassmenonly');
         }
     }); 
 }
@@ -896,6 +963,38 @@ exports.ug_track =  (req, res) => {
                 console.log("User: " + decoded.id + " has just tracked u-job# " + jid);
                 req.session.message2 = 'Listing Tracked & Added to MyApps';
                 res.status(200).redirect("/underrepresented");
+            }
+            });
+    });
+}
+
+//allows a user to track an internship from the underclassmen-only internships page (add it to myapps page)
+exports.uc_track =  (req, res) => {
+    const jid = req.body.job_id;
+
+    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
+        if (error) {
+            console.log(error);
+        }
+
+            var string = JSON.stringify(result);
+            var data =  JSON.parse(string);
+            //console.log('>> json: ', data); 
+        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
+        //console.log(decoded.id);
+
+        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
+            if(error){
+                console.log(error);
+                if (error.errno == 1062){
+                    return res.status(200).redirect("/underclassmenonly");
+                }
+            }
+
+            else {
+                console.log("User: " + decoded.id + " has just tracked uc-job# " + jid);
+                req.session.message2 = 'Listing Tracked & Added to MyApps';
+                res.status(200).redirect("/underclassmenonly");
             }
             });
     });
@@ -1084,7 +1183,7 @@ exports.approve =  (req, res) => {
     //console.log(req.body);
 
     let {role_type, suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, dates} = req.body;
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, dates, is_uc} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
@@ -1127,11 +1226,14 @@ exports.approve =  (req, res) => {
     if (dates == ''){
         dates = null;
     }
+    if (is_uc.length > 1){
+        is_uc = 1;
+    }
 
     
     pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
-        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: dates}, (error, results) => {
+        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: dates, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
         }
@@ -1201,10 +1303,10 @@ exports.reject =  (req, res) => {
 
 //allows privileged users to directly edit internship listings w/o direct DB access
 exports.edit =  (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
 
     let {role_type, job_id, origin, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, event_dates} = req.body;
+         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, event_dates, is_uc} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
@@ -1247,11 +1349,14 @@ exports.edit =  (req, res) => {
     if (event_dates == ''){
         event_dates = null;
     }
+    if (is_uc.length > 1){
+        is_uc = 1;
+    }
 
     
     pool.query('UPDATE internships SET ? WHERE job_id = ' + job_id, {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
-        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: event_dates}, (error, results) => {
+        international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: event_dates, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
         }
@@ -1268,6 +1373,9 @@ exports.edit =  (req, res) => {
             }
             else if (origin == 4){
                 return res.redirect('/fedits')
+            }
+            else if (origin == 5){
+                return res.redirect('/ucedits')
             }
         }
     });
