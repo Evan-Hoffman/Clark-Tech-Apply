@@ -461,7 +461,7 @@ exports.populateFulltime = async (req, res, next) => {
             console.log(error);
             return next();
         }
-        console.log(req.user.email + " has just loaded up the Fulltime page");
+        console.log(req.user.email + " has just loaded up the New-Grad page");
     }
     else {
         return next();
@@ -722,60 +722,30 @@ exports.suggest =  (req, res) => {
 
 //adds a correction suggestion to edit_suggestions table once user has submitted it
 exports.suggestCorrection =  (req, res) => {
-
-    let {job_id, international_allowed, juniors_only, link, is_closed, international_allowed_new, juniors_only_new, comments} = req.body;
+    //console.log(req.body);
+    let {job_id, link, is_closed, comments, origin} = req.body;
     let suggested_by = req.user.id;
 
-    if (is_closed.length >1){
-        is_closed = '1';
-    }
-    else {
-        is_closed = null;
-    }
-
-    if (international_allowed_new == ''){
-        international_allowed_new = null;
-    }
-
-    if (juniors_only_new.length >1){
-        juniors_only_new = '1';
-    }
-    else {
-        juniors_only_new = null;
-    }
-    
-    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id, international_allowed: international_allowed, international_allowed_new: international_allowed_new, 
-        juniors_only: juniors_only, juniors_only_new: juniors_only_new, link: link, is_closed: is_closed, comments: comments, suggested_by: suggested_by}, (error, results) => {
-        if(error) {
-            console.log(error);
-            return;
-        }
-        else {
-            console.log("User " + suggested_by + "has submitted a correction for approval")
-            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
-            return res.redirect('/internships');
-        }
-    }); 
-}
-
-//adds a correction suggestion to edit_suggestions table once user has submitted it
-exports.suggestCorrectionFT =  (req, res) => {
-
-    let {job_id, international_allowed, link, is_closed, international_allowed_new, comments} = req.body;
-    let suggested_by = req.user.id;
-
-    if (is_closed.length >1){
-        is_closed = '1';
-    }
-    else {
-        is_closed = null;
+    if (is_closed == null && comments == ''){
+        req.session.message1 = 'Please fill out one of the 2 fields';
+            if (origin == 1){
+                return res.redirect('/internships');
+            }
+            if (origin == 2){
+                return res.redirect('/underrepresented');
+            }
+            if (origin == 3){
+                return res.redirect('/exploratory');
+            }
+            if (origin == 4){
+                return res.redirect('/fulltime');
+            }
+            if (origin == 5){
+                return res.redirect('/underclassmenonly');
+            }
     }
 
-    if (international_allowed_new == ''){
-        international_allowed_new = null;
-    }
-    
-    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id, international_allowed: international_allowed, international_allowed_new: international_allowed_new, 
+    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id,
         link: link, is_closed: is_closed, comments: comments, suggested_by: suggested_by}, (error, results) => {
         if(error) {
             console.log(error);
@@ -784,88 +754,21 @@ exports.suggestCorrectionFT =  (req, res) => {
         else {
             console.log("User " + suggested_by + "has submitted a correction for approval")
             req.session.message2 = 'Correction Submitted for Approval. Thanks!';
-            return res.redirect('/fulltime');
-        }
-    }); 
-}
-
-//adds a correction suggestion to edit_suggestions table once user has submitted it from UG
-exports.suggestCorrectionUG =  (req, res) => {
-
-    let {job_id, link, is_closed} = req.body;
-    let suggested_by = req.user.id;
-
-    if (is_closed.length >1){
-        is_closed = '1';
-    }
-    else {
-        is_closed = null;
-    }
-    
-    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id,
-        link: link, is_closed: is_closed, suggested_by: suggested_by}, (error, results) => {
-        if(error) {
-            console.log(error);
-            return;
-        }
-        else {
-            console.log("User " + suggested_by + "has submitted a correction for approval")
-            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
-            return res.redirect('/underrepresented');
-        }
-    }); 
-}
-
-//adds a correction suggestion to edit_suggestions table once user has submitted it from UC
-exports.suggestCorrectionUC =  (req, res) => {
-
-    let {job_id, link, is_closed} = req.body;
-    let suggested_by = req.user.id;
-
-    if (is_closed.length >1){
-        is_closed = '1';
-    }
-    else {
-        is_closed = null;
-    }
-    
-    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id,
-        link: link, is_closed: is_closed, suggested_by: suggested_by}, (error, results) => {
-        if(error) {
-            console.log(error);
-            return;
-        }
-        else {
-            console.log("User " + suggested_by + "has submitted a correction for approval")
-            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
-            return res.redirect('/underclassmenonly');
-        }
-    }); 
-}
-
-//adds a correction suggestion to edit_suggestions table once user has submitted it from UG
-exports.suggestCorrectionEP =  (req, res) => {
-
-    let {job_id, link, is_closed} = req.body;
-    let suggested_by = req.user.id;
-
-    if (is_closed.length >1){
-        is_closed = '1';
-    }
-    else {
-        is_closed = null;
-    }
-    
-    pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id,
-        link: link, is_closed: is_closed, suggested_by: suggested_by}, (error, results) => {
-        if(error) {
-            console.log(error);
-            return;
-        }
-        else {
-            console.log("User " + suggested_by + "has submitted a correction for approval")
-            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
-            return res.redirect('/exploratory');
+            if (origin == 1){
+                return res.redirect('/internships');
+            }
+            if (origin == 2){
+                return res.redirect('/underrepresented');
+            }
+            if (origin == 3){
+                return res.redirect('/exploratory');
+            }
+            if (origin == 4){
+                return res.redirect('/fulltime');
+            }
+            if (origin == 5){
+                return res.redirect('/underclassmenonly');
+            }
         }
     }); 
 }
@@ -873,6 +776,7 @@ exports.suggestCorrectionEP =  (req, res) => {
 //allows a user to track an internship from the internships page (add it to myapps page)
 exports.track =  (req, res) => {
     const jid = req.body.job_id;
+    const origin = req.body.origin;
 
     pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
         if (error) {
@@ -896,137 +800,21 @@ exports.track =  (req, res) => {
             else {
                 console.log("User: " + decoded.id + " has just tracked job# " + jid);
                 req.session.message2 = 'Listing Tracked & Added to MyApps';
-                res.status(200).redirect("/internships");
-            }
-            });
-    });
-}
-
-//allows a user to track an internship from the internships page (add it to myapps page)
-exports.ft_track =  (req, res) => {
-    const jid = req.body.job_id;
-
-    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-
-            var string = JSON.stringify(result);
-            var data =  JSON.parse(string);
-            //console.log('>> json: ', data); 
-        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
-        //console.log(decoded.id);
-
-        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
-            if(error){
-                console.log(error);
-                if (error.errno == 1062){
-                    return res.status(200).redirect("/fulltime");
+                if (origin == 1){
+                    return res.redirect('/internships');
                 }
-            }
-
-            else {
-                console.log("User: " + decoded.id + " has just tracked job# " + jid);
-                req.session.message2 = 'Listing Tracked & Added to MyApps';
-                res.status(200).redirect("/fulltime");
-            }
-            });
-    });
-}
-
-
-
-//allows a user to track an internship from the underrepresented groups internships page (add it to myapps page)
-exports.ug_track =  (req, res) => {
-    const jid = req.body.job_id;
-
-    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-
-            var string = JSON.stringify(result);
-            var data =  JSON.parse(string);
-            //console.log('>> json: ', data); 
-        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
-        //console.log(decoded.id);
-
-        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
-            if(error){
-                console.log(error);
-                if (error.errno == 1062){
-                    return res.status(200).redirect("/underrepresented");
+                if (origin == 2){
+                    return res.redirect('/underrepresented');
                 }
-            }
-
-            else {
-                console.log("User: " + decoded.id + " has just tracked u-job# " + jid);
-                req.session.message2 = 'Listing Tracked & Added to MyApps';
-                res.status(200).redirect("/underrepresented");
-            }
-            });
-    });
-}
-
-//allows a user to track an internship from the underclassmen-only internships page (add it to myapps page)
-exports.uc_track =  (req, res) => {
-    const jid = req.body.job_id;
-
-    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-
-            var string = JSON.stringify(result);
-            var data =  JSON.parse(string);
-            //console.log('>> json: ', data); 
-        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
-        //console.log(decoded.id);
-
-        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
-            if(error){
-                console.log(error);
-                if (error.errno == 1062){
-                    return res.status(200).redirect("/underclassmenonly");
+                if (origin == 3){
+                    return res.redirect('/exploratory');
                 }
-            }
-
-            else {
-                console.log("User: " + decoded.id + " has just tracked uc-job# " + jid);
-                req.session.message2 = 'Listing Tracked & Added to MyApps';
-                res.status(200).redirect("/underclassmenonly");
-            }
-            });
-    });
-}
-
-//allows a user to track an exploratory program from the exploratory page (add it to myapps page)
-exports.ep_track =  (req, res) => {
-    const jid = req.body.job_id;
-
-    pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-
-            var string = JSON.stringify(result);
-            var data =  JSON.parse(string);
-            //console.log('>> json: ', data); 
-        const decoded = await promisify(jtoken.verify)(req.cookies.jtoken, process.env.JWT_SECRET);
-        //console.log(decoded.id);
-
-        pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
-            if(error){
-                console.log(error);
-                if (error.errno == 1062){
-                    return res.status(200).redirect("/exploratory");
+                if (origin == 4){
+                    return res.redirect('/fulltime');
                 }
-            }
-
-            else {
-                console.log("User: " + decoded.id + " has just tracked ep-job# " + jid);
-                req.session.message2 = 'Listing Tracked & Added to MyApps';
-                res.status(200).redirect("/exploratory");
+                if (origin == 5){
+                    return res.redirect('/underclassmenonly');
+                }
             }
             });
     });

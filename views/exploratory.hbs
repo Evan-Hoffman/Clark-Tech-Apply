@@ -36,8 +36,8 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #817a38">
           Edits
         </a>
-        <ul class="dropdown-menu" >
-          <li><a href="/fedits" class="dropdown-item" style="color: #000000">Fulltime</a></li>
+        <ul class="dropdown-menu">
+          <li><a href="/fedits" class="dropdown-item" style="color: #000000">New-Grad</a></li>
           <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
           <li><a href="/ucedits" class="dropdown-item" style="color: #000000">Underclassmen</a></li>
           <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a></li>
@@ -48,15 +48,17 @@
       <li><a id="b" href="/">Home</a></li>
       <li><a href="/tips">Tips</a></li>
       <li><a href="/myapps">MyApps</a></li>
-      <li><a href="/fulltime">Fulltime</a></li>
+      <li><a href="/fulltime">New-Grad</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Internships
         </a>
         <ul class="dropdown-menu">
           <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-          <li><a href="/underclassmenonly" class="dropdown-item" style="color: #000000">For 1st and 2nd Years Only</a></li>
-          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
+          <li><a href="/underclassmenonly" class="dropdown-item" style="color: #000000">For 1st and 2nd Years Only</a>
+          </li>
+          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
+          </li>
           <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a>
           </li>
         </ul>
@@ -84,23 +86,33 @@
         <p></p>
         <div class="car text-center">
           <t>
-            Many Companies hold 1 to 5 day Exploratory Programs the Summer, Fall, or Winter before their summer internship program.
-            These programs can consist of various activities, usually involving workshops where you learn skills, seminars where you 
-            learn about careers/internships at the company, and often prep for interviewing with them for an internship. When you attend 
-            their exploratory program, the company is likely to prioritize your application for the internship and you will likely get 
-            guaranteed an interview. As the application process for the exploratory program is usually much more open and simple than for
-            the full internship, this is a great way to get to interviews at a company that offers a program like this. Also, you
-            will be able to put that you attended the Exploratory Program at X company on your resume, which looks really good!
+            Many Companies hold 1 to 5 day Exploratory Programs the Summer, Fall, or Winter before their summer
+            internship program.
+            These programs can consist of various activities, usually involving workshops where you learn skills,
+            seminars where you
+            learn about careers/internships at the company, and often prep for interviewing with them for an internship.
+            When you attend
+            their exploratory program, the company is likely to prioritize your application for the internship and you
+            will likely get
+            guaranteed an interview. As the application process for the exploratory program is usually much more open
+            and simple than for
+            the full internship, this is a great way to get to interviews at a company that offers a program like this.
+            Also, you
+            will be able to put that you attended the Exploratory Program at X company on your resume, which looks
+            really good!
           </t>
-<p></p>
-<t>
-            Applying for these really can't hurt; you don't need to go through a technical interview process or anything, likely it'll
-            just be a phone call with a recruiter, but getting admitted and attending the event will give you a huge leg-up for interviewing
+          <p></p>
+          <t>
+            Applying for these really can't hurt; you don't need to go through a technical interview process or
+            anything, likely it'll
+            just be a phone call with a recruiter, but getting admitted and attending the event will give you a huge
+            leg-up for interviewing
             for the real summer internship program.
-</t>
-<p></p>
-<t>
-            These programs are virtual for now, but usually they are in-person, fully paid travel and accomodations to and from.
+          </t>
+          <p></p>
+          <t>
+            These programs are virtual for now, but usually they are in-person, fully paid travel and accomodations to
+            and from.
 
           </t>
           <p></p>
@@ -118,7 +130,7 @@
           {{/if}}
 
 
-         <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -144,7 +156,7 @@
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2 required>
                       <label class="form-check-label" for="fulltimeBox">
-                        Fulltime
+                        New-Grad
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
@@ -153,7 +165,7 @@
                         Exploratory Program/Summit
                       </label>
                     </div>
-                     <p></p>
+                    <p></p>
                     <div class="form-group">
                       <label for="company_name">Company*</label>
                       <input type="text" placeholder="Company Name" value="" class="form-control" id="company_name"
@@ -238,7 +250,7 @@
                 </th>
                 <th class="th-sm">Program Title
                 </th>
-                 <th class="th-sm">Eligibility
+                <th class="th-sm">Eligibility
                 </th>
                 <th class="th-sm">Event Date
                 </th>
@@ -262,7 +274,8 @@
                 <td>{{date_added}}</td>
                 <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
                 <td>
-                  <form action="/auth/ep_track" method="POST">
+                  <form action="/auth/track" method="POST">
+                    <input type="hidden" value=3 class="form-control" id="origin" name="origin">
                     {{#if is_tracked}}
 
                     <button class="btn btn-info" disabled>+</button>
@@ -286,20 +299,27 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form action="/auth/suggestCorrectionEP" method="POST">
+                          <form action="/auth/suggestCorrection" method="POST">
 
                             <div class="form-group">
                               <input type="hidden" value={{job_id}} class="form-control" id="job_id" name="job_id">
                               <input type="hidden" value={{link}} class="form-control" id="link" name="link">
+                              <input type="hidden" value=3 class="form-control" id="origin" name="origin">
                             </div>
                             <t>------------------------------------------------------------------------</t>
+
                             <div class="form-check">
-                              <input type="hidden" name="is_closed" value="0">
+
                               <input type="checkbox" value="1" name="is_closed" id="is_closed">
                               <label for="is_closed">Is the Link Down or Application Closed?</label>
                             </div>
                             <t>------------------------------------------------------------------------</t>
-
+                            <p> </p>
+                            <div class="form-group">
+                              <label for="comments">Other Issue</label>
+                              <input type="text" placeholder="Which table entry is incorrect & how did you find out?"
+                                value="" class="form-control" id="comments" name="comments">
+                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                           </form>
 
@@ -321,7 +341,7 @@
                 </th>
                 <th class="th-sm">Program Title
                 </th>
-                  <th class="th-sm">Eligibility
+                <th class="th-sm">Eligibility
                 </th>
                 <th class="th-sm">Event Date
                 </th>

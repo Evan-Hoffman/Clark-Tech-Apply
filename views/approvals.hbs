@@ -40,7 +40,7 @@
           Edits
         </a>
         <ul class="dropdown-menu" >
-          <li><a href="/fedits" class="dropdown-item" style="color: #000000">Fulltime</a></li>
+          <li><a href="/fedits" class="dropdown-item" style="color: #000000">New-Grad</a></li>
           <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
           <li><a href="/ucedits" class="dropdown-item" style="color: #000000">Underclassmen</a></li>
           <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a></li>
@@ -51,7 +51,7 @@
       <li><a id="b" href="/">Home</a></li>
       <li><a href="/tips">Tips</a></li>
       <li><a href="/myapps">MyApps</a></li>
-      <li><a href="/fulltime">Fulltime</a></li>
+      <li><a href="/fulltime">New-Grad</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Internships
@@ -222,7 +222,7 @@
                               <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2 {{#if is_ft}} checked {{/if}}>
                                 <label class="form-check-label" for="fulltimeBox">
-                                  Fulltime
+                                  New-Grad
                                 </label>
                               </div>
                               <div class="form-check form-check-inline">
@@ -416,14 +416,6 @@
               <tr>
                 <th class="th-sm">Job ID
                 </th>
-                <th class="th-sm">(Old) Int'l Students?
-                </th>
-                <th class="th-sm">(New) Int'l Students?
-                </th>
-                <th class="th-sm">(Old) '23 Only?
-                </th>
-                <th class="th-sm">(New) '23 Only?
-                </th>
                 <th class="th-sm">Link
                 </th>
                 <th class="th-sm">Closed?
@@ -440,10 +432,6 @@
               {{#each edits}}
               <tr>
                 <td>{{job_id}}</td>
-                <td>{{international_allowed}}</td>
-                <td>{{international_allowed_new}}</td>
-                <td>{{juniors_only}}</td>
-                <td>{{juniors_only_new}}</td>
                 <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Link</a></td>
                 <td>{{is_closed}}</td>
                 <td>{{comments}}</td>
@@ -463,14 +451,6 @@
               <tr>
                 <th class="th-sm">Job ID
                 </th>
-                <th class="th-sm">(Old) Int'l Students?
-                </th>
-                <th class="th-sm">(New) Int'l Students?
-                </th>
-                <th class="th-sm">(Old) '23 Only?
-                </th>
-                <th class="th-sm">(New) '23 Only?
-                </th>
                 <th class="th-sm">Link
                 </th>
                 <th class="th-sm">Closed?
@@ -486,7 +466,7 @@
             <script>
               $(document).ready(function () {
                 $('#editsTable').DataTable({
-                  "order": [[9, "desc"]]
+                  "order": [[5, "desc"]]
                 });
               });
             </script>

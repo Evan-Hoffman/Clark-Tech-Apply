@@ -37,7 +37,7 @@
           Edits
         </a>
         <ul class="dropdown-menu" >
-          <li><a href="/fedits" class="dropdown-item" style="color: #000000">Fulltime</a></li>
+          <li><a href="/fedits" class="dropdown-item" style="color: #000000">New-Grad</a></li>
           <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
           <li><a href="/ucedits" class="dropdown-item" style="color: #000000">Underclassmen</a></li>
           <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a></li>
@@ -48,7 +48,7 @@
       <li><a id="b" href="/">Home</a></li>
       <li><a href="/tips">Tips</a></li>
       <li><a href="/myapps">MyApps</a></li>
-      <li><a href="/fulltime">Fulltime</a></li>
+      <li><a href="/fulltime">New-Grad</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Internships
@@ -128,7 +128,7 @@
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2 required>
                       <label class="form-check-label" for="fulltimeBox">
-                        Fulltime
+                        New-Grad
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
@@ -243,7 +243,8 @@
                 <td>{{date_added}}</td>
                 <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
                 <td>
-                  <form action="/auth/uc_track" method="POST">
+                  <form action="/auth/track" method="POST">
+                    <input type="hidden" value=5 class="form-control" id="origin" name="origin">
                     {{#if is_tracked}}
 
                     <button class="btn btn-info" disabled>+</button>
@@ -267,20 +268,28 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form action="/auth/suggestCorrectionUC" method="POST">
+                          <form action="/auth/suggestCorrection" method="POST">
 
                             <div class="form-group">
                               <input type="hidden" value={{job_id}} class="form-control" id="job_id" name="job_id">
                               <input type="hidden" value={{link}} class="form-control" id="link" name="link">
+                              <input type="hidden" value=5 class="form-control" id="origin" name="origin">
                             </div>
                             <t>------------------------------------------------------------------------</t>
+
                             <div class="form-check">
-                              <input type="hidden" name="is_closed" value="0">
+                              
                               <input type="checkbox" value="1" name="is_closed" id="is_closed">
                               <label for="is_closed">Is the Link Down or Application Closed?</label>
                             </div>
                             <t>------------------------------------------------------------------------</t>
-
+                            <p> </p>
+                            <div class="form-group">
+                              <label for="comments">Other Issue</label>
+                              <input type="text"
+                                placeholder="Which table entry is incorrect & how did you find out?" value=""
+                                class="form-control" id="comments" name="comments">
+                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                           </form>
 
