@@ -148,8 +148,8 @@
                     {{#if swe_tag}}
                     <span class="badge badge-pill badge-success">SWE</span>
                     {{/if}}
-                    {{#if it_tag}}
-                    <span class="badge badge-pill badge-dark">IT</span>
+                    {{#if devops_tag}}
+                    <span class="badge badge-pill badge-dark">Dev-Ops</span>
                     {{/if}}
                     {{#if consulting_tag}}
                     <span class="badge badge-pill badge-secondary">TECH-CONSULTING</span>
@@ -271,13 +271,13 @@
                                 <label for="dsci_tag">DSCI Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input type="hidden" name="it_tag" value="0">
-                                {{#if it_tag}}
-                                <input type="checkbox" checked="checked" value="1" name="it_tag" id="it_tag">
+                                <input type="hidden" name="devops_tag" value="0">
+                                {{#if devops_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="devops_tag" id="devops_tag">
                                 {{else}}
-                                <input type="checkbox" value="1" name="it_tag" id="it_tag">
+                                <input type="checkbox" value="1" name="devops_tag" id="devops_tag">
                                 {{/if}}
-                                <label for="it_tag">DevOps Tag</label>
+                                <label for="devops_tag">DevOps Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
                                 <input type="hidden" name="consulting_tag" value="0">

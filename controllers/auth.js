@@ -649,7 +649,7 @@ exports.suggest =  (req, res) => {
     //console.log(req.body);
     
     let {suggested_by, origin, role_type, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, is_uc} = req.body;
+         dsci_tag, devops_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, is_uc} = req.body;
     
     let is_ep = 0;
     let is_ft = 0;
@@ -667,8 +667,8 @@ exports.suggest =  (req, res) => {
     if (dsci_tag.length >1){
         dsci_tag = '1';
     }
-    if (it_tag.length >1){
-        it_tag = '1';
+    if (devops_tag.length >1){
+        devops_tag = '1';
     }
     if (consulting_tag.length >1){
         consulting_tag = '1';
@@ -691,7 +691,7 @@ exports.suggest =  (req, res) => {
 
 
     pool.query('INSERT INTO suggestions SET ?', {suggested_by: suggested_by, company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
-         dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
+         dsci_tag: dsci_tag, swe_tag: swe_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
         international_allowed: international_allowed, is_ug: is_ug, is_ep: is_ep, is_ft: is_ft, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
@@ -1183,7 +1183,7 @@ exports.approve =  (req, res) => {
     //console.log(req.body);
 
     let {role_type, suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, dates, is_uc} = req.body;
+         dsci_tag, devops_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, dates, is_uc} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
@@ -1202,8 +1202,8 @@ exports.approve =  (req, res) => {
         dsci_tag = '1';
     }
 
-    if (it_tag.length >1){
-        it_tag = '1';
+    if (devops_tag.length >1){
+        devops_tag = '1';
     }
     if (consulting_tag.length >1){
         consulting_tag = '1';
@@ -1232,7 +1232,7 @@ exports.approve =  (req, res) => {
 
     
     pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
-         dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
+         dsci_tag: dsci_tag, swe_tag: swe_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
         international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: dates, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
@@ -1306,7 +1306,7 @@ exports.edit =  (req, res) => {
     //console.log(req.body);
 
     let {role_type, job_id, origin, company_name, internship_title, link, international_allowed, swe_tag,
-         dsci_tag, it_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, event_dates, is_uc} = req.body;
+         dsci_tag, devops_tag, consulting_tag, cyber_tag, product_tag, juniors_only, is_ug, eligibility, event_dates, is_uc} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
@@ -1325,8 +1325,8 @@ exports.edit =  (req, res) => {
         dsci_tag = '1';
     }
 
-    if (it_tag.length >1){
-        it_tag = '1';
+    if (devops_tag.length >1){
+        devops_tag = '1';
     }
     if (consulting_tag.length >1){
         consulting_tag = '1';
@@ -1355,7 +1355,7 @@ exports.edit =  (req, res) => {
 
     
     pool.query('UPDATE internships SET ? WHERE job_id = ' + job_id, {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
-         dsci_tag: dsci_tag, swe_tag: swe_tag, it_tag: it_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
+         dsci_tag: dsci_tag, swe_tag: swe_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, product_tag: product_tag,
         international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: event_dates, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
