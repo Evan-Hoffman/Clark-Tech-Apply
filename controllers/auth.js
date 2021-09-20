@@ -6,6 +6,8 @@ const {promisify} = require('util');
 var fs = require('fs');
 const e = require("express");
 const { waitForDebugger } = require("inspector");
+const { resolve } = require("path");
+const { endianness } = require("os");
 
 
 var db_config = {
@@ -152,9 +154,9 @@ exports.verifyUser = (req, res) => {
             if(error) {
                 console.log(error);
             }
+            console.log("Someone just verified their account");
         });
     });
-    console.log("Someone just verified their account");
     return res.render('login', {
         message2: 'Account Verified. Please Login'
     });
@@ -538,9 +540,10 @@ function populateInternshipsHelper(req, json, _callback){
             }
         }
 
+        json = json.sort((job1, job2) => (job1.date_added < job2.date_added) ? 1 : (job1.date_added > job2.date_added) ? -1 : 0);
             
         _callback();
-            //return json;
+            
         });
     
 }
@@ -775,6 +778,7 @@ exports.suggestCorrection =  (req, res) => {
 
 //allows a user to track an internship from the internships page (add it to myapps page)
 exports.track =  (req, res) => {
+    //console.log(req.body);
     const jid = req.body.job_id;
     const origin = req.body.origin;
 
@@ -818,6 +822,7 @@ exports.track =  (req, res) => {
             }
             });
     });
+    //return res.status(200);
 }
 
 /**********************************************************MyApps Methods*******************************************************************/

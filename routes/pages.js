@@ -78,7 +78,7 @@ router.get('/fulltime', authController.isLoggedIn, authController.populateFullti
 
 //only go to Internships if logged in
 router.get('/internships', authController.isLoggedIn, authController.populateInternships, (req, res) => {
-    //console.log(req.internships.length);
+    //console.log(req.internships);
     if(req.user) {
         res.render('internships', {
             user: req.user,
