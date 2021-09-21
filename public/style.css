@@ -38,3 +38,34 @@ nav li a:hover{
     width: 65%;
     border-bottom: 1px solid rgba(0,0,0,0,1.5);
 }
+
+.badge.badge-ux {
+    background-color: rgb(105, 22, 112);
+    color: white;
+
+    
+}
+
+.badge.badge-web {
+    background-color: rgb(151, 240, 156);
+    
+}
+
+.badge.badge-backend {
+    background-color: rgb(3, 70, 25);
+    color: white;
+}
+
+.badge.badge-devops {
+    background-color: rgb(85, 66, 52);
+    color: white;
+}
+
+.badge.badge-networks {
+    background-color: rgb(209, 52, 201);
+    color: white;
+}
+.badge.badge-it {
+    background-color: rgb(24, 4, 8);
+    color: white;
+}

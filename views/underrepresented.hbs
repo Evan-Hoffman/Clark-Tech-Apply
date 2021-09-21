@@ -157,10 +157,20 @@
                         id="international_allowed" name="international_allowed">
                     </div>
                     <label>Tags:</label>
+                   <div class="form-check form-check-inline">
+                      <input type="hidden" name="swe_web_tag" value="0">
+                      <input type="checkbox" value="1" name="swe_web_tag" id="swe_web_tag">
+                      <label for="swe_web_tag">SWE-Web</label>
+                    </div>
                     <div class="form-check form-check-inline">
-                      <input type="hidden" name="swe_tag" value="0">
-                      <input type="checkbox" value="1" name="swe_tag" id="swe_tag">
-                      <label for="swe_tag">SWE</label>
+                      <input type="hidden" name="swe_backend_tag" value="0">
+                      <input type="checkbox" value="1" name="swe_backend_tag" id="swe_backend_tag">
+                      <label for="swe_backend_tag">SWE-Backend</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="swe_mobile_tag" value="0">
+                      <input type="checkbox" value="1" name="swe_mobile_tag" id="swe_mobile_tag">
+                      <label for="swe_mobile_tag">SWE-Mobile</label>
                     </div>
                     <div class="form-check form-check-inline">
                       <input type="hidden" name="dsci_tag" value="0">
@@ -173,19 +183,34 @@
                       <label for="devops_tag">DevOps</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input type="hidden" name="consulting_tag" value="0">
-                      <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
-                      <label for="consulting_tag">Consulting</label>
-                    </div>
-                    <div class="form-check form-check-inline">
                       <input type="hidden" name="cyber_tag" value="0">
                       <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
                       <label for="cyber_tag">Cyber</label>
+                    </div>
+                     <div class="form-check form-check-inline">
+                      <input type="hidden" name="networks_tag" value="0">
+                      <input type="checkbox" value="1" name="networks_tag" id="networks_tag">
+                      <label for="networks_tag">Networks</label>
                     </div>
                     <div class="form-check form-check-inline">
                       <input type="hidden" name="product_tag" value="0">
                       <input type="checkbox" value="1" name="product_tag" id="product_tag">
                       <label for="product_tag">Product</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="ux_tag" value="0">
+                      <input type="checkbox" value="1" name="ux_tag" id="ux_tag">
+                      <label for="ux_tag">UX/HCI</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="it_tag" value="0">
+                      <input type="checkbox" value="1" name="it_tag" id="it_tag">
+                      <label for="it_tag">IT Analyst</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="hidden" name="consulting_tag" value="0">
+                      <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
+                      <label for="consulting_tag">Consulting</label>
                     </div>
                     <div class="form-check">
                       <input type="hidden" name="juniors_only" value="0">

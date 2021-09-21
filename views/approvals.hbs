@@ -39,7 +39,7 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #817a38">
           Edits
         </a>
-        <ul class="dropdown-menu" >
+        <ul class="dropdown-menu">
           <li><a href="/fedits" class="dropdown-item" style="color: #000000">New-Grad</a></li>
           <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
           <li><a href="/ucedits" class="dropdown-item" style="color: #000000">Underclassmen</a></li>
@@ -58,8 +58,10 @@
         </a>
         <ul class="dropdown-menu">
           <li><a href="/internships" class="dropdown-item" style="color: #000000">General</a></li>
-          <li><a href="/underclassmenonly" class="dropdown-item" style="color: #000000">For 1st and 2nd Years Only</a></li>
-          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a></li>
+          <li><a href="/underclassmenonly" class="dropdown-item" style="color: #000000">For 1st and 2nd Years Only</a>
+          </li>
+          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
+          </li>
           <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a>
           </li>
         </ul>
@@ -143,24 +145,43 @@
                   <td>{{company_name}}</td>
                   <td>
                     {{#if dsci_tag}}
-                    <span class="badge badge-pill badge-primary">DSCI</span>
-                    {{/if}}
-                    {{#if swe_tag}}
-                    <span class="badge badge-pill badge-success">SWE</span>
-                    {{/if}}
-                    {{#if devops_tag}}
-                    <span class="badge badge-pill badge-dark">Dev-Ops</span>
-                    {{/if}}
-                    {{#if consulting_tag}}
-                    <span class="badge badge-pill badge-secondary">TECH-CONSULTING</span>
-                    {{/if}}
-                    {{#if cyber_tag}}
-                    <span class="badge badge-pill badge-danger">CYBER</span>
-                    {{/if}}
-                    {{#if product_tag}}
-                    <span class="badge badge-pill badge-warning">PM</span>
-                    {{/if}}
+                  <span class="badge badge-pill badge-primary">DSCI</span>
+                  {{/if}}
+                  {{#if swe_web_tag}}
+                  <span class="badge badge-pill badge-web">SWE-Web</span>
+                  {{/if}}
+                  {{#if swe_mobile_tag}}
+                  <span class="badge badge-pill badge-success">SWE-Mobile</span>
+                  {{/if}}
+                  {{#if swe_tag}}
+                  <span class="badge badge-pill badge-success">SWE</span>
+                  {{/if}}
+                  {{#if swe_backend_tag}}
+                  <span class="badge badge-pill badge-backend">SWE-Backend</span>
+                  {{/if}}
+                  {{#if devops_tag}}
+                  <span class="badge badge-pill badge-devops">DevOps</span>
+                  {{/if}}
+                  {{#if cyber_tag}}
+                  <span class="badge badge-pill badge-danger">CYBER</span>
+                  {{/if}}
+                  {{#if networks_tag}}
+                  <span class="badge badge-pill badge-networks">NET</span>
+                  {{/if}}
+                  {{#if ux_tag}}
+                  <span class="badge badge-pill badge-ux">UX/HCI</span>
+                  {{/if}}
+                  {{#if product_tag}}
+                  <span class="badge badge-pill badge-warning">PM</span>
+                  {{/if}}
+                  {{#if consulting_tag}}
+                  <span class="badge badge-pill badge-secondary">Tech-Consulting</span>
+                  {{/if}}
+                  {{#if it_tag}}
+                  <span class="badge badge-pill badge-it">IT Analyst</span>
+                  {{/if}}
                   </td>
+
                   {{#if is_ft}}
                   <td>N/A</td>
                   {{else}}
@@ -213,20 +234,22 @@
                               <t>Role Type*</t>
                               <p></p>
                               <div class="form-check form-check-inline" id="typeSelect">
-                                <input class="form-check-input" type="radio" name="role_type" id="internshipBox"
-                                  value=1 checked>
+                                <input class="form-check-input" type="radio" name="role_type" id="internshipBox" value=1
+                                  checked>
                                 <label class="form-check-label" for="internshipBox">
                                   Internship
                                 </label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2 {{#if is_ft}} checked {{/if}}>
+                                <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2
+                                  {{#if is_ft}} checked {{/if}}>
                                 <label class="form-check-label" for="fulltimeBox">
                                   New-Grad
                                 </label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="role_type" id="epBox" value=3 {{#if is_ep}} checked {{/if}}>
+                                <input class="form-check-input" type="radio" name="role_type" id="epBox" value=3 {{#if
+                                  is_ep}} checked {{/if}}>
                                 <label class="form-check-label" for="epBox">
                                   Exploratory Program/Summit
                                 </label>
@@ -253,13 +276,31 @@
                                   class="form-control" id="international_allowed" name="international_allowed" required>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input type="hidden" name="swe_tag" value="0">
-                                {{#if swe_tag}}
-                                <input type="checkbox" checked="checked" value="1" name="swe_tag" id="swe_tag">
+                                <input type="hidden" name="swe_web_tag" value="0">
+                                {{#if swe_web_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="swe_web_tag" id="swe_web_tag">
                                 {{else}}
-                                <input type="checkbox" value="1" name="swe_tag" id="swe_tag">
+                                <input type="checkbox" value="1" name="swe_web_tag" id="swe_web_tag">
                                 {{/if}}
-                                <label for="swe_tag">SWE Tag</label>
+                                <label for="swe_web_tag">SWE-Web Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="swe_backend_tag" value="0">
+                                {{#if swe_backend_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="swe_backend_tag" id="swe_backend_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="swe_backend_tag" id="swe_backend_tag">
+                                {{/if}}
+                                <label for="swe_backend_tag">SWE-Backend Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="swe_mobile_tag" value="0">
+                                {{#if swe_mobile_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="swe_mobile_tag" id="swe_mobile_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="swe_mobile_tag" id="swe_mobile_tag">
+                                {{/if}}
+                                <label for="swe_mobile_tag">SWE-Mobile Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
                                 <input type="hidden" name="dsci_tag" value="0">
@@ -280,16 +321,6 @@
                                 <label for="devops_tag">DevOps Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input type="hidden" name="consulting_tag" value="0">
-                                {{#if consulting_tag}}
-                                <input type="checkbox" checked="checked" value="1" name="consulting_tag"
-                                  id="consulting_tag">
-                                {{else}}
-                                <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
-                                {{/if}}
-                                <label for="consulting_tag">Consulting Tag</label>
-                              </div>
-                              <div class="form-check form-check-inline">
                                 <input type="hidden" name="cyber_tag" value="0">
                                 {{#if cyber_tag}}
                                 <input type="checkbox" checked="checked" value="1" name="cyber_tag" id="cyber_tag">
@@ -297,6 +328,15 @@
                                 <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
                                 {{/if}}
                                 <label for="cyber_tag">Cyber Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="networks_tag" value="0">
+                                {{#if networks_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="networks_tag" id="networks_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="networks_tag" id="networks_tag">
+                                {{/if}}
+                                <label for="networks_tag">Networks Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
                                 <input type="hidden" name="product_tag" value="0">
@@ -307,7 +347,35 @@
                                 {{/if}}
                                 <label for="product_tag">Product Tag</label>
                               </div>
-
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="ux_tag" value="0">
+                                {{#if ux_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="ux_tag" id="ux_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="ux_tag" id="ux_tag">
+                                {{/if}}
+                                <label for="ux_tag">UX Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="consulting_tag" value="0">
+                                {{#if consulting_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="consulting_tag"
+                                  id="consulting_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
+                                {{/if}}
+                                <label for="consulting_tag">Consulting Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="it_tag" value="0">
+                                {{#if it_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="it_tag"
+                                  id="it_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="it_tag" id="it_tag">
+                                {{/if}}
+                                <label for="it_tag">IT Analyst Tag</label>
+                              </div>
                               <div class="form-check">
                                 <input type="hidden" name="juniors_only" value="0">
                                 {{#if juniors_only}}
@@ -380,7 +448,7 @@
               <th class="th-sm">UG?
               </th>
               <th class="th-sm">UC?
-                  </th>
+              </th>
               <th class="th-sm">Position
               </th>
               <th class="th-sm">Date Suggested
