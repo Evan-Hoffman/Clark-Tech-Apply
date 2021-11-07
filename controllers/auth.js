@@ -144,6 +144,7 @@ exports.register = (req, res) => {
 }
 
 exports.verifyUser = (req, res) => {
+    console.log('Verify user has been called');
     let ccode = req.params.confirmationCode;
     pool.query('UPDATE users SET active = 1 WHERE confirmation_code = ?', [ccode], (error, results) => {
         if(error) {
