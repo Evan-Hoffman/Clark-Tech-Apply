@@ -986,6 +986,39 @@ exports.populateApprovals = async (req, res, next) => {
     }
 }
 
+//approve all suggested listings
+exports.approveAll = (req, res) => {
+    try {
+        pool.query('INSERT INTO internships (company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, product_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag) (SELECT company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, product_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag FROM suggestions)', async (error, result) => {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            else {
+                console.log('An admin has approved all internship listings in suggestion');
+                try {
+                    pool.query('DELETE FROM suggestions', async (error, results) => {
+                        if (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+                catch (error) {
+                    console.log(error);
+                    return res.redirect('/approvals');
+                    
+                }
+                return res.redirect('/approvals');
+            }
+        });
+    }
+
+    catch (error) {
+        console.log(error);
+        return;
+    }
+}
+
 //adds a suggestion to internships table once privileged user has approved it
 exports.approve =  (req, res) => {
     //console.log(req.body);
