@@ -144,7 +144,6 @@ exports.register = (req, res) => {
 }
 
 exports.verifyUser = (req, res) => {
-    console.log('Verify user has been called');
     let ccode = req.params.confirmationCode;
     pool.query('UPDATE users SET active = 1 WHERE confirmation_code = ?', [ccode], (error, results) => {
         if(error) {
@@ -169,7 +168,7 @@ exports.login = async (req, res) => {
         const {email, password} = req.body;
 
         if(!email || !password){
-            console.log("Someone forgot to include their password or email at login")
+            //console.log("Someone forgot to include their password or email at login")
             return res.status(400).render('login', {
                 message1: 'Please provide an email and a password'
             })
