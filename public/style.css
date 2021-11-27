@@ -69,3 +69,7 @@ nav li a:hover{
     background-color: rgb(24, 4, 8);
     color: white;
 }
+.badge.badge-analytics {
+    background-color: rgb(17, 29, 197);
+    color: white;
+}

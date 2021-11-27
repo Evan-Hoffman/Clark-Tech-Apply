@@ -163,6 +163,9 @@
                   {{#if swe_backend_tag}}
                   <span class="badge badge-pill badge-backend">SWE-Backend</span>
                   {{/if}}
+                  {{#if ba_tag}}
+                  <span class="badge badge-pill badge-analytics">Analytics</span>
+                  {{/if}}
                   {{#if devops_tag}}
                   <span class="badge badge-pill badge-devops">DevOps</span>
                   {{/if}}
@@ -369,6 +372,16 @@
                                 <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
                                 {{/if}}
                                 <label for="consulting_tag">Consulting Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="hidden" name="ba_tag" value="0">
+                                {{#if ba_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="ba_tag"
+                                  id="ba_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="ba_tag" id="ba_tag">
+                                {{/if}}
+                                <label for="ba_tag">Analytics Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
                                 <input type="hidden" name="it_tag" value="0">

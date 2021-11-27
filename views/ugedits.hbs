@@ -279,6 +279,15 @@
                                 <label for="ux_tag">UX Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
+                                <input type="hidden" name="ba_tag" value="0">
+                                {{#if ba_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="ba_tag" id="ba_tag">
+                                {{else}}
+                                <input type="checkbox" value="1" name="ba_tag" id="ba_tag">
+                                {{/if}}
+                                <label for="ba_tag">Analytics Tag</label>
+                              </div>
+                              <div class="form-check form-check-inline">
                                 <input type="hidden" name="it_tag" value="0">
                                 {{#if it_tag}}
                                 <input type="checkbox" checked="checked" value="1" name="it_tag" id="it_tag">

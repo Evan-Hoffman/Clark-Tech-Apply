@@ -206,6 +206,11 @@
                       <label for="it_tag">IT Analyst</label>
                     </div>
                     <div class="form-check form-check-inline">
+                      <input type="hidden" name="ba_tag" value="0">
+                      <input type="checkbox" value="1" name="ba_tag" id="ba_tag">
+                      <label for="ba_tag">Analytics</label>
+                    </div>
+                    <div class="form-check form-check-inline">
                       <input type="hidden" name="consulting_tag" value="0">
                       <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
                       <label for="consulting_tag">Consulting</label>
@@ -253,7 +258,7 @@
                   </div>
                   <div class="modal-body">
                     <span class="badge badge-pill badge-primary">DSCI</span>
-                    <t>Roles involving Data Science, Machine Learning, Data Engineering, and Data Analytics</t>
+                    <t>Roles involving Data Science, Machine Learning, AI, and Data Engineering</t>
                     <p></p>
                     <span class="badge badge-pill badge-web">SWE-Web</span>
                     <t>Software Engineering roles involving Web Development, Front-end, Fullstack, and Backend specific
@@ -277,7 +282,13 @@
                       Configuration (CICD),
                       and Cloud Architecture/Infrastructure
                     </t>
+                    
 
+                    <p></p>
+
+                    <span class="badge badge-pill badge-analytics">Analytics</span>
+                    <t>Business and Data Analytics Roles</t>
+ 
                     <p></p>
 
                     <span class="badge badge-pill badge-ux">UX/HCI</span>
@@ -300,7 +311,7 @@
                     <p></p>
 
                     <span class="badge badge-pill badge-warning">PM</span>
-                    <t>Project/Program Managament roles</t>
+                    <t>Project/Program/Product Managament roles</t>
 
                     <p></p>
 
@@ -371,6 +382,9 @@
                   {{/if}}
                   {{#if swe_backend_tag}}
                   <span class="badge badge-pill badge-backend">SWE-Backend</span>
+                  {{/if}}
+                  {{#if ba_tag}}
+                  <span class="badge badge-pill badge-analytics">Analytics</span>
                   {{/if}}
                   {{#if devops_tag}}
                   <span class="badge badge-pill badge-devops">DevOps</span>
