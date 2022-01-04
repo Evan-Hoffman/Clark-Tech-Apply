@@ -1,7 +1,7 @@
 ## [clarkTech Apply](https://clarktechapply.com/)
 
 Technology Internship and New-Grad List And Stage Tracking Application for Clark University Students
-    -Tracking Listings for Software Engineering, Data Science, Cybersecurity, Networks, Product, UX/HCI, DevOps, IT Analyst, and Tech-Consulting Summer Internships and New-Grad Positions
+    -Tracking Listings for Software Engineering, Data Science, Cybersecurity, Networks, PM, UX/HCI, DevOps, IT Analyst, and Tech-Consulting Summer Internships and New-Grad Positions
 
 Honor's Project & Capstone by Evan Hurst Hoffman, Clark'21
 

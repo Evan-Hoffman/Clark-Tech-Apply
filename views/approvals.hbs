@@ -178,7 +178,7 @@
                   {{#if ux_tag}}
                   <span class="badge badge-pill badge-ux">UX/HCI</span>
                   {{/if}}
-                  {{#if product_tag}}
+                  {{#if pm_tag}}
                   <span class="badge badge-pill badge-warning">PM</span>
                   {{/if}}
                   {{#if consulting_tag}}
@@ -346,13 +346,13 @@
                                 <label for="networks_tag">Networks Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input type="hidden" name="product_tag" value="0">
-                                {{#if product_tag}}
-                                <input type="checkbox" checked="checked" value="1" name="product_tag" id="product_tag">
+                                <input type="hidden" name="pm_tag" value="0">
+                                {{#if pm_tag}}
+                                <input type="checkbox" checked="checked" value="1" name="pm_tag" id="pm_tag">
                                 {{else}}
-                                <input type="checkbox" value="1" name="product_tag" id="product_tag">
+                                <input type="checkbox" value="1" name="pm_tag" id="pm_tag">
                                 {{/if}}
-                                <label for="product_tag">Product Tag</label>
+                                <label for="pm_tag">PM Tag</label>
                               </div>
                               <div class="form-check form-check-inline">
                                 <input type="hidden" name="ux_tag" value="0">

@@ -651,7 +651,7 @@ exports.suggest =  (req, res) => {
     //console.log(req.body);
     
     let {suggested_by, origin, role_type, company_name, internship_title, link, international_allowed, swe_web_tag, swe_backend_tag, swe_mobile_tag,
-         dsci_tag, devops_tag, consulting_tag, cyber_tag, networks_tag, product_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, is_uc} = req.body;
+         dsci_tag, devops_tag, consulting_tag, cyber_tag, networks_tag, pm_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, is_uc} = req.body;
     
     let is_ep = 0;
     let is_ft = 0;
@@ -687,8 +687,8 @@ exports.suggest =  (req, res) => {
     if (networks_tag.length >1){
         networks_tag = '1';
     }
-    if (product_tag.length >1){
-        product_tag = '1';
+    if (pm_tag.length >1){
+        pm_tag = '1';
     }
     if (ux_tag.length >1){
         ux_tag = '1';
@@ -711,7 +711,7 @@ exports.suggest =  (req, res) => {
 
 
     pool.query('INSERT INTO suggestions SET ?', {suggested_by: suggested_by, company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
-         dsci_tag: dsci_tag, swe_backend_tag: swe_backend_tag, swe_web_tag: swe_web_tag, swe_mobile_tag: swe_mobile_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, product_tag: product_tag,
+         dsci_tag: dsci_tag, swe_backend_tag: swe_backend_tag, swe_web_tag: swe_web_tag, swe_mobile_tag: swe_mobile_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, pm_tag: pm_tag,
         ux_tag: ux_tag, it_tag: it_tag, ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, is_ep: is_ep, is_ft: is_ft, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
@@ -991,7 +991,7 @@ exports.populateApprovals = async (req, res, next) => {
 //approve all suggested listings
 exports.approveAll = (req, res) => {
     try {
-        pool.query('INSERT INTO internships (company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, product_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag, ba_tag) (SELECT company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, product_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag, ba_tag FROM suggestions)', async (error, result) => {
+        pool.query('INSERT INTO internships (company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, pm_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag, ba_tag) (SELECT company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, pm_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag, ba_tag FROM suggestions)', async (error, result) => {
             if (error) {
                 console.log(error);
                 return;
@@ -1026,7 +1026,7 @@ exports.approve =  (req, res) => {
     //console.log(req.body);
 
     let {role_type, suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_backend_tag, swe_web_tag, swe_mobile_tag,
-         dsci_tag, devops_tag, consulting_tag, cyber_tag, networks_tag, product_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, eligibility, dates, is_uc} = req.body;
+         dsci_tag, devops_tag, consulting_tag, cyber_tag, networks_tag, pm_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, eligibility, dates, is_uc} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
@@ -1063,8 +1063,8 @@ exports.approve =  (req, res) => {
     if (networks_tag.length >1){
         networks_tag = '1';
     }
-    if (product_tag.length >1){
-        product_tag = '1';
+    if (pm_tag.length >1){
+        pm_tag = '1';
     }
     if (ux_tag.length >1){
         ux_tag = '1';
@@ -1093,7 +1093,7 @@ exports.approve =  (req, res) => {
 
     
     pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
-         dsci_tag: dsci_tag, swe_backend_tag: swe_backend_tag, swe_web_tag: swe_web_tag, swe_mobile_tag: swe_mobile_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, product_tag: product_tag,
+         dsci_tag: dsci_tag, swe_backend_tag: swe_backend_tag, swe_web_tag: swe_web_tag, swe_mobile_tag: swe_mobile_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, pm_tag: pm_tag,
         ux_tag: ux_tag, it_tag: it_tag, ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: dates, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
@@ -1167,7 +1167,7 @@ exports.edit =  (req, res) => {
     //console.log(req.body);
 
     let {role_type, job_id, origin, company_name, internship_title, link, international_allowed, swe_tag, swe_backend_tag, swe_web_tag, swe_mobile_tag, dsci_tag,
-        devops_tag, consulting_tag, cyber_tag, networks_tag, product_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, eligibility, event_dates, is_uc} = req.body;
+        devops_tag, consulting_tag, cyber_tag, networks_tag, pm_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, eligibility, event_dates, is_uc} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
@@ -1207,8 +1207,8 @@ exports.edit =  (req, res) => {
     if (networks_tag.length >1){
         networks_tag = '1';
     }
-    if (product_tag.length >1){
-        product_tag = '1';
+    if (pm_tag.length >1){
+        pm_tag = '1';
     }
     if (ux_tag.length >1){
         ux_tag = '1';
@@ -1238,7 +1238,7 @@ exports.edit =  (req, res) => {
     
     pool.query('UPDATE internships SET ? WHERE job_id = ' + job_id, {company_name: company_name, internship_title: internship_title, link: link,
         juniors_only: juniors_only, dsci_tag: dsci_tag, swe_tag: swe_tag, swe_backend_tag: swe_backend_tag, swe_web_tag: swe_web_tag, swe_mobile_tag: swe_mobile_tag,
-        devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, product_tag: product_tag, ux_tag: ux_tag, it_tag: it_tag,
+        devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, pm_tag: pm_tag, ux_tag: ux_tag, it_tag: it_tag,
         ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: event_dates, is_uc: is_uc}, (error, results) => {
         if(error) {
             console.log(error);
