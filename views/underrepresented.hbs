@@ -19,6 +19,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+  <script src="/scripts/trackScript.js"></script>
+
 
 
 
@@ -272,15 +274,17 @@
                 <td>{{date_added}}</td>
                 <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
                 <td>
-                  <form action="/auth/track" method="POST">
-                    <input type="hidden" value=2 class="form-control" id="origin" name="origin">
+                  <form id="track_form">
+                      <div class='container'>
+                    <input type="hidden" value={{job_id}} class="form-control" name="job_id" id="job_id">
                     {{#if is_tracked}}
 
                     <button class="btn btn-info" disabled>+</button>
 
                     {{else}}
-                    <button name="job_id" class="btn btn-success" value={{job_id}}>+</button>
+                    <button type="submit" class="btn btn-success">+</button>
                     {{/if}}
+                    </div>
                   </form>
                 </td>
                 <td>

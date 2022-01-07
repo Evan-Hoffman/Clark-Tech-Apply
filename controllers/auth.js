@@ -794,10 +794,8 @@ exports.suggestCorrection =  (req, res) => {
 }
 
 //allows a user to track an internship from the internships page (add it to myapps page)
-exports.track =  (req, res) => {
-    //console.log(req.body);
+exports.track =  (req, res, next) => {
     const jid = req.body.job_id;
-    const origin = req.body.origin;
 
     pool.query('SELECT * FROM internships WHERE job_id = ?', [jid], async (error, result) => {
         if (error) {
@@ -813,33 +811,24 @@ exports.track =  (req, res) => {
         pool.query('INSERT INTO ' + decoded.id + '_apps SET ?', {job_id: jid, company_name: data[0].company_name, link: data[0].link, internship_title: data[0].internship_title}, (error, results) => {
             if(error){
                 console.log(error);
-                if (error.errno == 1062){
-                    return res.status(200).redirect("/internships");
-                }
+               return;
+
             }
 
             else {
                 console.log("User: " + decoded.id + " has just tracked job# " + jid);
-                //req.session.message2 = 'Listing Tracked & Added to MyApps';
-                if (origin == 1){
-                    return res.redirect('/internships');
+                try {         
+                    return next();
                 }
-                if (origin == 2){
-                    return res.redirect('/underrepresented');
-                }
-                if (origin == 3){
-                    return res.redirect('/exploratory');
-                }
-                if (origin == 4){
-                    return res.redirect('/fulltime');
-                }
-                if (origin == 5){
-                    return res.redirect('/underclassmenonly');
+                catch (error) {
+                    console.log(error);
+                    return next();
                 }
             }
+            
             });
     });
-    //return res.status(200);
+
 }
 
 /**********************************************************MyApps Methods*******************************************************************/
