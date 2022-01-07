@@ -20,6 +20,8 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
   <script src="/scripts/trackScript.js"></script>
+  <script src="/scripts/flagScript.js"></script>
+
 
 
 
@@ -186,7 +188,7 @@
                       <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
                       <label for="cyber_tag">Cyber</label>
                     </div>
-                     <div class="form-check form-check-inline">
+                    <div class="form-check form-check-inline">
                       <input type="hidden" name="networks_tag" value="0">
                       <input type="checkbox" value="1" name="networks_tag" id="networks_tag">
                       <label for="networks_tag">Networks</label>
@@ -283,13 +285,13 @@
                       Configuration (CICD),
                       and Cloud Architecture/Infrastructure
                     </t>
-                    
+
 
                     <p></p>
 
                     <span class="badge badge-pill badge-analytics">Analytics</span>
                     <t>Business and Data Analytics Roles</t>
- 
+
                     <p></p>
 
                     <span class="badge badge-pill badge-ux">UX/HCI</span>
@@ -342,7 +344,7 @@
             </div>
           </div>
 
-
+          <h4 id="message_toggle" class="alert-success mt-4 text-left"></h4>
           <table id="internshipTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <thead>
               <tr>
@@ -413,17 +415,17 @@
                 <td>{{internship_title}}</td>
                 <td>{{date_added}}</td>
                 <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
-                 <td>
+                <td>
                   <form id="track_form">
-                      <div class='container'>
-                    <input type="hidden" value={{job_id}} class="form-control" name="job_id" id="job_id">
-                    {{#if is_tracked}}
+                    <div class='container'>
+                      <input type="hidden" value={{job_id}} class="form-control" name="job_id" id="job_id">
+                      {{#if is_tracked}}
 
-                    <button class="btn btn-info" disabled>+</button>
+                      <button class="btn btn-info" disabled>+</button>
 
-                    {{else}}
-                    <button type="submit" class="btn btn-success">+</button>
-                    {{/if}}
+                      {{else}}
+                      <button type="submit" class="btn btn-success">+</button>
+                      {{/if}}
                     </div>
                   </form>
                 </td>
@@ -441,12 +443,11 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form action="/auth/suggestCorrection" method="POST">
+                          <form id="flag_form">
 
                             <div class="form-group">
                               <input type="hidden" value={{job_id}} class="form-control" id="job_id" name="job_id">
                               <input type="hidden" value={{link}} class="form-control" id="link" name="link">
-                              <input type="hidden" value=4 class="form-control" id="origin" name="origin">
                             </div>
                             <t>------------------------------------------------------------------------</t>
 
@@ -462,7 +463,8 @@
                               <input type="text" placeholder="Which table entry is incorrect & how did you find out?"
                                 value="" class="form-control" id="comments" name="comments">
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" data-toggle="modal"
+                              data-target="#flagModal + {{job_id}}">Submit</button>
                           </form>
 
                         </div>

@@ -743,26 +743,12 @@ exports.suggest =  (req, res) => {
 //adds a correction suggestion to edit_suggestions table once user has submitted it
 exports.suggestCorrection =  (req, res) => {
     //console.log(req.body);
-    let {job_id, link, is_closed, comments, origin} = req.body;
+    let {job_id, link, is_closed, comments} = req.body;
     let suggested_by = req.user.id;
 
     if (is_closed == null && comments == ''){
-        req.session.message1 = 'Please fill out one of the 2 fields';
-            if (origin == 1){
-                return res.redirect('/internships');
-            }
-            if (origin == 2){
-                return res.redirect('/underrepresented');
-            }
-            if (origin == 3){
-                return res.redirect('/exploratory');
-            }
-            if (origin == 4){
-                return res.redirect('/fulltime');
-            }
-            if (origin == 5){
-                return res.redirect('/underclassmenonly');
-            }
+        console.log("An empty suggestion was submitted by: " + suggested_by + " and filtered out");
+        return;
     }
 
     pool.query('INSERT INTO edit_suggestions SET ?', {job_id: job_id,
@@ -773,22 +759,7 @@ exports.suggestCorrection =  (req, res) => {
         }
         else {
             console.log("User " + suggested_by + "has submitted a correction for approval")
-            req.session.message2 = 'Correction Submitted for Approval. Thanks!';
-            if (origin == 1){
-                return res.redirect('/internships');
-            }
-            if (origin == 2){
-                return res.redirect('/underrepresented');
-            }
-            if (origin == 3){
-                return res.redirect('/exploratory');
-            }
-            if (origin == 4){
-                return res.redirect('/fulltime');
-            }
-            if (origin == 5){
-                return res.redirect('/underclassmenonly');
-            }
+            return;
         }
     }); 
 }

@@ -30,6 +30,7 @@ app.use(function(req, res, next) {
       next();
 });
 
+
 //make sure express is using public directory:
 app.use(express.static(publicDirectory));
 
