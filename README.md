@@ -18,6 +18,8 @@ Advisor: Prof. Kenneth Basye
 Boilerplate NodeJS webapp startcode from [Telmo Sampaio](https://www.youtube.com/playlist?list=PLD9SRxG6ST3GBsczn8OUKLaErhrvOz9zQ)
     (Starting commits on/before September 17th, 2020)
 
-Icon Credit: [Dmitriy Bondarchuk](https://www.behance.net/indie4art)
+Good Karma Icon: [Lazyacreslongbeach](https://www.kindpng.com/imgv/woJbom_goodwill-icon-png-transparent-png/)
+
+Profile Icon: [Dmitriy Bondarchuk](https://www.behance.net/indie4art)
 
 Clarkies who tested, continue to test and use, and send me detailed feedback and feature desires

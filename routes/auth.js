@@ -57,4 +57,9 @@ router.post('/reject', authController.reject);
 
 router.post('/dismissEdit', authController.dismissEdit);
 
+router.post('/markEditResolved', authController.markEditResolved);
+
+router.post('/approveDeleteEdit', authController.approveDeleteEdit);
+
+
 module.exports = router;

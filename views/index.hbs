@@ -68,6 +68,41 @@
                     <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
                 </ul>
             </li>
+            <li>
+        <div class="container-fluid" type="button" data-toggle="modal" data-target="#karmaModal"
+          style="text-align:left; background-color: rgba(11, 13, 27, 0.356)">
+          <t>{{user.karma}}</t>
+          <img src="/images/karma.png" style="width: 25px; height: 100%">
+          
+        </div>
+        <div class="modal fade" id="karmaModal" tabindex="-1" role="dialog" aria-labelledby="karmaLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" style="color: #000000" id="karmaLabel">Spread Good Karma by Contributing</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <h6 style="color: #000000">Do any of the following and once an admin approves the suggestion, you will earn                  
+                  <img src="/images/karma.png" style="width: 25px; height: 100%"> Karma</h4>
+                  <div class="list-group">
+                    <button type="button" class="list-group-item list-group-item-action">
+                      Flag an error with a listing &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp = &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 1
+                      <img src="/images/karma.png" style="width: 25px; height: 100%" align="right">
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action">
+                      Suggest a listing we missed &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp = &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  5
+                      <img src="/images/karma.png" style="width: 25px; height: 100%" align="right">
+                    </button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
 
             {{else}}
             <li><a href="/login">Login</a></li>

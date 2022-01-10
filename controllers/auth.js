@@ -236,8 +236,9 @@ exports.isLoggedIn = async (req, res, next) => {
             if(!result){
                 return next();
             }
-
+ 
             req.user = result[0];
+            //console.log(req.user);
             return next();
         });
         } catch (error) {
@@ -959,26 +960,78 @@ exports.approveAll = (req, res) => {
             else {
                 console.log('An admin has approved all internship listings in suggestion');
                 try {
-                    pool.query('DELETE FROM suggestions', async (error, results) => {
+                    pool.query('SELECT suggested_by FROM suggestions', async (error, results) => {
                         if (error) {
                             console.log(error);
                         }
-                    });
+                        else {
+                            let arr = {}
+
+                            for (i = 0; i < results.length; i++){
+                                //console.log(results[i].suggested_by);
+                                let id = results[i].suggested_by;
+                                if (arr[id] == null) {
+                                    arr[id] = 5;
+                                }
+                                else {
+                                    arr[id] = arr[id] + 5;
+                                }
+                            }
+
+                            let keys = Object.keys(arr);
+
+                            for (i = 0; i < keys.length; i++){
+                                let uid = keys[i];                                
+                                let toAdd = arr[uid];
+                            
+                                try {
+                                    pool.query('UPDATE users SET karma = karma + ? WHERE id = ?', [toAdd, uid], (error, result) => {
+                                        if(error) {
+                                            console.log(error);
+                                        }
+                                        else {
+                                            console.log("User: " + uid + " has gained " + toAdd + " karma from having their listing suggestion(s) approved");
+                                            try {
+                                                pool.query('DELETE FROM suggestions', async (error, results) => {
+                                                    if (error) {
+                                                        console.log(error);
+                                                        return res.redirect('/approvals');
+
+                                                    }
+                                                    else {
+                                                        console.log("Listings suggestions have been cleared");
+                                                    }
+                                                });
+                                            }
+                                            catch (error) {
+                                                console.log(error);
+                                                return res.redirect('/approvals');
+                                            }
+                                        }
+                                        
+                                    });
+                                }
+                                catch (error) {
+                                    console.log(error);
+                                    return res.redirect('/approvals');
+                                    
+                                }
+                            }
+                        }
+                    });               
                 }
                 catch (error) {
                     console.log(error);
                     return res.redirect('/approvals');
-                    
                 }
-                return res.redirect('/approvals');
             }
         });
     }
-
     catch (error) {
         console.log(error);
         return;
     }
+    return res.redirect('/approvals');
 }
 
 //adds a suggestion to internships table once privileged user has approved it
@@ -1078,7 +1131,7 @@ exports.approve =  (req, res) => {
                     });
                 }
                 else {
-                    var newKarma = result[0].karma + 1;
+                    var newKarma = result[0].karma + 5;
 
                     pool.query('UPDATE users SET karma = ? WHERE id = ?', [newKarma, suggested_by], (error, results) => {
                         if(error) {
@@ -1248,7 +1301,7 @@ exports.deleteListing =  (req, res) => {
     });
 }
 
-//a dismissal of an edit suggestion ordered by the admin
+//a dismissal of an edit suggestion ordered by the admin, don't award Karma
 exports.dismissEdit =  (req, res) => {
     //console.log(req.body.suggestion_id);
 
@@ -1261,6 +1314,107 @@ exports.dismissEdit =  (req, res) => {
             return res.redirect('/approvals');
             }
         });
+}
+
+//delete the listing, award karma, remove from edit_suggestions
+exports.approveDeleteEdit =  (req, res) => {
+    //console.log(req.body.suggestion_id);
+
+    pool.query('DELETE FROM internships WHERE job_id = ?', [req.body.job_id], (error, results) => {
+        if(error) {
+            console.log(error);
+       }
+        else {
+            pool.query('SELECT karma FROM users WHERE id = ?', [req.body.suggested_by], async (error, result) => {
+                if(error) {
+                    console.log(error);
+                }
+                else if (result.length < 1){
+                    console.log('User does not exist, no Karma awarded');
+
+                    pool.query('DELETE FROM edit_suggestions WHERE identifier = ?', [req.body.identifier], (error, result) => {
+                        if(error) {
+                            console.log(error);
+                        }
+                        else {
+                            console.log('A closed edit suggestion for job# ' + req.body.job_id + ' has been approved by a privileged user');
+                            return res.redirect('/approvals');
+                        }
+                    });
+                }
+                else {
+                    var newKarma = result[0].karma + 1;
+
+                    pool.query('UPDATE users SET karma = ? WHERE id = ?', [newKarma, req.body.suggested_by], (error, results) => {
+                        if(error) {
+                            console.log(error);
+                        }
+                        else {
+                            //console.log(suggestion_id);
+                            pool.query('DELETE FROM edit_suggestions WHERE identifier = ?', [req.body.identifier], (error, result) => {
+                                if(error) {
+                                    console.log(error);
+                                }
+                                else {
+                                    console.log('A closed edit suggestion for job# ' + req.body.job_id + ' has been approved by a privileged user');
+                                    return res.redirect('/approvals');
+                                }
+                            });
+                           
+                            
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+//award karma, remove from edit_suggestions
+exports.markEditResolved =  (req, res) => {
+    //console.log(req.body.suggestion_id);
+
+    pool.query('SELECT karma FROM users WHERE id = ?', [req.body.suggested_by], async (error, result) => {
+        if(error) {
+            console.log(error);
+        }
+        else if (result.length < 1){
+            console.log('User does not exist, no Karma awarded');
+
+            pool.query('DELETE FROM edit_suggestions WHERE identifier = ?', [req.body.identifier], (error, result) => {
+                if(error) {
+                    console.log(error);
+                }
+                else {
+                    console.log('An edit suggestion has been marked resolved by a privileged user');
+                    return res.redirect('/approvals');
+                }
+            });
+        }
+        else {
+            var newKarma = result[0].karma + 1;
+
+            pool.query('UPDATE users SET karma = ? WHERE id = ?', [newKarma, req.body.suggested_by], (error, results) => {
+                if(error) {
+                    console.log(error);
+                }
+                else {
+                    //console.log(suggestion_id);
+                    pool.query('DELETE FROM edit_suggestions WHERE identifier = ?', [req.body.identifier], (error, result) => {
+                        if(error) {
+                            console.log(error);
+                        }
+                        else {
+                            console.log('An edit suggestion has been marked resolved by a privileged user, Karma awarded');
+                            return res.redirect('/approvals');
+                        }
+                    });
+                   
+                    
+                }
+            });
+        }
+    });
 }
 
 /************************************************************************************************************************************* */
