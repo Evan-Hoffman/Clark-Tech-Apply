@@ -1419,6 +1419,12 @@ exports.deleteListing =  (req, res) => {
             else if (req.body.origin == 5){
                 return res.redirect('/ucedits')
             }
+            else if (origin == 6){
+                return res.redirect('/gfedits')
+            }
+            else if (origin == 7){
+                return res.redirect('/giedits')
+            }
         }       
     });
 }
