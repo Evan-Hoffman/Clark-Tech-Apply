@@ -4,11 +4,6 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const {promisify} = require('util');
 var fs = require('fs');
-const e = require("express");
-const { waitForDebugger } = require("inspector");
-const { resolve } = require("path");
-const { endianness } = require("os");
-
 
 var db_config = {
     //connectionLimit : 100,
@@ -439,9 +434,9 @@ exports.sendResetEmail = (req, res) => {
 
 //populate the internships page from the database
 exports.populateFulltime = async (req, res, next) => {
-    if (req.user){
+    if (req.user){ 
         try {
-            pool.query('SELECT * FROM internships WHERE is_ft = 1 ORDER BY job_id', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships WHERE is_ft = 1 AND is_ugrad = 1 ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -474,7 +469,7 @@ exports.populateFulltime = async (req, res, next) => {
 exports.populateInternships = async (req, res, next) => {
     if (req.user){
         try {
-            pool.query('SELECT * FROM internships WHERE is_ug = 0 AND is_ep = 0 AND is_ft = 0 AND is_uc = 0 ORDER BY job_id', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships WHERE is_ug = 0 AND is_ep = 0 AND is_ft = 0 AND is_uc = 0 AND is_ugrad = 1 ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -548,11 +543,78 @@ function populateInternshipsHelper(req, json, _callback){
     
 }
 
+//populate the grad internships page from the database
+exports.populateGradInternships = async (req, res, next) => {
+    if (req.user){
+        try {
+            pool.query('SELECT * FROM internships WHERE is_ug = 0 AND is_ep = 0 AND is_ft = 0 AND is_uc = 0 AND is_grad = 1 ORDER BY job_id', async (error, result, fields) => {
+            //console.log(result);
+            if (error) {
+                console.log(error);
+            }
+            if(!result){
+                return next();
+            }
+            var string = JSON.stringify(result);
+            var json =  JSON.parse(string);
+            //console.log('>> json: ', json);
+            
+            populateInternshipsHelper(req, json, function() {
+               // console.log(json);
+                req.internships = json; 
+                return next();
+            });
+        });
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+        console.log(req.user.email + " has just loaded up the grad internships page");
+    }
+    else {
+        return next();
+    }
+}
+
+//populate the grad fulltime page from the database
+exports.populateGradFulltime = async (req, res, next) => {
+    if (req.user){
+        try {
+            pool.query('SELECT * FROM internships WHERE is_ft = 1 AND is_grad = 1 ORDER BY job_id', async (error, result, fields) => {
+            //console.log(result);
+            if (error) {
+                console.log(error);
+            }
+            if(!result){
+                return next();
+            }
+            var string = JSON.stringify(result);
+            var json =  JSON.parse(string);
+            //console.log('>> json: ', json);
+            
+            populateInternshipsHelper(req, json, function() {
+               // console.log(json);
+                req.internships = json; 
+                return next();
+            });
+        });
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+        console.log(req.user.email + " has just loaded up the grad fulltime page");
+    }
+    else {
+        return next();
+    }
+}
+
+
 //populate the underrepresented groups page from the database
 exports.populateUnderrepresented = async (req, res, next) => {
     if (req.user){
         try {
-            pool.query('SELECT * FROM internships WHERE is_ug = 1 ORDER BY job_id', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships WHERE is_ug = 1 AND is_ugrad = 1 ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -585,7 +647,7 @@ exports.populateUnderrepresented = async (req, res, next) => {
 exports.populateUnderclassmen = async (req, res, next) => {
     if (req.user){
         try {
-            pool.query('SELECT * FROM internships WHERE is_uc = 1 ORDER BY job_id', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships WHERE is_uc = 1 AND is_ugrad = 1 ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -618,7 +680,7 @@ exports.populateUnderclassmen = async (req, res, next) => {
 exports.populateExploratory = async (req, res, next) => {
     if (req.user){
         try {
-            pool.query('SELECT * FROM internships WHERE is_ep = 1 ORDER BY job_id', async (error, result, fields) => {
+            pool.query('SELECT * FROM internships WHERE is_ep = 1 AND is_ugrad = 1 ORDER BY job_id', async (error, result, fields) => {
             //console.log(result);
             if (error) {
                 console.log(error);
@@ -651,17 +713,33 @@ exports.populateExploratory = async (req, res, next) => {
 exports.suggest =  (req, res) => {    
     //console.log(req.body);
     
-    let {suggested_by, origin, role_type, company_name, internship_title, link, international_allowed, swe_web_tag, swe_backend_tag, swe_mobile_tag,
+    let {suggested_by, origin, role_type, class_type, company_name, internship_title, link, international_allowed, swe_web_tag, swe_backend_tag, swe_mobile_tag,
          dsci_tag, devops_tag, consulting_tag, cyber_tag, networks_tag, pm_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, is_uc} = req.body;
     
     let is_ep = 0;
     let is_ft = 0;
+
+    let is_ugrad = 0;
+    let is_grad = 0;
+    let is_both = 0;
 
     if (role_type == 2) {
         is_ft = 1;
     }
     else if (role_type == 3){
         is_ep = 1;
+    }
+
+    if (class_type == 3) {
+        is_both = 1;
+        is_ugrad = 1;
+        is_grad = 1;
+    }
+    else if (class_type == 1){
+        is_ugrad = 1;
+    }
+    else {
+        is_grad = 1; 
     }
 
     if (swe_backend_tag.length >1){
@@ -713,7 +791,7 @@ exports.suggest =  (req, res) => {
 
     pool.query('INSERT INTO suggestions SET ?', {suggested_by: suggested_by, company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_backend_tag: swe_backend_tag, swe_web_tag: swe_web_tag, swe_mobile_tag: swe_mobile_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, pm_tag: pm_tag,
-        ux_tag: ux_tag, it_tag: it_tag, ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, is_ep: is_ep, is_ft: is_ft, is_uc: is_uc}, (error, results) => {
+        ux_tag: ux_tag, it_tag: it_tag, ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, is_ep: is_ep, is_ft: is_ft, is_uc: is_uc, is_grad: is_grad, is_ugrad: is_ugrad, is_both: is_both}, (error, results) => {
         if(error) {
             console.log(error);
             return;
@@ -735,6 +813,12 @@ exports.suggest =  (req, res) => {
             }
             if (origin == 5){
                 return res.redirect('/underclassmenonly');
+            }
+            if (origin == 6){
+                return res.redirect('/gradfulltime');
+            }
+            if (origin == 7){
+                return res.redirect('/gradinternships');
             }
         }
 
@@ -952,7 +1036,7 @@ exports.populateApprovals = async (req, res, next) => {
 //approve all suggested listings
 exports.approveAll = (req, res) => {
     try {
-        pool.query('INSERT INTO internships (company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, pm_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag, ba_tag) (SELECT company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, pm_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag, ba_tag FROM suggestions)', async (error, result) => {
+        pool.query('INSERT INTO internships (company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, pm_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag, ba_tag, is_ugrad, is_grad) (SELECT company_name, internship_title, link, juniors_only, dsci_tag, swe_tag, devops_tag, consulting_tag, cyber_tag, pm_tag, international_allowed, is_ug, is_ep, is_ft, is_uc, ux_tag, swe_web_tag, swe_backend_tag, networks_tag, swe_mobile_tag, it_tag, ba_tag, is_ugrad, is_grad FROM suggestions)', async (error, result) => {
             if (error) {
                 console.log(error);
                 return;
@@ -1038,11 +1122,14 @@ exports.approveAll = (req, res) => {
 exports.approve =  (req, res) => {
     //console.log(req.body);
 
-    let {role_type, suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_backend_tag, swe_web_tag, swe_mobile_tag,
+    let {role_type, class_type, suggestion_id, suggested_by, company_name, internship_title, link, international_allowed, swe_backend_tag, swe_web_tag, swe_mobile_tag,
          dsci_tag, devops_tag, consulting_tag, cyber_tag, networks_tag, pm_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, eligibility, dates, is_uc} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
+
+         let is_grad = 0;
+         let is_ugrad= 1;
      
          if (role_type == 2) {
              is_ft = 1;
@@ -1050,6 +1137,17 @@ exports.approve =  (req, res) => {
          else if (role_type == 3){
              is_ep = 1;
          }
+
+    if (class_type == 3) {
+        is_grad = 1;
+        is_ugrad = 1;
+    }
+    else if (class_type == 1){
+        is_ugrad = 1;
+    }
+    else {
+        is_grad = 1;
+    }
 
     if (swe_backend_tag.length >1){
         swe_backend_tag = '1';
@@ -1107,7 +1205,7 @@ exports.approve =  (req, res) => {
     
     pool.query('INSERT INTO internships SET ?', {company_name: company_name, internship_title: internship_title, link: link, juniors_only: juniors_only,
          dsci_tag: dsci_tag, swe_backend_tag: swe_backend_tag, swe_web_tag: swe_web_tag, swe_mobile_tag: swe_mobile_tag, devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, pm_tag: pm_tag,
-        ux_tag: ux_tag, it_tag: it_tag, ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: dates, is_uc: is_uc}, (error, results) => {
+        ux_tag: ux_tag, it_tag: it_tag, ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: dates, is_uc: is_uc, is_grad: is_grad, is_ugrad: is_ugrad}, (error, results) => {
         if(error) {
             console.log(error);
         }
@@ -1179,11 +1277,14 @@ exports.reject =  (req, res) => {
 exports.edit =  (req, res) => {
     //console.log(req.body);
 
-    let {role_type, job_id, origin, company_name, internship_title, link, international_allowed, swe_tag, swe_backend_tag, swe_web_tag, swe_mobile_tag, dsci_tag,
+    let {role_type, class_type, job_id, origin, company_name, internship_title, link, international_allowed, swe_tag, swe_backend_tag, swe_web_tag, swe_mobile_tag, dsci_tag,
         devops_tag, consulting_tag, cyber_tag, networks_tag, pm_tag, ux_tag, it_tag, ba_tag, juniors_only, is_ug, eligibility, event_dates, is_uc} = req.body;
     
          let is_ep = 0;
          let is_ft = 0;
+
+         let is_ugrad = 0;
+         let is_grad = 0;
      
          if (role_type == 2) {
              is_ft = 1;
@@ -1191,6 +1292,17 @@ exports.edit =  (req, res) => {
          else if (role_type == 3){
              is_ep = 1;
          }
+    
+         if (class_type == 3) {
+            is_grad = 1;
+            is_ugrad = 1;
+        }
+        else if (class_type == 1){
+            is_ugrad = 1;
+        }
+        else {
+            is_grad = 1;
+        }
 
     if (swe_tag.length >1){
         swe_tag = '1';
@@ -1252,7 +1364,8 @@ exports.edit =  (req, res) => {
     pool.query('UPDATE internships SET ? WHERE job_id = ' + job_id, {company_name: company_name, internship_title: internship_title, link: link,
         juniors_only: juniors_only, dsci_tag: dsci_tag, swe_tag: swe_tag, swe_backend_tag: swe_backend_tag, swe_web_tag: swe_web_tag, swe_mobile_tag: swe_mobile_tag,
         devops_tag: devops_tag, consulting_tag: consulting_tag, cyber_tag: cyber_tag, networks_tag: networks_tag, pm_tag: pm_tag, ux_tag: ux_tag, it_tag: it_tag,
-        ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: event_dates, is_uc: is_uc}, (error, results) => {
+        ba_tag: ba_tag, international_allowed: international_allowed, is_ug: is_ug, eligibility: eligibility, is_ep: is_ep, is_ft: is_ft, event_dates: event_dates,
+        is_uc: is_uc, is_grad: is_grad, is_ugrad: is_ugrad}, (error, results) => {
         if(error) {
             console.log(error);
         }
@@ -1272,6 +1385,12 @@ exports.edit =  (req, res) => {
             }
             else if (origin == 5){
                 return res.redirect('/ucedits')
+            }
+            else if (origin == 6){
+                return res.redirect('/gfedits')
+            }
+            else if (origin == 7){
+                return res.redirect('/giedits')
             }
         }
     });
@@ -1297,6 +1416,9 @@ exports.deleteListing =  (req, res) => {
             else if (req.body.origin == 4){
                 return res.redirect('/fedits')
             }     
+            else if (req.body.origin == 5){
+                return res.redirect('/ucedits')
+            }
         }       
     });
 }

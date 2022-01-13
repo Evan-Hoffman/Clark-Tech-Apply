@@ -22,11 +22,11 @@
 
 
 
-
-  <title>Edits -Underclassmen-clarkTech Apply</title>
+  <title>Edits - Grads: New-Grad -clarkTech Apply</title>
 </head>
 
 <body>
+
   <nav id="a">
     <h4><a class="text-white text-decoration-none" href="/">clarkTech Apply</a></h4>
     <ul>
@@ -127,10 +127,12 @@
   <div class="containter mt-4">
 
     <div class="col-12">
+
       <div class="car text-center">
         <div class="card-header">
-          Browse Internships
+          Browse New-Grad Positions for Grad Students
         </div>
+
         {{#if message1}}
         <h4 class="alert alert-danger mt-4 text-left">{{message1}}</h4>
         {{/if}}
@@ -138,14 +140,18 @@
         <h4 class="alert alert-success mt-4 text-left">{{message2}}</h4>
         {{/if}}
 
+
+
         <table id="internshipTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
           <thead>
             <tr>
               <th class="th-sm">Company
               </th>
-              <th class="th-sm">Position
+              <th class="th-sm">Tags
               </th>
-              <th class="th-sm">Eligibility
+              <th class="th-sm">Int'l Students?
+              </th>
+              <th class="th-sm">Position
               </th>
               <th class="th-sm">Date Added
               </th>
@@ -154,14 +160,57 @@
               <th class="th-sm">Edit
               </th>
               <th style="th-sm">Delete</th>
+
+
             </tr>
           </thead>
           <tbody>
             {{#each jobs}}
             <tr>
               <td>{{company_name}}</td>
+              <td>
+                {{#if dsci_tag}}
+                <span class="badge badge-pill badge-primary">DSCI</span>
+                {{/if}}
+                {{#if swe_web_tag}}
+                <span class="badge badge-pill badge-web">SWE-Web</span>
+                {{/if}}
+                {{#if swe_mobile_tag}}
+                <span class="badge badge-pill badge-success">SWE-Mobile</span>
+                {{/if}}
+                {{#if swe_tag}}
+                <span class="badge badge-pill badge-success">SWE</span>
+                {{/if}}
+                {{#if swe_backend_tag}}
+                <span class="badge badge-pill badge-backend">SWE-Backend</span>
+                {{/if}}
+                {{#if ba_tag}}
+                <span class="badge badge-pill badge-analytics">Analytics</span>
+                {{/if}}
+                {{#if devops_tag}}
+                <span class="badge badge-pill badge-devops">DevOps</span>
+                {{/if}}
+                {{#if cyber_tag}}
+                <span class="badge badge-pill badge-danger">CYBER</span>
+                {{/if}}
+                {{#if networks_tag}}
+                <span class="badge badge-pill badge-networks">NET</span>
+                {{/if}}
+                {{#if ux_tag}}
+                <span class="badge badge-pill badge-ux">UX/HCI</span>
+                {{/if}}
+                {{#if pm_tag}}
+                <span class="badge badge-pill badge-warning">PM</span>
+                {{/if}}
+                {{#if consulting_tag}}
+                <span class="badge badge-pill badge-secondary">Tech-Consulting</span>
+                {{/if}}
+                {{#if it_tag}}
+                <span class="badge badge-pill badge-it">IT Analyst</span>
+                {{/if}}
+              </td>
+              <td>{{international_allowed}}</td>
               <td>{{internship_title}}</td>
-              <td>{{eligibility}}</td>
               <td>{{date_added}}</td>
               <td><a href={{link}} target="_blank" class="btn btn-success" role="button">URL</a></td>
               <td>
@@ -182,9 +231,9 @@
                         <form action="/auth/edit" method="POST">
                           <div class="form-group">
                             <input type="hidden" value={{job_id}} class="form-control" id="job_id" name="job_id">
-                            <input type="hidden" value=5 class="form-control" id="origin" name="origin">
+                            <input type="hidden" value=6 class="form-control" id="origin" name="origin">
                           </div>
-                          <t>Role Type</t>
+                          <t>Role Type*</t>
                           <p></p>
                           <div class="form-check form-check-inline" id="typeSelect">
                             <input class="form-check-input" type="radio" name="role_type" id="internshipBox" value=1
@@ -420,11 +469,10 @@
 
                   </div>
                 </div>
-
               </td>
               <td>
                 <form action="/auth/deleteListing" method="POST">
-                  <input type="hidden" value=2 class="form-control" id="origin" name="origin">
+                  <input type="hidden" value=4 class="form-control" id="origin" name="origin">
                   <input type="hidden" value="{{company_name}}" class="form-control" id="company_name"
                     name="company_name">
                   <input type="hidden" value="{{internship_title}}" class="form-control" id="internship_title"
@@ -441,30 +489,33 @@
 
           <tfoot>
             <tr>
-              <th class="th-sm">Company
+              <th>Company
               </th>
-              <th class="th-sm">Position
+              <th>Tags
               </th>
-              <th class="th-sm">Eligibility
+              <th>Int'l Students?
               </th>
-              <th class="th-sm">Date Added
+              <th>Position
               </th>
-              <th class="th-sm">URL
+              <th>Date Added
               </th>
-              <th class="th-sm">Edit
+              <th>URL
+              </th>
+              <th>Edit
               </th>
               <th style="th-sm">Delete</th>
+
+
             </tr>
           </tfoot>
           <script>
             $(document).ready(function () {
               $('#internshipTable').DataTable({
-                "order": [[3, "desc"]]
+                "order": [[4, "desc"]]
               });
             });
           </script>
         </table>
-
 
       </div>
     </div>

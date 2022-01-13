@@ -96,6 +96,43 @@ router.get('/internships', authController.isLoggedIn, authController.populateInt
 
 });
 
+//only go to grad Internships if logged in
+router.get('/gradinternships', authController.isLoggedIn, authController.populateGradInternships, (req, res) => {
+    if(req.user) {
+        res.render('gradinternships', {
+            user: req.user,
+            id: req.user.id,
+            jobs: req.internships,
+            message1: req.session.message1,
+            message2: req.session.message2
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+
+});
+
+//only go to grad fulltime if logged in
+router.get('/gradfulltime', authController.isLoggedIn, authController.populateGradFulltime, (req, res) => {
+    if(req.user) {
+        res.render('gradfulltime', {
+            user: req.user,
+            id: req.user.id,
+            jobs: req.internships,
+            message1: req.session.message1,
+            message2: req.session.message2
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
 //only go to Underrepresented Programs if logged in
 router.get('/underrepresented', authController.isLoggedIn, authController.populateUnderrepresented, (req, res) => {
     //console.log(req.internships.length);
@@ -248,6 +285,54 @@ router.get('/fedits', authController.isLoggedIn, authController.populateFulltime
     delete req.session.message1;
     delete req.session.message2;
 });
+
+//only go to Edits if logged in & privileged
+router.get('/gfedits', authController.isLoggedIn, authController.populateGradFulltime, (req, res) => {
+
+    if(req.user) {
+        if(req.user.is_privileged) {
+            res.render('gfedits', {
+                user: req.user,
+                jobs: req.internships,
+                message1: req.session.message1,
+                message2: req.session.message2
+            });
+        }
+        else {
+            res.redirect('/');
+        }
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
+//only go to Edits if logged in & privileged
+router.get('/giedits', authController.isLoggedIn, authController.populateGradInternships, (req, res) => {
+
+    if(req.user) {
+        if(req.user.is_privileged) {
+            res.render('giedits', {
+                user: req.user,
+                jobs: req.internships,
+                message1: req.session.message1,
+                message2: req.session.message2
+            });
+        }
+        else {
+            res.redirect('/');
+        }
+    }
+    else {
+        res.redirect('/login');
+    }
+    delete req.session.message1;
+    delete req.session.message2;
+});
+
+
 
 //only go to Edits if logged in & privileged
 router.get('/ugedits', authController.isLoggedIn, authController.populateUnderrepresented, (req, res) => {

@@ -29,6 +29,10 @@ router.post('/populateMyApps', authController.populateMyApps);
 
 router.post('/populateInternships', authController.populateInternships);
 
+router.post('/populateGradInternships', authController.populateGradInternships);
+
+router.post('/populateGradFulltime', authController.populateGradFulltime);
+
 router.post('/populateUnderrepresented', authController.populateUnderrepresented);
 
 router.post('/populateUnderclassmen', authController.populateUnderclassmen);
