@@ -1,8 +1,8 @@
 nav#a {
     background-color: #33B7FF;
     color: #fff;
-    padding: 30px 60px;
-    display: flex;
+    padding: 10px 60px;
+    display: flex; 
     justify-content: space-between;
 }
 
