@@ -15,7 +15,7 @@ For Support, feedback, or comments, email clarktechapply@yahoo.com
 
 Advisor: Prof. Kenneth Basye
 
-ClarkTechApply Logo: Jamie Yeo
+ClarkTechApply Logo: [Jamie Yeo](https://www.linkedin.com/in/jamie-yeo-8aa0a1232/)
 
 Boilerplate NodeJS webapp startcode from [Telmo Sampaio](https://www.youtube.com/playlist?list=PLD9SRxG6ST3GBsczn8OUKLaErhrvOz9zQ)
     (Starting commits on/before September 17th, 2020)
