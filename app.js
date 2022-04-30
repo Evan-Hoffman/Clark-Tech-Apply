@@ -6,14 +6,14 @@ const cookieParser = require('cookie-parser');
 var session = require('cookie-session');
 
 const app = express();
-dotenv.config({path: './.env'});
+dotenv.config({ path: './.env' });
 
 var db_config = {
-    //connectionLimit : 100,
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PWD,
-    database: process.env.DATABASE
+  //connectionLimit : 100,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PWD,
+  database: process.env.DATABASE
 };
 
 //setup Database connection:
@@ -21,7 +21,7 @@ let pool = mysql.createPool(db_config);
 //public directory for styling:
 const publicDirectory = path.join(__dirname, './public');
 
-
+/*
 //force browser to use https:
 app.use(function(req, res, next) {
     if ((req.get('X-Forwarded-Proto') !== 'https')) {
@@ -29,12 +29,13 @@ app.use(function(req, res, next) {
     } else
       next();
 });
+*/
 
 //make sure express is using public directory:
 app.use(express.static(publicDirectory));
 
 //Parse URL-encoded bodies (as sent through HTML forms)
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 //Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 //initialize cookie parser to set up cookies in browser

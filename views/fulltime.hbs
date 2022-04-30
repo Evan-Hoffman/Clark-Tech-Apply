@@ -1,601 +1,810 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="/scripts/trackScript.js"></script>
-  <script src="/scripts/flagScript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+      crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+    <script src="/scripts/trackScript.js"></script>
+    <script src="/scripts/flagScript.js"></script>
 
 
 
 
-  <title>New-Grad Jobs -clarkTech Apply</title>
-</head>
+    <title>New-Grad Jobs -clarkTech Apply</title>
+  </head>
 
-<body>
+  <body>
 
-  <nav id="a">
- <a href="/">
-         <img src="images\V4_Logo.ai.svg" style="width: 75px; height: 75px" class="img-circle">
-        </a>    <ul>
-      {{#if user.is_privileged}}
-      <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #817a38">
-          Edits
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="/fedits" class="dropdown-item" style="color: #000000">New-Grad</a></li>
-          <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
-          <li><a href="/ucedits" class="dropdown-item" style="color: #000000">Underclassmen</a></li>
-          <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a></li>
-          <li><a href="/epedits" class="dropdown-item" style="color: #000000">Exploratory</a></li>
-          <li><a href="/giedits" class="dropdown-item" style="color: #000000">Internships - Grads</a></li>
-          <li><a href="/gfedits" class="dropdown-item" style="color: #000000">New-Grad - Grads</a></li>
-        </ul>
-      </li>
-      {{/if}}
-      <li><a id="b" href="/">Home</a></li>
-      <li><a href="/tips">Tips</a></li>
-      <li><a href="/myapps">MyApps</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Grad Students
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="/gradinternships" class="dropdown-item" style="color: #000000">Internships</a></li>
-          <li><a href="/gradfulltime" class="dropdown-item" style="color: #000000">New-Grad/Fulltime</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Undergrads
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="/internships" class="dropdown-item" style="color: #000000">Internships</a></li>
-          <li><a href="/fulltime" class="dropdown-item" style="color: #000000">New-Grad/Fulltime</a></li>
-          <li><a href="/underclassmenonly" class="dropdown-item" style="color: #000000">For 1st and 2nd Years Only</a>
+    <nav id="a">
+      <a href="/">
+        <img src="images\V4_Logo.ai.svg" style="width: 75px; height: 75px" class="img-circle">
+      </a>
+      <ul>
+        {{#if user.is_privileged}}
+          <li><a href="/approvals" style="color: #817a38">Approvals</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #817a38">
+              Edits
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/fedits" class="dropdown-item" style="color: #000000">New-Grad</a></li>
+              <li><a href="/iedits" class="dropdown-item" style="color: #000000">Internships</a></li>
+              <li><a href="/ucedits" class="dropdown-item" style="color: #000000">Underclassmen</a></li>
+              <li><a href="/ugedits" class="dropdown-item" style="color: #000000">Underrepresented</a></li>
+              <li><a href="/epedits" class="dropdown-item" style="color: #000000">Exploratory</a></li>
+              <li><a href="/giedits" class="dropdown-item" style="color: #000000">Internships - Grads</a></li>
+              <li><a href="/gfedits" class="dropdown-item" style="color: #000000">New-Grad - Grads</a></li>
+            </ul>
           </li>
-          <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
-          </li>
-          <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a></li>
+        {{/if}}
+        <li><a id="b" href="/">Home</a></li>
+        <li><a href="/tips">Tips</a></li>
+        <li><a href="/myapps">MyApps</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Grad Students
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/gradinternships" class="dropdown-item" style="color: #000000">Internships</a></li>
+            <li><a href="/gradfulltime" class="dropdown-item" style="color: #000000">New-Grad/Fulltime</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Undergrads
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/internships" class="dropdown-item" style="color: #000000">Internships</a></li>
+            <li><a href="/fulltime" class="dropdown-item" style="color: #000000">New-Grad/Fulltime</a></li>
+            <li><a href="/underclassmenonly" class="dropdown-item" style="color: #000000">For 1st and 2nd Years Only</a>
+            </li>
+            <li><a href="/underrepresented" class="dropdown-item" style="color: #000000">For Underrepresented Groups</a>
+            </li>
+            <li><a href="/exploratory" class="dropdown-item" style="color: #000000">Exploratory Programs</a></li>
 
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
-          <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="container-fluid" type="button" data-toggle="modal" data-target="#karmaModal"
-          style="text-align:left; background-color: rgba(11, 13, 27, 0.356)">
-          <t>{{user.karma}}</t>
-          <img src="/images/karma.png" style="width: 25px; height: 100%">
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="/images/profileIconb.png" style="width: 25px; height: 25px" class="profile-image img-circle">
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/settings" class="dropdown-item" style="color: #000000">Settings</a></li>
+            <li><a href="/auth/logout" class="dropdown-item" style="color: #000000">Logout</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="container-fluid" type="button" data-toggle="modal" data-target="#karmaModal"
+            style="text-align:left; background-color: rgba(11, 13, 27, 0.356)">
+            <t>{{user.karma}}</t>
+            <img src="/images/karma.png" style="width: 25px; height: 100%">
 
-        </div>
-        <div class="modal fade" id="karmaModal" tabindex="-1" role="dialog" aria-labelledby="karmaLabel"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" style="color: #000000" id="karmaLabel">Spread Good Karma by Contributing</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <h6 style="color: #000000">Do any of the following and once an admin approves the suggestion, you will
-                  earn
-                  <img src="/images/karma.png" style="width: 25px; height: 100%"> Karma</h4>
-                  <div class="list-group">
-                    <button type="button" class="list-group-item list-group-item-action">
-                      Flag an error with a listing &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp = &nbsp &nbsp
-                      &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 1
-                      <img src="/images/karma.png" style="width: 25px; height: 100%" align="right">
-                    </button>
-                    <button type="button" class="list-group-item list-group-item-action">
-                      Suggest a listing we missed &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp = &nbsp &nbsp &nbsp
-                      &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 5
-                      <img src="/images/karma.png" style="width: 25px; height: 100%" align="right">
-                    </button>
-                  </div>
-              </div>
-            </div>
           </div>
-        </div>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="containter mt-4">
-
-    <div class="col-12">
-      <div class="car text-center">
-        <div class="p-3 mb-2 bg-secondary text-white">Summer 2022 Season: Late Season (CTA Has Suspended New Listings as of 3/1/22, will Resume in Late April 2022 for Summer 2023)</div>
-        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#suggestModal">
-          Suggest
-        </a>
-        <p></p>
-
-        <div class="car text-center">
-          <div class="card-header">
-            Browse New-Grad Positions
-          </div>
-
-          {{#if message1}}
-          <h4 class="alert alert-danger mt-4 text-left">{{message1}}</h4>
-          {{/if}}
-          {{#if message2}}
-          <h4 class="alert alert-success mt-4 text-left">{{message2}}</h4>
-          {{/if}}
-
-          <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          <div class="modal fade" id="karmaModal" tabindex="-1" role="dialog" aria-labelledby="karmaLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Contribute a listing we may have missed!</h5>
+                  <h5 class="modal-title" style="color: #000000" id="karmaLabel">Spread Good Karma by Contributing</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form action="/auth/suggest" method="POST">
-                    <t>Role Type*</t>
-                    <div class="form-group">
-                      <input type="hidden" value={{user.id}} class="form-control" id="suggested_by" name="suggested_by">
-                      <input type="hidden" value=4 class="form-control" id="origin" name="origin">
-
+                  <h6 style="color: #000000">Do any of the following and once an admin approves the suggestion, you will
+                    earn
+                    <img src="/images/karma.png" style="width: 25px; height: 100%"> Karma</h4>
+                    <div class="list-group">
+                      <button type="button" class="list-group-item list-group-item-action">
+                        Flag an error with a listing &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp = &nbsp &nbsp
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 1
+                        <img src="/images/karma.png" style="width: 25px; height: 100%" align="right">
+                      </button>
+                      <button type="button" class="list-group-item list-group-item-action">
+                        Suggest a listing we missed &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp = &nbsp &nbsp &nbsp
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 5
+                        <img src="/images/karma.png" style="width: 25px; height: 100%" align="right">
+                      </button>
                     </div>
-                    <div class="form-check form-check-inline" id="typeSelect">
-                      <input class="form-check-input" type="radio" name="role_type" id="internshipBox" value=1 required>
-                      <label class="form-check-label" for="internshipBox">
-                        Internship
-                      </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2 required>
-                      <label class="form-check-label" for="fulltimeBox">
-                        New-Grad
-                      </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="role_type" id="epBox" value=3 required>
-                      <label class="form-check-label" for="epBox">
-                        Exploratory Program/Summit
-                      </label>
-                    </div>
-                    <p></p>
-                    <t>This role is for:</t>
-                    <p></p>
-                    <div class="form-check form-check-inline" id="typeSelect">
-                      <input class="form-check-input" type="radio" name="class_type" id="ugradBox" value=1 required>
-                      <label class="form-check-label" for="ugradBox">
-                        Undergrads
-                      </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="class_type" id="gradBox" value=2 required>
-                      <label class="form-check-label" for="gradBox">
-                        Grad Students
-                      </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="class_type" id="bothBox" value=3 required>
-                      <label class="form-check-label" for="bothBox">
-                        Both
-                      </label>
-                    </div>
-                    <p></p>
-                    <div class="form-group">
-                      <label for="company_name">Company*</label>
-                      <input type="text" placeholder="Company Name" value="" class="form-control" id="company_name"
-                        name="company_name" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="internship_title">Position Title*</label>
-                      <input type="text" placeholder="Position Title" value="" class="form-control"
-                        id="internship_title" name="internship_title" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="link">Link*</label>
-                      <input type="text" placeholder="URL" value="" class="form-control" id="link" name="link" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="international_allowed">Do they Sponser International Students?</label>
-                      <input type="text" placeholder="Yes/No/tbd" value="" class="form-control"
-                        id="international_allowed" name="international_allowed">
-                    </div>
-                    <label>Tags:</label>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="swe_web_tag" value="0">
-                      <input type="checkbox" value="1" name="swe_web_tag" id="swe_web_tag">
-                      <label for="swe_web_tag">SWE-Web</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="swe_backend_tag" value="0">
-                      <input type="checkbox" value="1" name="swe_backend_tag" id="swe_backend_tag">
-                      <label for="swe_backend_tag">SWE-Backend</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="swe_mobile_tag" value="0">
-                      <input type="checkbox" value="1" name="swe_mobile_tag" id="swe_mobile_tag">
-                      <label for="swe_mobile_tag">SWE-Mobile</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="dsci_tag" value="0">
-                      <input type="checkbox" value="1" name="dsci_tag" id="dsci_tag">
-                      <label for="dsci_tag">DSCI</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="devops_tag" value="0">
-                      <input type="checkbox" value="1" name="devops_tag" id="devops_tag">
-                      <label for="devops_tag">DevOps</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="cyber_tag" value="0">
-                      <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
-                      <label for="cyber_tag">Cyber</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="networks_tag" value="0">
-                      <input type="checkbox" value="1" name="networks_tag" id="networks_tag">
-                      <label for="networks_tag">Networks</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="pm_tag" value="0">
-                      <input type="checkbox" value="1" name="pm_tag" id="pm_tag">
-                      <label for="pm_tag">PM</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="ux_tag" value="0">
-                      <input type="checkbox" value="1" name="ux_tag" id="ux_tag">
-                      <label for="ux_tag">UX/HCI</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="it_tag" value="0">
-                      <input type="checkbox" value="1" name="it_tag" id="it_tag">
-                      <label for="it_tag">IT Analyst</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="ba_tag" value="0">
-                      <input type="checkbox" value="1" name="ba_tag" id="ba_tag">
-                      <label for="ba_tag">Analytics</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="hidden" name="consulting_tag" value="0">
-                      <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
-                      <label for="consulting_tag">Consulting</label>
-                    </div>
-                    <div class="form-check">
-                      <input type="hidden" name="juniors_only" value="0">
-                      <input type="checkbox" value="1" name="juniors_only" id="juniors_only">
-                      <label for="juniors_only">'23 Only? (will be juniors)</label>
-                    </div>
-
-                    <div class="form-check">
-                      <input type="hidden" name="is_ug" value="0">
-                      <input type="checkbox" value="1" name="is_ug" id="is_ug">
-                      <label for="is_ug">Program for Underrepresented Groups?</label>
-                    </div>
-
-                    <div class="form-check">
-                      <input type="hidden" name="is_uc" value="0">
-                      <input type="checkbox" value="1" name="is_uc" id="is_uc">
-                      <label for="is_uc">1st Year/Sophomore-Only Program?</label>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-
                 </div>
-
               </div>
             </div>
           </div>
+        </li>
+      </ul>
+    </nav>
 
-          <div class="text-left">
-            <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#keyModal">
-              Tags Key
-            </a>
-            <div class="modal fade" id="keyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="containter mt-4">
+
+      <div class="col-12">
+        <div class="car text-center">
+          <div class="p-3 mb-2 bg-success text-white">Summer 2023 Listings are Live! (Early Season)</div>
+
+          <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#suggestModal">
+            Suggest
+          </a>
+          <p></p>
+
+          <div class="car text-center">
+            <div class="card-header">
+              Browse New-Grad Positions
+            </div>
+
+            {{#if message1}}
+              <h4 class="alert alert-danger mt-4 text-left">{{message1}}</h4>
+            {{/if}}
+            {{#if message2}}
+              <h4 class="alert alert-success mt-4 text-left">{{message2}}</h4>
+            {{/if}}
+
+            <div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tag Key</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Contribute a listing we may have missed!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
-                    <span class="badge badge-pill badge-primary">DSCI</span>
-                    <t>Roles involving Data Science, Machine Learning, AI, and Data Engineering</t>
-                    <p></p>
-                    <span class="badge badge-pill badge-web">SWE-Web</span>
-                    <t>Software Engineering roles involving Web Development, Front-end, Fullstack, and Backend specific
-                      to Web Applications</t>
+                    <form action="/auth/suggest" method="POST">
+                      <t>Role Type*</t>
+                      <div class="form-group">
+                        <input type="hidden" value={{user.id}} class="form-control" id="suggested_by"
+                          name="suggested_by">
+                        <input type="hidden" value=4 class="form-control" id="origin" name="origin">
 
-                    <p></p>
+                      </div>
+                      <div class="form-check form-check-inline" id="typeSelect">
+                        <input class="form-check-input" type="radio" name="role_type" id="internshipBox" value=1
+                          required>
+                        <label class="form-check-label" for="internshipBox">
+                          Internship
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="role_type" id="fulltimeBox" value=2 required>
+                        <label class="form-check-label" for="fulltimeBox">
+                          New-Grad
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="role_type" id="epBox" value=3 required>
+                        <label class="form-check-label" for="epBox">
+                          Exploratory Program/Summit
+                        </label>
+                      </div>
+                      <p></p>
+                      <t>This role is for:</t>
+                      <p></p>
+                      <div class="form-check form-check-inline" id="typeSelect">
+                        <input class="form-check-input" type="radio" name="class_type" id="ugradBox" value=1 required>
+                        <label class="form-check-label" for="ugradBox">
+                          Undergrads
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="class_type" id="gradBox" value=2 required>
+                        <label class="form-check-label" for="gradBox">
+                          Grad Students
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="class_type" id="bothBox" value=3 required>
+                        <label class="form-check-label" for="bothBox">
+                          Both
+                        </label>
+                      </div>
+                      <p></p>
+                      <div class="form-group">
+                        <label for="company_name">Company*</label>
+                        <input type="text" placeholder="Company Name" value="" class="form-control" id="company_name"
+                          name="company_name" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="internship_title">Position Title*</label>
+                        <input type="text" placeholder="Position Title" value="" class="form-control"
+                          id="internship_title" name="internship_title" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="link">Link*</label>
+                        <input type="text" placeholder="URL" value="" class="form-control" id="link" name="link"
+                          required>
+                      </div>
+                      <div class="form-group">
+                        <label for="international_allowed">Do they Sponser International Students?</label>
+                        <input type="text" placeholder="Yes/No/tbd" value="" class="form-control"
+                          id="international_allowed" name="international_allowed">
+                      </div>
+                      <label>Tags:</label>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="swe_web_tag" value="0">
+                        <input type="checkbox" value="1" name="swe_web_tag" id="swe_web_tag">
+                        <label for="swe_web_tag">SWE-Web</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="swe_backend_tag" value="0">
+                        <input type="checkbox" value="1" name="swe_backend_tag" id="swe_backend_tag">
+                        <label for="swe_backend_tag">SWE-Backend</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="swe_mobile_tag" value="0">
+                        <input type="checkbox" value="1" name="swe_mobile_tag" id="swe_mobile_tag">
+                        <label for="swe_mobile_tag">SWE-Mobile</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="dsci_tag" value="0">
+                        <input type="checkbox" value="1" name="dsci_tag" id="dsci_tag">
+                        <label for="dsci_tag">DSCI</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="devops_tag" value="0">
+                        <input type="checkbox" value="1" name="devops_tag" id="devops_tag">
+                        <label for="devops_tag">DevOps</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="cyber_tag" value="0">
+                        <input type="checkbox" value="1" name="cyber_tag" id="cyber_tag">
+                        <label for="cyber_tag">Cyber</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="networks_tag" value="0">
+                        <input type="checkbox" value="1" name="networks_tag" id="networks_tag">
+                        <label for="networks_tag">Networks</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="pm_tag" value="0">
+                        <input type="checkbox" value="1" name="pm_tag" id="pm_tag">
+                        <label for="pm_tag">PM</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="ux_tag" value="0">
+                        <input type="checkbox" value="1" name="ux_tag" id="ux_tag">
+                        <label for="ux_tag">UX/HCI</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="it_tag" value="0">
+                        <input type="checkbox" value="1" name="it_tag" id="it_tag">
+                        <label for="it_tag">IT Analyst</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="ba_tag" value="0">
+                        <input type="checkbox" value="1" name="ba_tag" id="ba_tag">
+                        <label for="ba_tag">Analytics</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="hidden" name="consulting_tag" value="0">
+                        <input type="checkbox" value="1" name="consulting_tag" id="consulting_tag">
+                        <label for="consulting_tag">Consulting</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="hidden" name="juniors_only" value="0">
+                        <input type="checkbox" value="1" name="juniors_only" id="juniors_only">
+                        <label for="juniors_only">'24 Only? (will be juniors)</label>
+                      </div>
 
-                    <span class="badge badge-pill badge-success">SWE-Mobile</span>
-                    <t>Software Engineering roles involving Mobile Development, on IOS or Android or both</t>
+                      <div class="form-check">
+                        <input type="hidden" name="is_ug" value="0">
+                        <input type="checkbox" value="1" name="is_ug" id="is_ug">
+                        <label for="is_ug">Program for Underrepresented Groups?</label>
+                      </div>
 
-                    <p></p>
+                      <div class="form-check">
+                        <input type="hidden" name="is_uc" value="0">
+                        <input type="checkbox" value="1" name="is_uc" id="is_uc">
+                        <label for="is_uc">1st Year/Sophomore-Only Program?</label>
+                      </div>
 
-                    <span class="badge badge-pill badge-backend">SWE-Backend</span>
-                    <t>Software Engineering roles involving Backend Development, Embedded and Closed Systems,
-                      Algorithmic and Programatic roles</t>
-
-                    <p></p>
-
-                    <span class="badge badge-pill badge-devops">DevOps</span>
-                    <t>Roles that involve ensuring smooth software releases, Continous Integration/Development Pipeline
-                      Configuration (CICD),
-                      and Cloud Architecture/Infrastructure
-                    </t>
-
-
-                    <p></p>
-
-                    <span class="badge badge-pill badge-analytics">Analytics</span>
-                    <t>Business and Data Analytics Roles</t>
-
-                    <p></p>
-
-                    <span class="badge badge-pill badge-ux">UX/HCI</span>
-                    <t>Roles involving User Experience (UX), Design, Visual Testing, and Human-Computer Interaction
-                      (HCI)</t>
-
-
-
-                    <p></p>
-
-                    <span class="badge badge-pill badge-danger">CYBER</span>
-                    <t>Roles involving Cybersecurity, Network Security, Information Security, Data and Information
-                      Governence</t>
-
-                    <p></p>
-
-                    <span class="badge badge-pill badge-networks">NET</span>
-                    <t>Roles involving Networks, Systems Administration, Linux/Unix/OS Engineering</t>
-
-                    <p></p>
-
-                    <span class="badge badge-pill badge-warning">PM</span>
-                    <t>Project/Program/Product Managament roles</t>
-
-                    <p></p>
-
-                    <span class="badge badge-pill badge-secondary">Tech-Consulting</span>
-                    <t>Typically found with other role tags, just with the additional feature of the work being at a
-                      consulting company,
-                      meaning you will be collaborating with other employees on a project that a client of the company
-                      has requested
-                    </t>
-
-                    <p></p>
-
-                    <span class="badge badge-pill badge-it">IT Analyst</span>
-                    <t>IT Analyst is a broad role that includes planning future digital transformations within the
-                      company, evaluating the pros and cons of implementing different approaches or
-                      tools or coding languages/frameworks, envisioning and planning future moves the company will make
-                      regarding tech
-                      initiatives, or making a busininess case for adapting an IT proposal
-                    </t>
-
-
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
 
                   </div>
 
                 </div>
               </div>
             </div>
-          </div>
 
-          <h4 id="message_toggle" class="alert-success mt-4 text-left"></h4>
-          <table id="internshipTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-            <thead>
-              <tr>
-                <th class="th-sm">Company
-                </th>
-                <th class="th-sm">Tags
-                </th>
-                <th class="th-sm">Int'l Students?
-                </th>
-                <th class="th-sm">Position
-                </th>
-                <th class="th-sm">Date Added
-                </th>
-                <th class="th-sm">Apply
-                </th>
-                <th class="th-sm">Track
-                </th>
-                <th style="width: 5%">Flag Errors</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              {{#each jobs}}
-              <tr>
-                <td>{{company_name}}</td>
-                <td>
-                  {{#if dsci_tag}}
-                  <span class="badge badge-pill badge-primary">DSCI</span>
-                  {{/if}}
-                  {{#if swe_web_tag}}
-                  <span class="badge badge-pill badge-web">SWE-Web</span>
-                  {{/if}}
-                  {{#if swe_mobile_tag}}
-                  <span class="badge badge-pill badge-success">SWE-Mobile</span>
-                  {{/if}}
-                  {{#if swe_tag}}
-                  <span class="badge badge-pill badge-success">SWE</span>
-                  {{/if}}
-                  {{#if swe_backend_tag}}
-                  <span class="badge badge-pill badge-backend">SWE-Backend</span>
-                  {{/if}}
-                  {{#if ba_tag}}
-                  <span class="badge badge-pill badge-analytics">Analytics</span>
-                  {{/if}}
-                  {{#if devops_tag}}
-                  <span class="badge badge-pill badge-devops">DevOps</span>
-                  {{/if}}
-                  {{#if cyber_tag}}
-                  <span class="badge badge-pill badge-danger">CYBER</span>
-                  {{/if}}
-                  {{#if networks_tag}}
-                  <span class="badge badge-pill badge-networks">NET</span>
-                  {{/if}}
-                  {{#if ux_tag}}
-                  <span class="badge badge-pill badge-ux">UX/HCI</span>
-                  {{/if}}
-                  {{#if pm_tag}}
-                  <span class="badge badge-pill badge-warning">PM</span>
-                  {{/if}}
-                  {{#if consulting_tag}}
-                  <span class="badge badge-pill badge-secondary">Tech-Consulting</span>
-                  {{/if}}
-                  {{#if it_tag}}
-                  <span class="badge badge-pill badge-it">IT Analyst</span>
-                  {{/if}}
-                </td>
-                <td>{{international_allowed}}</td>
-                <td>{{internship_title}}</td>
-                <td>{{date_added}}</td>
-                <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
-                <td>
-                  <form id="track_form">
-                    <div class='container'>
-                      <input type="hidden" value={{job_id}} class="form-control" name="job_id" id="job_id">
-                      {{#if is_tracked}}
-
-                      <button class="btn btn-info" disabled>+</button>
-
-                      {{else}}
-                      <button type="submit" class="btn btn-success">+</button>
-                      {{/if}}
+            <div class="text-left">
+              <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#keyModal">
+                Tags Key
+              </a>
+              <div class="modal fade" id="keyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Tag Key</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
-                  </form>
-                </td>
-                <td>
-                  <img src="/images/whiteflagicon.png" type="button" data-toggle="modal"
-                    data-target="#flagModal + {{job_id}}" style="width: 25px; height: 25px">
+                    <div class="modal-body">
+                      <span class="badge badge-pill badge-primary">DSCI</span>
+                      <t>Roles involving Data Science, Machine Learning, AI, and Data Engineering</t>
+                      <p></p>
+                      <span class="badge badge-pill badge-web">SWE-Web</span>
+                      <t>Software Engineering roles involving Web Development, Front-end, Fullstack, and Backend
+                        specific
+                        to Web Applications</t>
 
-                  <div class="modal fade" id="flagModal + {{job_id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Only Check/Fill the Relevent Field</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <form id="flag_form">
+                      <p></p>
 
-                            <div class="form-group">
-                              <input type="hidden" value={{job_id}} class="form-control" id="job_id" name="job_id">
-                              <input type="hidden" value={{link}} class="form-control" id="link" name="link">
-                            </div>
-                            <t>------------------------------------------------------------------------</t>
+                      <span class="badge badge-pill badge-success">SWE-Mobile</span>
+                      <t>Software Engineering roles involving Mobile Development, on IOS or Android or both</t>
 
-                            <div class="form-check">
+                      <p></p>
 
-                              <input type="checkbox" value="1" name="is_closed" id="is_closed">
-                              <label for="is_closed">Is the Link Down or Application Closed?</label>
-                            </div>
-                            <t>------------------------------------------------------------------------</t>
-                            <p> </p>
-                            <div class="form-group">
-                              <label for="comments">Other Issue</label>
-                              <input type="text" placeholder="Which table entry is incorrect & how did you find out?"
-                                value="" class="form-control" id="comments" name="comments">
-                            </div>
-                            <button type="submit" class="btn btn-primary" data-toggle="modal"
-                              data-target="#flagModal + {{job_id}}">Submit</button>
-                          </form>
+                      <span class="badge badge-pill badge-backend">SWE-Backend</span>
+                      <t>Software Engineering roles involving Backend Development, Embedded and Closed Systems,
+                        Algorithmic and Programatic roles</t>
 
-                        </div>
+                      <p></p>
 
-                      </div>
+                      <span class="badge badge-pill badge-devops">DevOps</span>
+                      <t>Roles that involve ensuring smooth software releases, Continous Integration/Development
+                        Pipeline
+                        Configuration (CICD),
+                        and Cloud Architecture/Infrastructure
+                      </t>
+
+
+                      <p></p>
+
+                      <span class="badge badge-pill badge-analytics">Analytics</span>
+                      <t>Business and Data Analytics Roles</t>
+
+                      <p></p>
+
+                      <span class="badge badge-pill badge-ux">UX/HCI</span>
+                      <t>Roles involving User Experience (UX), Design, Visual Testing, and Human-Computer Interaction
+                        (HCI)</t>
+
+
+
+                      <p></p>
+
+                      <span class="badge badge-pill badge-danger">CYBER</span>
+                      <t>Roles involving Cybersecurity, Network Security, Information Security, Data and Information
+                        Governence</t>
+
+                      <p></p>
+
+                      <span class="badge badge-pill badge-networks">NET</span>
+                      <t>Roles involving Networks, Systems Administration, Linux/Unix/OS Engineering</t>
+
+                      <p></p>
+
+                      <span class="badge badge-pill badge-warning">PM</span>
+                      <t>Project/Program/Product Managament roles</t>
+
+                      <p></p>
+
+                      <span class="badge badge-pill badge-secondary">Tech-Consulting</span>
+                      <t>Typically found with other role tags, just with the additional feature of the work being at a
+                        consulting company,
+                        meaning you will be collaborating with other employees on a project that a client of the company
+                        has requested
+                      </t>
+
+                      <p></p>
+
+                      <span class="badge badge-pill badge-it">IT Analyst</span>
+                      <t>IT Analyst is a broad role that includes planning future digital transformations within the
+                        company, evaluating the pros and cons of implementing different approaches or
+                        tools or coding languages/frameworks, envisioning and planning future moves the company will
+                        make
+                        regarding tech
+                        initiatives, or making a busininess case for adapting an IT proposal
+                      </t>
+
+
+
                     </div>
+
                   </div>
-                </td>
-              </tr>
-              {{/each}}
+                </div>
+              </div>
+            </div>
+
+            <h4 id="message_toggle" class="alert-success mt-4 text-left"></h4>
+
+            <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class='nav-link active' data-bs-toggle='tab' id="cur-Tab" role="tab" data-bs-target="#cur"
+                  aria-controls="cur" aria-selected="true" type="button" href='#cur'>2023</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class='nav-link' id="prev-tab" data-bs-toggle='tab' data-bs-target="#prev" role="tab" type="button"
+                  aria-controls="prev" href='#prev'>2022</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="cur" role="tabpanel">
+                <div class="car text-center">
+
+                  <table id="curTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>
+                        <th class="th-sm">Company
+                        </th>
+                        <th class="th-sm">Tags
+                        </th>
+                        <th class="th-sm">Int'l Students?
+                        </th>
+                        <th class="th-sm">Position
+                        </th>
+                        <th class="th-sm">Date Added
+                        </th>
+                        <th class="th-sm">Apply
+                        </th>
+                        <th class="th-sm">Track
+                        </th>
+                        <th style="width: 5%">Flag Errors</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each cur_listings}}
+                        <tr>
+                          <td>{{company_name}}</td>
+                          <td>
+                            {{#if dsci_tag}}
+                              <span class="badge badge-pill badge-primary">DSCI</span>
+                            {{/if}}
+                            {{#if swe_web_tag}}
+                              <span class="badge badge-pill badge-web">SWE-Web</span>
+                            {{/if}}
+                            {{#if swe_mobile_tag}}
+                              <span class="badge badge-pill badge-success">SWE-Mobile</span>
+                            {{/if}}
+                            {{#if swe_tag}}
+                              <span class="badge badge-pill badge-success">SWE</span>
+                            {{/if}}
+                            {{#if swe_backend_tag}}
+                              <span class="badge badge-pill badge-backend">SWE-Backend</span>
+                            {{/if}}
+                            {{#if ba_tag}}
+                              <span class="badge badge-pill badge-analytics">Analytics</span>
+                            {{/if}}
+                            {{#if devops_tag}}
+                              <span class="badge badge-pill badge-devops">DevOps</span>
+                            {{/if}}
+                            {{#if cyber_tag}}
+                              <span class="badge badge-pill badge-danger">CYBER</span>
+                            {{/if}}
+                            {{#if networks_tag}}
+                              <span class="badge badge-pill badge-networks">NET</span>
+                            {{/if}}
+                            {{#if ux_tag}}
+                              <span class="badge badge-pill badge-ux">UX/HCI</span>
+                            {{/if}}
+                            {{#if pm_tag}}
+                              <span class="badge badge-pill badge-warning">PM</span>
+                            {{/if}}
+                            {{#if consulting_tag}}
+                              <span class="badge badge-pill badge-secondary">Tech-Consulting</span>
+                            {{/if}}
+                            {{#if it_tag}}
+                              <span class="badge badge-pill badge-it">IT Analyst</span>
+                            {{/if}}
+                          </td>
+                          <td>{{international_allowed}}</td>
+                          <td>{{internship_title}}</td>
+                          <td>{{date_added}}</td>
+                          <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
+                          <td>
+                            <form id="track_form">
+                              <div class='container'>
+                                <input type="hidden" value={{job_id}} class="form-control" name="job_id" id="job_id">
+                                <input type="hidden" value=1 class="form-control" name="table_id" id="table_id">
+
+                                {{#if is_tracked}}
+
+                                  <button class="btn btn-info" disabled>+</button>
+
+                                {{else}}
+                                  <button type="submit" class="btn btn-success">+</button>
+                                {{/if}}
+                              </div>
+                            </form>
+                          </td>
+                          <td>
+                            <img src="/images/whiteflagicon.png" type="button" data-toggle="modal"
+                              data-target="#flagModal + {{job_id}}" style="width: 25px; height: 25px">
+
+                            <div class="modal fade" id="flagModal + {{job_id}}" tabindex="-1" role="dialog"
+                              aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Only Check/Fill the Relevent Field
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form id="flag_form">
+
+                                      <div class="form-group">
+                                        <input type="hidden" value={{job_id}} class="form-control" id="job_id"
+                                          name="job_id">
+                                        <input type="hidden" value={{link}} class="form-control" id="link" name="link">
+                                      </div>
+                                      <t>------------------------------------------------------------------------</t>
+
+                                      <div class="form-check">
+
+                                        <input type="checkbox" value="1" name="is_closed" id="is_closed">
+                                        <label for="is_closed">Is the Link Down or Application Closed?</label>
+                                      </div>
+                                      <t>------------------------------------------------------------------------</t>
+                                      <p> </p>
+                                      <div class="form-group">
+                                        <label for="comments">Other Issue</label>
+                                        <input type="text"
+                                          placeholder="Which table entry is incorrect & how did you find out?" value=""
+                                          class="form-control" id="comments" name="comments">
+                                      </div>
+                                      <button type="submit" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#flagModal + {{job_id}}">Submit</button>
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      {{/each}}
 
 
-            </tbody>
+                    </tbody>
 
-            <tfoot>
-              <tr>
-                <th>Company
-                </th>
-                <th>Tags
-                </th>
-                <th>Int'l Students?
-                </th>
-                <th>Position
-                </th>
-                <th>Date Added
-                </th>
-                <th>Apply
-                </th>
-                <th>Track
-                </th>
-                <th style="width: 5%">Flag Errors</th>
+                    <tfoot>
+                      <tr>
+                        <th>Company
+                        </th>
+                        <th>Tags
+                        </th>
+                        <th>Int'l Students?
+                        </th>
+                        <th>Position
+                        </th>
+                        <th>Date Added
+                        </th>
+                        <th>Apply
+                        </th>
+                        <th>Track
+                        </th>
+                        <th style="width: 5%">Flag Errors</th>
 
-              </tr>
-            </tfoot>
-            <script>
-              $(document).ready(function () {
-                $('#internshipTable').DataTable({
-                  "order": []
-                });
-              });
-            </script>
-          </table>
+                      </tr>
+                    </tfoot>
+                    <script>
+                      $(document).ready(function () {
+                        $('#curTable').DataTable({
+                          "order": []
+                        });
+                      });
+                    </script>
+                  </table>
 
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="prev" aria-selected="false" role="tabpanel" aria-labelledby="prev-tab">
+                <div class="car text-center">
+                  <table id="prevTable" class="table table-striped table-bordered table-sm" cellspacing="0"
+                    width="100%">
+                    <thead>
+                      <tr>
+                        <th class="th-sm">Company
+                        </th>
+                        <th class="th-sm">Tags
+                        </th>
+                        <th class="th-sm">Int'l Students?
+                        </th>
+                        <th class="th-sm">Position
+                        </th>
+                        <th class="th-sm">Date Added
+                        </th>
+                        <th class="th-sm">Apply
+                        </th>
+                        <th class="th-sm">Track
+                        </th>
+                        <th style="width: 5%">Flag Errors</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each prev_listings}}
+                        <tr>
+                          <td>{{company_name}}</td>
+                          <td>
+                            {{#if dsci_tag}}
+                              <span class="badge badge-pill badge-primary">DSCI</span>
+                            {{/if}}
+                            {{#if swe_web_tag}}
+                              <span class="badge badge-pill badge-web">SWE-Web</span>
+                            {{/if}}
+                            {{#if swe_mobile_tag}}
+                              <span class="badge badge-pill badge-success">SWE-Mobile</span>
+                            {{/if}}
+                            {{#if swe_tag}}
+                              <span class="badge badge-pill badge-success">SWE</span>
+                            {{/if}}
+                            {{#if swe_backend_tag}}
+                              <span class="badge badge-pill badge-backend">SWE-Backend</span>
+                            {{/if}}
+                            {{#if ba_tag}}
+                              <span class="badge badge-pill badge-analytics">Analytics</span>
+                            {{/if}}
+                            {{#if devops_tag}}
+                              <span class="badge badge-pill badge-devops">DevOps</span>
+                            {{/if}}
+                            {{#if cyber_tag}}
+                              <span class="badge badge-pill badge-danger">CYBER</span>
+                            {{/if}}
+                            {{#if networks_tag}}
+                              <span class="badge badge-pill badge-networks">NET</span>
+                            {{/if}}
+                            {{#if ux_tag}}
+                              <span class="badge badge-pill badge-ux">UX/HCI</span>
+                            {{/if}}
+                            {{#if pm_tag}}
+                              <span class="badge badge-pill badge-warning">PM</span>
+                            {{/if}}
+                            {{#if consulting_tag}}
+                              <span class="badge badge-pill badge-secondary">Tech-Consulting</span>
+                            {{/if}}
+                            {{#if it_tag}}
+                              <span class="badge badge-pill badge-it">IT Analyst</span>
+                            {{/if}}
+                          </td>
+                          <td>{{international_allowed}}</td>
+                          <td>{{internship_title}}</td>
+                          <td>{{date_added}}</td>
+                          <td><a href={{link}} target="_blank" class="btn btn-success" role="button">Apply</a></td>
+                          <td>
+                            <form id="track_form">
+                              <div class='container'>
+                                <input type="hidden" value={{job_id}} class="form-control" name="job_id" id="job_id">
+                                <input type="hidden" value=2 class="form-control" name="table_id" id="table_id">
+
+                                {{#if is_tracked}}
+
+                                  <button class="btn btn-info" disabled>+</button>
+
+                                {{else}}
+                                  <button type="submit" class="btn btn-success">+</button>
+                                {{/if}}
+                              </div>
+                            </form>
+                          </td>
+                          <td>
+                            <img src="/images/whiteflagicon.png" type="button" data-toggle="modal"
+                              data-target="#flagModal + {{job_id}}" style="width: 25px; height: 25px">
+
+                            <div class="modal fade" id="flagModal + {{job_id}}" tabindex="-1" role="dialog"
+                              aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Only Check/Fill the Relevent Field
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form id="flag_form">
+
+                                      <div class="form-group">
+                                        <input type="hidden" value={{job_id}} class="form-control" id="job_id"
+                                          name="job_id">
+                                        <input type="hidden" value={{link}} class="form-control" id="link" name="link">
+                                      </div>
+                                      <t>------------------------------------------------------------------------</t>
+
+                                      <div class="form-check">
+
+                                        <input type="checkbox" value="1" name="is_closed" id="is_closed">
+                                        <label for="is_closed">Is the Link Down or Application Closed?</label>
+                                      </div>
+                                      <t>------------------------------------------------------------------------</t>
+                                      <p> </p>
+                                      <div class="form-group">
+                                        <label for="comments">Other Issue</label>
+                                        <input type="text"
+                                          placeholder="Which table entry is incorrect & how did you find out?" value=""
+                                          class="form-control" id="comments" name="comments">
+                                      </div>
+                                      <button type="submit" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#flagModal + {{job_id}}">Submit</button>
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      {{/each}}
+
+
+                    </tbody>
+
+                    <tfoot>
+                      <tr>
+                        <th>Company
+                        </th>
+                        <th>Tags
+                        </th>
+                        <th>Int'l Students?
+                        </th>
+                        <th>Position
+                        </th>
+                        <th>Date Added
+                        </th>
+                        <th>Apply
+                        </th>
+                        <th>Track
+                        </th>
+                        <th style="width: 5%">Flag Errors</th>
+
+                      </tr>
+                    </tfoot>
+                    <script>
+                      $(document).ready(function () {
+                        $('#prevTable').DataTable({
+                          "order": []
+                        });
+                      });
+                    </script>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
+  </body>
+  <footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
+        <p>
+          <a href="https://www.linkedin.com/in/evan-hoffman/" target="_blank">
+            <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px" class="img-thumbnail">
+            <a href="https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role="button">Code</a>
+
+        </p>
+        <a class="text-dark">For Support, contact clarktechapply@yahoo.com</a>
+      </a>
     </div>
-
-</body>
-<footer class="bg-light text-center text-lg-start">
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-    <a class="text-dark">Built by Evan Hurst Hoffman, Clark'21
-      <p>
-        <a href="https://www.linkedin.com/in/evan-hoffman/" target="_blank">
-          <img src="/images/linkedinIcon.png" style="width: 25px; height: 25px" class="img-thumbnail">
-          <a href="https://github.com/Evan-Hoffman/Clark-Tech-Apply" target="_blank" role="button">Code</a>
-
-      </p>
-      <a class="text-dark">For Support, contact clarktechapply@yahoo.com</a>
-    </a>
-  </div>
-</footer>
+  </footer>
 
 </html>

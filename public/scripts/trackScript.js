@@ -1,14 +1,15 @@
-  $(document).ready(function() {
-    $('[id="track_form"]').on('submit', function(event) {
+$(document).ready(function () {
+    $('[id="track_form"]').on('submit', function (event) {
         event.preventDefault();
-                            
+
         let jobinfo = $(this).serializeArray();
         let jid = {};
 
-        jobinfo.forEach((value) => {               
+        jobinfo.forEach((value) => {
             jid[value.name] = value.value;
         });
         let url = "/auth/track";
+        console.log("jid info: ", jid);
 
         $.ajax({
             method: "POST",
@@ -18,9 +19,9 @@
     });
 });
 
-$(document).ready(function() {
-        $('[id="track_form"]').on('submit', function(event) {
+$(document).ready(function () {
+    $('[id="track_form"]').on('submit', function (event) {
 
-       var $btn = $(this).replaceWith("<button class='btn btn-info' disabled>+</button>");
+        var $btn = $(this).replaceWith("<button class='btn btn-info' disabled>+</button>");
     });
 });

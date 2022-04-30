@@ -19,7 +19,7 @@ router.get('/login', (req, res) => {
 
 //only go to profile if logged in
 router.get('/profile', authController.isLoggedIn, (req, res) => {
-    if(req.user) {
+    if (req.user) {
         res.render('profile', {
             user: req.user
         });
@@ -30,7 +30,7 @@ router.get('/profile', authController.isLoggedIn, (req, res) => {
 });
 
 router.get('/tips', authController.isLoggedIn, (req, res) => {
-    if(req.user) {
+    if (req.user) {
         res.render('tips', {
             user: req.user
         });
@@ -42,7 +42,7 @@ router.get('/tips', authController.isLoggedIn, (req, res) => {
 });
 
 router.get('/settings', authController.isLoggedIn, (req, res) => {
-    if(req.user) {
+    if (req.user) {
         res.render('settings', {
             user: req.user,
             message1: req.session.message1,
@@ -60,11 +60,12 @@ router.get('/settings', authController.isLoggedIn, (req, res) => {
 
 //only go to Fulltime listings if logged in
 router.get('/fulltime', authController.isLoggedIn, authController.populateFulltime, (req, res) => {
-    if(req.user) {
+    if (req.user) {
         res.render('fulltime', {
             user: req.user,
             id: req.user.id,
-            jobs: req.jobs,
+            cur_listings: req.cur_listings,
+            prev_listings: req.prev_listings,
             message1: req.session.message1,
             message2: req.session.message2
         });
@@ -79,11 +80,12 @@ router.get('/fulltime', authController.isLoggedIn, authController.populateFullti
 //only go to Internships if logged in
 router.get('/internships', authController.isLoggedIn, authController.populateInternships, (req, res) => {
     //console.log(req.internships);
-    if(req.user) {
+    if (req.user) {
         res.render('internships', {
             user: req.user,
             id: req.user.id,
-            jobs: req.internships,
+            cur_listings: req.cur_listings,
+            prev_listings: req.prev_listings,
             message1: req.session.message1,
             message2: req.session.message2
         });
@@ -98,11 +100,12 @@ router.get('/internships', authController.isLoggedIn, authController.populateInt
 
 //only go to grad Internships if logged in
 router.get('/gradinternships', authController.isLoggedIn, authController.populateGradInternships, (req, res) => {
-    if(req.user) {
+    if (req.user) {
         res.render('gradinternships', {
             user: req.user,
             id: req.user.id,
-            jobs: req.internships,
+            cur_listings: req.cur_listings,
+            prev_listings: req.prev_listings,
             message1: req.session.message1,
             message2: req.session.message2
         });
@@ -117,11 +120,12 @@ router.get('/gradinternships', authController.isLoggedIn, authController.populat
 
 //only go to grad fulltime if logged in
 router.get('/gradfulltime', authController.isLoggedIn, authController.populateGradFulltime, (req, res) => {
-    if(req.user) {
+    if (req.user) {
         res.render('gradfulltime', {
             user: req.user,
             id: req.user.id,
-            jobs: req.internships,
+            cur_listings: req.cur_listings,
+            prev_listings: req.prev_listings,
             message1: req.session.message1,
             message2: req.session.message2
         });
@@ -136,11 +140,12 @@ router.get('/gradfulltime', authController.isLoggedIn, authController.populateGr
 //only go to Underrepresented Programs if logged in
 router.get('/underrepresented', authController.isLoggedIn, authController.populateUnderrepresented, (req, res) => {
     //console.log(req.internships.length);
-    if(req.user) {
+    if (req.user) {
         //console.log(req.internships);
         res.render('underrepresented', {
             user: req.user,
-            jobs: req.internships,
+            cur_listings: req.cur_listings,
+            prev_listings: req.prev_listings,
             message1: req.session.message1,
             message2: req.session.message2
         });
@@ -156,11 +161,12 @@ router.get('/underrepresented', authController.isLoggedIn, authController.popula
 //only go to Sophomore Programs if logged in
 router.get('/underclassmenonly', authController.isLoggedIn, authController.populateUnderclassmen, (req, res) => {
     //console.log(req.internships.length);
-    if(req.user) {
+    if (req.user) {
         //console.log(req.internships);
         res.render('underclassmenonly', {
             user: req.user,
-            jobs: req.internships,
+            cur_listings: req.cur_listings,
+            prev_listings: req.prev_listings,
             message1: req.session.message1,
             message2: req.session.message2
         });
@@ -175,11 +181,12 @@ router.get('/underclassmenonly', authController.isLoggedIn, authController.popul
 //only go to Exploratory Programs if logged in
 router.get('/exploratory', authController.isLoggedIn, authController.populateExploratory, (req, res) => {
     //console.log(req.internships.length);
-    if(req.user) {
+    if (req.user) {
         //console.log(req.internships);
         res.render('exploratory', {
             user: req.user,
-            jobs: req.programs,
+            cur_listings: req.cur_listings,
+            prev_listings: req.prev_listings,
             message1: req.session.message1,
             message2: req.session.message2
         });
@@ -193,7 +200,7 @@ router.get('/exploratory', authController.isLoggedIn, authController.populateExp
 
 //only go to MyApps if logged in
 router.get('/myapps', authController.isLoggedIn, authController.populateMyApps, (req, res) => {
-    if(req.user) {
+    if (req.user) {
         res.render('myapps', {
             user: req.user,
             myapps: req.myapps
@@ -205,7 +212,7 @@ router.get('/myapps', authController.isLoggedIn, authController.populateMyApps, 
 });
 
 router.get('/passwordreset/:confirmationCode', (req, res) => {
-    if (req.params.confirmationCode != 0){
+    if (req.params.confirmationCode != 0) {
         res.render('passwordreset', {
             code: req.params.confirmationCode,
             message1: req.session.message1,
@@ -223,31 +230,31 @@ router.get('/passwordreset/:confirmationCode', (req, res) => {
 
 //Approvals Page for Privileged Users to approve suggested internship additions
 router.get('/approvals', authController.isLoggedIn, authController.populateApprovals, (req, res) => {
-if(req.user){
-    if(req.user.is_privileged) {
-        res.render('approvals', {
-            user: req.user,
-            suggestions: req.suggestions,
-            edits: req.edits
-        });
+    if (req.user) {
+        if (req.user.is_privileged) {
+            res.render('approvals', {
+                user: req.user,
+                suggestions: req.suggestions,
+                edits: req.edits
+            });
+        }
+        else {
+            res.redirect('/');
+        }
     }
     else {
         res.redirect('/');
     }
-}
-else {
-    res.redirect('/');
-}
 });
 
 //only go to Edits if logged in & privileged
 router.get('/iedits', authController.isLoggedIn, authController.populateInternships, (req, res) => {
 
-    if(req.user) {
-        if(req.user.is_privileged) {
+    if (req.user) {
+        if (req.user.is_privileged) {
             res.render('iedits', {
                 user: req.user,
-                jobs: req.internships,
+                jobs: req.cur_listings,
                 message1: req.session.message1,
                 message2: req.session.message2
             });
@@ -266,11 +273,11 @@ router.get('/iedits', authController.isLoggedIn, authController.populateInternsh
 //only go to Edits if logged in & privileged
 router.get('/fedits', authController.isLoggedIn, authController.populateFulltime, (req, res) => {
 
-    if(req.user) {
-        if(req.user.is_privileged) {
+    if (req.user) {
+        if (req.user.is_privileged) {
             res.render('fedits', {
                 user: req.user,
-                jobs: req.jobs,
+                jobs: req.cur_listings,
                 message1: req.session.message1,
                 message2: req.session.message2
             });
@@ -289,11 +296,11 @@ router.get('/fedits', authController.isLoggedIn, authController.populateFulltime
 //only go to Edits if logged in & privileged
 router.get('/gfedits', authController.isLoggedIn, authController.populateGradFulltime, (req, res) => {
 
-    if(req.user) {
-        if(req.user.is_privileged) {
+    if (req.user) {
+        if (req.user.is_privileged) {
             res.render('gfedits', {
                 user: req.user,
-                jobs: req.internships,
+                jobs: req.cur_listings,
                 message1: req.session.message1,
                 message2: req.session.message2
             });
@@ -312,11 +319,11 @@ router.get('/gfedits', authController.isLoggedIn, authController.populateGradFul
 //only go to Edits if logged in & privileged
 router.get('/giedits', authController.isLoggedIn, authController.populateGradInternships, (req, res) => {
 
-    if(req.user) {
-        if(req.user.is_privileged) {
+    if (req.user) {
+        if (req.user.is_privileged) {
             res.render('giedits', {
                 user: req.user,
-                jobs: req.internships,
+                jobs: req.cur_listings,
                 message1: req.session.message1,
                 message2: req.session.message2
             });
@@ -337,11 +344,11 @@ router.get('/giedits', authController.isLoggedIn, authController.populateGradInt
 //only go to Edits if logged in & privileged
 router.get('/ugedits', authController.isLoggedIn, authController.populateUnderrepresented, (req, res) => {
 
-    if(req.user) {
-        if(req.user.is_privileged) {
+    if (req.user) {
+        if (req.user.is_privileged) {
             res.render('ugedits', {
                 user: req.user,
-                jobs: req.internships,
+                jobs: req.cur_listings,
                 message1: req.session.message1,
                 message2: req.session.message2
             });
@@ -360,11 +367,11 @@ router.get('/ugedits', authController.isLoggedIn, authController.populateUnderre
 //only go to Edits if logged in & privileged
 router.get('/ucedits', authController.isLoggedIn, authController.populateUnderclassmen, (req, res) => {
 
-    if(req.user) {
-        if(req.user.is_privileged) {
+    if (req.user) {
+        if (req.user.is_privileged) {
             res.render('ucedits', {
                 user: req.user,
-                jobs: req.internships,
+                jobs: req.cur_listings,
                 message1: req.session.message1,
                 message2: req.session.message2
             });
@@ -384,11 +391,11 @@ router.get('/ucedits', authController.isLoggedIn, authController.populateUndercl
 //only go to Edits if logged in & privileged
 router.get('/epedits', authController.isLoggedIn, authController.populateExploratory, (req, res) => {
 
-    if(req.user) {
-        if(req.user.is_privileged) {
+    if (req.user) {
+        if (req.user.is_privileged) {
             res.render('epedits', {
                 user: req.user,
-                jobs: req.programs,
+                jobs: req.cur_listings,
                 message1: req.session.message1,
                 message2: req.session.message2
             });
