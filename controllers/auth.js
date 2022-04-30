@@ -1002,7 +1002,6 @@ exports.track = (req, res, next) => {
     else {
         table_name = process.env.DB_PREV_SEASON;
     }
-    console.log("Table name: ", table_name);
 
     //console.log("tid value: ", req.body.table_id);
     pool.query('SELECT * FROM ' + table_name + ' WHERE job_id = ?', [jid], async (error, result) => {
