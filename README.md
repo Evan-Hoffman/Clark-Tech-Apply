@@ -25,3 +25,5 @@ Good Karma Icon: [Lazyacreslongbeach](https://www.kindpng.com/imgv/woJbom_goodwi
 Profile Icon: [Dmitriy Bondarchuk](https://www.behance.net/indie4art)
 
 Clarkies who tested, continue to test and use, and send me detailed feedback and feature desires
+
+Fin
