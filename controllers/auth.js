@@ -159,6 +159,9 @@ exports.verifyUser = (req, res) => {
 
 //login a user
 exports.login = async (req, res) => {
+    var blacklist = [
+        '5.188.62.21',
+    ]
     try {
         const { email, password } = req.body;
 
@@ -173,11 +176,16 @@ exports.login = async (req, res) => {
                 console.log(error);
             }
             if (results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
-                console.log(req.headers['x-forwarded-for'])
                 console.log("Someone's email or password is incorrect")
-                res.status(401).render('login', {
-                    message1: 'Your email or password is incorrect'
-                })
+                if (blackList.indexOf(req.headers['x-forwarded-for']) > -1) {
+                    res.end(); // exit if it is a black listed ip
+                    console.log("blacklisted IP hit");
+                }
+                else {
+                    res.status(401).render('login', {
+                        message1: 'Your email or password is incorrect'
+                    })
+                }
             }
             else if (results[0].active == 0) {
                 console.log(email + " tried to login before confirming their account");
