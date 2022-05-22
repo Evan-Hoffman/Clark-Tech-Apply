@@ -173,7 +173,7 @@ exports.login = async (req, res) => {
                 console.log(error);
             }
             if (results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
-                console.log(request.headers['x-forwarded-for'])
+                console.log(req.headers['x-forwarded-for'])
                 console.log("Someone's email or password is incorrect")
                 res.status(401).render('login', {
                     message1: 'Your email or password is incorrect'
