@@ -159,7 +159,7 @@ exports.verifyUser = (req, res) => {
 
 //login a user
 exports.login = async (req, res) => {
-    var blacklist = [
+    var blackList = [
         '5.188.62.21',
     ]
     try {
